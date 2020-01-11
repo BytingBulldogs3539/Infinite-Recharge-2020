@@ -51,13 +51,15 @@ public class MaxSwerveEnclosure extends BaseEnclosure implements SwerveEnclosure
         steerMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
         steerMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 5);
 
+        // steerMotor.setControlFramePeriodMs(1);
+
         this.SteerPidController.setOutputRange(-1, 1);
         this.SteerPidController.setAbsoluteTolerance(1);
         this.drivePidController = this.driveMotor.getPIDController();
 
         driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
         driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 20);
-
+        // driveMotor.setControlFramePeriodMs(1);
         // Configure the drivePID Controller.
         drivePidController.setOutputRange(-1, 1);
         drivePidController.setSmartMotionMaxVelocity(4000, 0);
@@ -79,13 +81,7 @@ public class MaxSwerveEnclosure extends BaseEnclosure implements SwerveEnclosure
     }
 
     @Override
-    public void move(double speed, double angle) {
-        setAngle(angle);
-        setSpeed(speed);
-    }
-
-    @Override
-    public void setSmartSpeed(double speed)
+    public void setSpeed(double speed)
     {
         this.drivePidController.setP(drivePIDGains.p, 0);
         this.drivePidController.setI(drivePIDGains.i, 0);
@@ -96,18 +92,14 @@ public class MaxSwerveEnclosure extends BaseEnclosure implements SwerveEnclosure
         SmartDashboard.putNumber(this.getName() + " Speed Setpoint", speed * 6000);
 
         drivePidController.setReference(speed * 6000, ControlType.kSmartVelocity);
-    }
+        // System.out.println(speed * 3000);
 
-    @Override
-    public void setSpeed(double speed) {
-       driveMotor.set(speed);
     }
 
     @Override
     public void setAngle(double angle)
     {
         SteerPidController.enable();
-        //angle /= 360.0;
         SteerPidController.setSetpoint((reverseSteer ? -1 : 1) * angle * encoderTicksPerRev);
 
     }

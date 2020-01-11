@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-import frc.robot.commands.VisionTrack;
 import frc.robot.utilities.LogitechF310;
+import frc.robot.commands.VisionTrack;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,7 +21,6 @@ public class OI
   public OI()
   {
     driver = new LogitechF310(RobotMap.DriverPort);
-
     driver.buttonX.toggleWhenPressed(new VisionTrack());
   }
 }

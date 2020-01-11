@@ -80,13 +80,6 @@ public class SwerveDrive
         this.swerveMath.setCentricMode(centricMode);
     }
 
-    public void setAllAngles(double angle) {	
-        swerveEnclosure1.setAngle(angle);	
-        swerveEnclosure1.setAngle(angle);	
-        swerveEnclosure1.setAngle(angle);	
-        swerveEnclosure1.setAngle(angle);	
-    }
-
     public CentricMode getCentricMode()
     {
         return this.swerveMath.getCentricMode();

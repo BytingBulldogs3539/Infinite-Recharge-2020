@@ -92,15 +92,6 @@ public abstract class BaseEnclosure implements SwerveEnclosure
      */
     protected abstract void setAngle(double angle);
 
-
-    /**
-     * 
-     * @param speed A value between 1 and -1 however the robot will drive that speed
-     *              multipled by max rpm.
-     */
-    protected abstract void setSmartSpeed(double speed);
-
-
     private boolean shouldReverse(double wa, double encoderValue)
     {
 

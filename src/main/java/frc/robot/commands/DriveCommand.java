@@ -8,8 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.swerve_library.math.CentricMode;
+import frc.robot.Robot;
 
 /**
  * An example command. You can replace me with your own command.
@@ -45,6 +45,7 @@ public class DriveCommand extends Command
       Robot.driveTrain.swerveDrive.setCentricMode(CentricMode.FIELD);
     }
 
+
     if (Robot.oi.driver.buttonA.get())
     {
       Robot.driveTrain.setAllAngles(0);
@@ -53,17 +54,17 @@ public class DriveCommand extends Command
     {
 
       if (Robot.oi.driver.getLeftStickY() >= .05 || Robot.oi.driver.getLeftStickY() <= -.05)
-        y = Robot.oi.driver.getLeftStickY() * 1.0;
+        y = Robot.oi.driver.getLeftStickY() * .5;
       else
         y = 0;
 
       if (Robot.oi.driver.getLeftStickX() >= .05 || Robot.oi.driver.getLeftStickX() <= -.05)
-        x = Robot.oi.driver.getLeftStickX() * 1.0;
+        x = Robot.oi.driver.getLeftStickX() * .5;
       else
         x = 0;
 
       if (Robot.oi.driver.getRightStickX() >= .05 || Robot.oi.driver.getRightStickX() <= -.05)
-        x1 = Robot.oi.driver.getRightStickX() * 1.0;
+        x1 = Robot.oi.driver.getRightStickX() * .5;
       else
         x1 = 0;
 
