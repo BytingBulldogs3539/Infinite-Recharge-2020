@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -8,154 +8,185 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.CounterBase;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotMap;
-import frc.robot.commands.DriveCommand;
-import frc.robot.swerve_library.drive.MaxSwerveEnclosure;
-import frc.robot.swerve_library.drive.SwerveDrive;
-import frc.robot.swerve_library.math.CentricMode;
-import frc.robot.utilities.ByteEncoder;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
-public class DriveSubsystem extends Subsystem
-{
-  PigeonIMU pigeon = new PigeonIMU(25);
+@SuppressWarnings("PMD.ExcessiveImports")
+public class DriveSubsystem extends SubsystemBase {
+  // Robot swerve modules
+  public final SwerveModule m_frontLeft = new SwerveModule("Front Left Module", RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveMotorPort(),
+  RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderPorts(),
+  RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderReversed(),
+  RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningReversed());
 
-  CANSparkMax FRDrive = new CANSparkMax(4, MotorType.kBrushless);
-  CANSparkMax FRSteer = new CANSparkMax(3, MotorType.kBrushless);
-  ByteEncoder FRSteerEncoder = new ByteEncoder(0, 1, 13, false, CounterBase.EncodingType.k1X, 0, false);
-  MaxSwerveEnclosure FRModule = new MaxSwerveEnclosure("FRModule", FRDrive, FRSteer, FRSteerEncoder,
-      RobotMap.FRSwerveModuleGains, RobotMap.FRSwerveDriveGains, RobotMap.encoderTicksPerRev);
+  private final SwerveModule m_rearLeft = new SwerveModule("Back Left Module", RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveMotorPort(),
+  RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderPorts(),
+      RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningReversed());
 
-  CANSparkMax FLDrive = new CANSparkMax(2, MotorType.kBrushless);
-  CANSparkMax FLSteer = new CANSparkMax(1, MotorType.kBrushless);
-  ByteEncoder FLSteerEncoder = new ByteEncoder(2, 3, 11, false, CounterBase.EncodingType.k1X, 0, false);
-  MaxSwerveEnclosure FLModule = new MaxSwerveEnclosure("FLModule", FLDrive, FLSteer, FLSteerEncoder,
-      RobotMap.FLSwerveModuleGains, RobotMap.FRSwerveDriveGains, RobotMap.encoderTicksPerRev);
+  private final SwerveModule m_frontRight = new SwerveModule("Front Right Module",
+  RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningReversed());
 
-  CANSparkMax BLDrive = new CANSparkMax(7, MotorType.kBrushless);
-  CANSparkMax BLSteer = new CANSparkMax(8, MotorType.kBrushless);
-  ByteEncoder BLSteerEncoder = new ByteEncoder(4, 5, 12, false, CounterBase.EncodingType.k1X, 0, false);
-  MaxSwerveEnclosure BLModule = new MaxSwerveEnclosure("BLModule", BLDrive, BLSteer, BLSteerEncoder,
-      RobotMap.BLSwerveModuleGains, RobotMap.FRSwerveDriveGains, RobotMap.encoderTicksPerRev);
+  private final SwerveModule m_rearRight = new SwerveModule("Back Right Module",
+  RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningReversed());
 
-  CANSparkMax BRDrive = new CANSparkMax(5, MotorType.kBrushless);
-  CANSparkMax BRSteer = new CANSparkMax(6, MotorType.kBrushless);
-  public ByteEncoder BRSteerEncoder = new ByteEncoder(6, 7, 10, false, CounterBase.EncodingType.k1X, 423, true);
-  MaxSwerveEnclosure BRModule = new MaxSwerveEnclosure("BRModule", BRDrive, BRSteer, BRSteerEncoder,
-      RobotMap.BRSwerveModuleGains, RobotMap.FRSwerveDriveGains, RobotMap.encoderTicksPerRev);
+  // The gyro sensor
+  private final PigeonIMU m_gyro = new PigeonIMU(RobotContainer.robotConstants.getDriveConstants().getkPigeonID());
 
-  public SwerveDrive swerveDrive = new SwerveDrive(FRModule, FLModule, BLModule, BRModule, RobotMap.Robot_W, RobotMap.Robot_L);
+  // Odometry class for tracking robot pose
+  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(), getAngle());
 
-  public AnalogPotentiometer vision = new AnalogPotentiometer(0);
-
-  public DriveSubsystem()
-  {
-    pigeon.setYaw(0);
-
-    swerveDrive.setCentricMode(CentricMode.FIELD);
-
-    FRDrive.setInverted(false);
-    FLDrive.setInverted(false);
-    BLDrive.setInverted(false);
-    BRDrive.setInverted(false);
-
-    FRDrive.setIdleMode(IdleMode.kBrake);
-    FLDrive.setIdleMode(IdleMode.kBrake);
-    BRDrive.setIdleMode(IdleMode.kBrake);
-    BLDrive.setIdleMode(IdleMode.kBrake);
-
-    FRModule.setReverseSteerMotor(true);
-    FLModule.setReverseSteerMotor(true);
-    BLModule.setReverseSteerMotor(true);
-    BRModule.setReverseSteerMotor(true);
-    FRModule.setReverseEncoder(true);
-    FLModule.setReverseEncoder(true);
-    BLModule.setReverseEncoder(true);
-    BRModule.setReverseEncoder(true);
-
-    FRModule.getPIDController().setName("FR");
-    FLModule.getPIDController().setName("FL");
-    BRModule.getPIDController().setName("BR");
-    BLModule.getPIDController().setName("BL");
-
-    FRSteerEncoder.setName("FR");
-    FLSteerEncoder.setName("FL");
-    BRSteerEncoder.setName("BR");
-    BLSteerEncoder.setName("BL");
-    
+  /**
+   * Creates a new DriveSubsystem.
+   */
+  public DriveSubsystem() {
   }
 
-  public void drive(double fwd, double str, double rcw)
-  {
+  /**
+   * Returns the angle of the robot as a Rotation2d.
+   *
+   * @return The angle of the robot.
+   */
+  public Rotation2d getAngle() {
+    // Negating the angle because WPILib gyros are CW positive.
     double[] ypr = new double[3];
-    pigeon.getYawPitchRoll(ypr);
-    swerveDrive.move(fwd, str, rcw, -ypr[0]);
-  }
-
-  public void setAllAngles(double angle)
-  {
-    FRModule.setAngle(angle);
-    FLModule.setAngle(angle);
-    BRModule.setAngle(angle);
-    BLModule.setAngle(angle);
-  }
-
-  public void updateSmartDash()
-  {
-    SmartDashboard.putNumber("FR Encoder", FRModule.getEncPosition());
-    SmartDashboard.putNumber("FL Encoder", FLModule.getEncPosition());
-    SmartDashboard.putNumber("BR Encoder", BRModule.getEncPosition());
-    SmartDashboard.putNumber("BL Encoder", BLModule.getEncPosition());
-    SmartDashboard.putString("Centric Mode", swerveDrive.getCentricMode().toString());
-
-    SmartDashboard.putNumber("FR Velocity", FRDrive.getEncoder().getVelocity());
-    SmartDashboard.putNumber("FL Velocity", FLDrive.getEncoder().getVelocity());
-    SmartDashboard.putNumber("BL Velocity", BLDrive.getEncoder().getVelocity());
-    SmartDashboard.putNumber("BR Velocity", BRDrive.getEncoder().getVelocity());
-
-    // read PID coefficients from SmartDashboard
-    RobotMap.FRSwerveDriveGains.p = SmartDashboard.getNumber("P Gain", 0);
-    RobotMap.FRSwerveDriveGains.i = SmartDashboard.getNumber("I Gain", 0);
-    RobotMap.FRSwerveDriveGains.d = SmartDashboard.getNumber("D Gain", 0);
-    RobotMap.FRSwerveDriveGains.iZone = SmartDashboard.getNumber("I Zone", 0);
-    RobotMap.FRSwerveDriveGains.iMax = SmartDashboard.getNumber("I Max", 0);
-    RobotMap.FRSwerveDriveGains.f = SmartDashboard.getNumber("ff", 0);
-
-    SmartDashboard.putNumber("P Gain", RobotMap.FRSwerveDriveGains.p);
-    SmartDashboard.putNumber("I Gain", RobotMap.FRSwerveDriveGains.i);
-    SmartDashboard.putNumber("D Gain", RobotMap.FRSwerveDriveGains.d);
-    SmartDashboard.putNumber("I Zone", RobotMap.FRSwerveDriveGains.iZone);
-    SmartDashboard.putNumber("I Max", RobotMap.FRSwerveDriveGains.iMax);
-    SmartDashboard.putNumber("ff", RobotMap.FRSwerveDriveGains.f);
-  }
-
-  public void initializeSmartDashBoard()
-  {
-
-    SmartDashboard.putData(FRModule.getPIDController());
-    SmartDashboard.putData(FLModule.getPIDController());
-    SmartDashboard.putData(BLModule.getPIDController());
-    SmartDashboard.putData(BRModule.getPIDController());
-
-    SmartDashboard.putNumber("P Gain", RobotMap.FRSwerveDriveGains.p);
-    SmartDashboard.putNumber("I Gain", RobotMap.FRSwerveDriveGains.i);
-    SmartDashboard.putNumber("D Gain", RobotMap.FRSwerveDriveGains.d);
-    SmartDashboard.putNumber("I Zone", RobotMap.FRSwerveDriveGains.iZone);
-    SmartDashboard.putNumber("I Max", RobotMap.FRSwerveDriveGains.iMax);
-    SmartDashboard.putNumber("ff", RobotMap.FRSwerveDriveGains.f);
+    m_gyro.getYawPitchRoll(ypr);
+    return Rotation2d.fromDegrees(ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? 1.0 : -1.0));
   }
 
   @Override
-  public void initDefaultCommand()
-  {
-    // Set the default command for a subsystem here.
-    setDefaultCommand(new DriveCommand());
+  public void periodic() {
+    // Update the odometry in the periodic block
+    m_odometry.update(new Rotation2d(getHeading()), m_frontLeft.getState(), m_rearLeft.getState(),
+        m_frontRight.getState(), m_rearRight.getState());
   }
+
+  /**
+   * Returns the currently-estimated pose of the robot.
+   *
+   * @return The pose.
+   */
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  /**
+   * Resets the odometry to the specified pose.
+   *
+   * @param pose The pose to which to set the odometry.
+   */
+  public void resetOdometry(Pose2d pose) {
+    m_odometry.resetPosition(pose, getAngle());
+  }
+
+  /**
+   * Method to drive the robot using joystick info.
+   *
+   * @param xSpeed        Speed of the robot in the x direction (forward).
+   * @param ySpeed        Speed of the robot in the y direction (sideways).
+   * @param rot           Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the
+   *                      field.
+   */
+  @SuppressWarnings("ParameterName")
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+    if (xSpeed >= .05 || xSpeed <= -.05)
+      xSpeed = xSpeed * 1.0;
+    else
+      xSpeed = 0;
+
+    if (ySpeed >= .05 || ySpeed <= -.05)
+      ySpeed = ySpeed * 1.0;
+    else
+      ySpeed = 0;
+
+    if (rot >= .05 || rot <= -.05)
+      rot = rot * 1.0;
+    else
+      rot = 0;
+
+    if (xSpeed == 0 & ySpeed == 0 && rot == 0) {
+      stopDrive();
+    } else {
+      xSpeed *= RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond();
+      ySpeed *= RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond();
+      rot *= RobotContainer.robotConstants.getDriveConstants().getkMaxTurnSpeedRadPerSecond();
+      var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics()
+          .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
+              : new ChassisSpeeds(xSpeed, ySpeed, rot));
+      setModuleStates(swerveModuleStates);
+    }
+
+  }
+
+  public void stopDrive() {
+    m_frontLeft.stopDrive();
+    m_frontRight.stopDrive();
+    m_rearLeft.stopDrive();
+    m_rearRight.stopDrive();
+  }
+
+  /**
+   * Sets the swerve ModuleStates.
+   *
+   * @param desiredStates The desired SwerveModule states.
+   */
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates, RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond());
+    m_frontLeft.setDesiredState(desiredStates[0]);
+    m_frontRight.setDesiredState(desiredStates[1]);
+    m_rearLeft.setDesiredState(desiredStates[2]);
+    m_rearRight.setDesiredState(desiredStates[3]);
+  }
+
+  /**
+   * Resets the drive encoders to currently read a position of 0.
+   */
+  public void resetEncoders() {
+    m_frontLeft.resetEncoders();
+    m_rearLeft.resetEncoders();
+    m_frontRight.resetEncoders();
+    m_rearRight.resetEncoders();
+  }
+
+  /**
+   * Zeroes the heading of the robot.
+   */
+  public void zeroHeading() {
+    m_gyro.setYaw(0);
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from 180 to 180
+   */
+  public double getHeading() {
+    double[] ypr = new double[3];
+    m_gyro.getYawPitchRoll(ypr);
+    return Math.IEEEremainder(ypr[0], 360) * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
+  }
+
+  // The pigeon does not return a rate and it does'nt seem to need it...
+  // /**
+  // * Returns the turn rate of the robot.
+  // *
+  // * @return The turn rate of the robot, in degrees per second
+  // */
+  // public double getTurnRate() {
+  // return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  // }
 }

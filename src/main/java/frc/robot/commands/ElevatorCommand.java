@@ -7,18 +7,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
-public class DriveCommand extends CommandBase {
+public class ElevatorCommand extends CommandBase {
   /**
-   * Creates a new DriveCommand.
+   * Creates a new ElevatorCommand.
    */
-  DriveSubsystem subsystem;
+  ElevatorSubsystem subsystem;
 
-  public DriveCommand(DriveSubsystem subsystem) {
+  public ElevatorCommand(ElevatorSubsystem subsytem) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
@@ -32,11 +30,6 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    subsystem.drive(RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
-        RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
-        RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), false);
-
   }
 
   // Called once the command ends or is interrupted.
