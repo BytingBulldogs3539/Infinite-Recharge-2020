@@ -53,6 +53,7 @@ public class DriveSubsystem extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
+    m_gyro.setYaw(0);
   }
 
   /**
@@ -62,15 +63,12 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Rotation2d getAngle() {
     // Negating the angle because WPILib gyros are CW positive.
-    double[] ypr = new double[3];
-    m_gyro.getYawPitchRoll(ypr);
-    return Rotation2d.fromDegrees(ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? 1.0 : -1.0));
-  }
+    return Rotation2d.fromDegrees(getPigeonAngle() * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? 1.0 : -1.0));  }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(new Rotation2d(getHeading()), m_frontLeft.getState(), m_rearLeft.getState(),
+    m_odometry.update(new Rotation2d(Math.toRadians(getHeading())), m_frontLeft.getState(), m_rearLeft.getState(),
         m_frontRight.getState(), m_rearRight.getState());
   }
 
@@ -103,18 +101,18 @@ public class DriveSubsystem extends SubsystemBase {
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    if (xSpeed >= .05 || xSpeed <= -.05)
-      xSpeed = xSpeed * 1.0;
+    if (xSpeed >= .02 || xSpeed <= -.02)
+      xSpeed = xSpeed * .5;
     else
       xSpeed = 0;
 
-    if (ySpeed >= .05 || ySpeed <= -.05)
-      ySpeed = ySpeed * 1.0;
+    if (ySpeed >= .02 || ySpeed <= -.02)
+      ySpeed = ySpeed * .5;
     else
       ySpeed = 0;
 
-    if (rot >= .05 || rot <= -.05)
-      rot = rot * 1.0;
+    if (rot >= .02 || rot <= -.02)
+      rot = rot * .5;
     else
       rot = 0;
 
@@ -169,15 +167,21 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.setYaw(0);
   }
 
+  public double getPigeonAngle()
+  {
+    double[] ypr = new double[3];
+    m_gyro.getYawPitchRoll(ypr);
+    return ypr[0];
+  }
+
   /**
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    double[] ypr = new double[3];
-    m_gyro.getYawPitchRoll(ypr);
-    return Math.IEEEremainder(ypr[0], 360) * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
+    
+    return Math.IEEEremainder(getPigeonAngle(), 360) * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
   }
 
   // The pigeon does not return a rate and it does'nt seem to need it...

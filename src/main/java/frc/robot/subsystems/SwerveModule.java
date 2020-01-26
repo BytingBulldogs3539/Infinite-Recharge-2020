@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -54,9 +55,15 @@ public class SwerveModule {
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
+
     // Invert the motors if needed.
     m_driveMotor.setInverted(reverseDrive);
     m_turningMotor.setInverted(reverseTurn);
+
+    m_driveMotor.setIdleMode(IdleMode.kBrake);
+    m_turningMotor.setIdleMode(IdleMode.kBrake);
+
+
 
     // Get and store away the built in encoder on the drive motor.
     this.m_driveEncoder = m_driveMotor.getEncoder();

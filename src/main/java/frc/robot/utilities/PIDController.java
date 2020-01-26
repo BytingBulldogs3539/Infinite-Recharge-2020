@@ -33,10 +33,6 @@ public class PIDController implements Sendable, AutoCloseable {
     @SuppressWarnings("MemberName")
     private double m_Kd;
 
-    // Factor for "derivative" control
-    @SuppressWarnings("MemberName")
-    private double m_Kf;
-
     // The period (in seconds) of the loop that calls the controller
     private final double m_period;
 
@@ -59,7 +55,9 @@ public class PIDController implements Sendable, AutoCloseable {
     private double m_prevError;
 
     // The sum of the errors for use in the integral calc
-    private double m_totalError;
+    private double m_totalI;
+
+    private double m_kiZone;
 
     // The percentage or absolute error that is considered at setpoint.
     private double m_positionTolerance = 0.05;
@@ -267,6 +265,10 @@ public class PIDController implements Sendable, AutoCloseable {
         m_maximumIntegral = maximumIntegral;
     }
 
+    public void setIntegratorZone(double iZone) {
+        m_kiZone = iZone; 
+    }
+
     /**
      * Sets the error which is considered tolerable for use with atSetpoint().
      *
@@ -325,12 +327,21 @@ public class PIDController implements Sendable, AutoCloseable {
         m_positionError = getContinuousError(m_setpoint - measurement);
         m_velocityError = (m_positionError - m_prevError) / m_period;
 
-        if (m_Ki != 0) {
-            m_totalError = MathUtil.clamp(m_totalError + m_positionError * m_period, m_minimumIntegral / m_Ki,
-                    m_maximumIntegral / m_Ki);
+        // if (m_Ki != 0) {
+        //     m_totalError = MathUtil.clamp(m_totalError + m_positionError * m_period, m_minimumIntegral / m_Ki,
+        //             m_maximumIntegral / m_Ki);
+        // }
+        if (m_kiZone == 0 || Math.abs(m_positionError) <= m_kiZone)
+        {
+            m_totalI += m_Ki * m_positionError;
+            m_totalI = MathUtil.clamp(m_totalI, m_minimumIntegral, m_maximumIntegral);
+        }
+        else
+        {
+            m_totalI=0;
         }
 
-        return m_Kp * m_positionError + m_Ki * m_totalError + m_Kd * m_velocityError;
+        return m_Kp * m_positionError + m_totalI + m_Kd * m_velocityError;
     }
 
     /**
@@ -338,7 +349,7 @@ public class PIDController implements Sendable, AutoCloseable {
      */
     public void reset() {
         m_prevError = 0;
-        m_totalError = 0;
+        m_totalI = 0;
     }
 
     @Override

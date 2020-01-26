@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -32,6 +34,7 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.VisionTrack;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.utilities.Constants;
 
@@ -58,6 +61,9 @@ public class RobotContainer {
       (byte) 0x4e };
   private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe5,
       0x18 };
+
+  public static final NetworkTableInstance table = NetworkTableInstance.getDefault();
+  public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("Microsoft LifeCam HD-3000");
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -106,11 +112,12 @@ public class RobotContainer {
       robotConstants = new CompConstants();
     }
 
-    // Configure the button bindings
-    configureButtonBindings();
     m_robotDrive = new DriveSubsystem();
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
+    // Configure the button bindings
+    configureButtonBindings();
+   
   }
 
   /**
@@ -121,6 +128,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_driverController = new XboxController(robotConstants.getOIConstants().getkDriverControllerPort());
+    JoystickButton button = new JoystickButton(m_driverController, 1);
+    button.toggleWhenPressed(new VisionTrack(m_robotDrive));
   }
 
   /**
@@ -176,16 +185,18 @@ public class RobotContainer {
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(12, 12), new Translation2d(24, -12)),
+        List.of(),
         // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(36, 0, new Rotation2d(0)), config);
+        //new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
+        new Pose2d(0,36, Rotation2d.fromDegrees(90)), config);
 
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
         robotConstants.getDriveConstants().getkDriveKinematics(),
 
         // Position controllers
-        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0, 0), new PIDController(robotConstants.getAutoConstants().getkPYController(), 0, 0),
+        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0, 0), 
+        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0, 0),
         new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0, robotConstants.getAutoConstants().getkThetaControllerConstraints()),
 
         m_robotDrive::setModuleStates,

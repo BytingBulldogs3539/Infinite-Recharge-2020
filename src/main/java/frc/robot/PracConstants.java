@@ -23,19 +23,22 @@ import frc.robot.utilities.Constants;
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the constants are needed, to reduce verbosity.
  */
-public final class PracConstants extends Constants {
+public final class PracConstants extends Constants
+{
 
     // TODO: Figure out real IDs
-    public class RobotIDConstants extends Constants.RobotIDConstants {
+    public class RobotIDConstants extends Constants.RobotIDConstants
+    {
         @Override
-        public int getIntakeMotorID() {
+        public int getIntakeMotorID()
+        {
             return 73;
         }
 
         @Override
         public int getElevatorBaseMotorID()
         {
-            // TODO: Real ID
+            // TODO: Read ID
             return 0;
         }
 
@@ -323,19 +326,19 @@ public final class PracConstants extends Constants {
     }
     public class AutoConstants extends Constants.AutoConstants {
         public double getkMaxSpeedINPerSecond() {
-            return 3;
+            return 160.44;
         }
 
         public double getkMaxAccelerationINPerSecondSquared() {
-            return 3;
+            return 160.44*1.5;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecond() {
-            return Math.PI;
+            return 10.6;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecondSquared() {
-            return Math.PI;
+            return 10.6;
         }
 
         public double getkPXController() {

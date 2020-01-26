@@ -238,7 +238,7 @@ public final class CompConstants extends Constants
         }
 
         public boolean getkGyroReversed() {
-            return false;
+            return true;
         }
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
@@ -326,31 +326,31 @@ public final class CompConstants extends Constants
     }
     public class AutoConstants extends Constants.AutoConstants {
         public double getkMaxSpeedINPerSecond() {
-            return 3;
+            return 160.44;
         }
 
         public double getkMaxAccelerationINPerSecondSquared() {
-            return 3;
+            return 20;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecond() {
-            return Math.PI;
+            return 10.6;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecondSquared() {
-            return Math.PI;
+            return 10.6;
         }
 
         public double getkPXController() {
-            return 1;
+            return .001;
         }
 
         public double getkPYController() {
-            return 1;
+            return .001;
         }
 
         public double getkPThetaController() {
-            return 1;
+            return 1.6;
         }
 
         // Constraint for the motion profilied robot angle controller

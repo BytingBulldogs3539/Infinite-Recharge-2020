@@ -35,7 +35,9 @@ public class DriveCommand extends CommandBase {
 
     subsystem.drive(RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
         RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
-        RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), false);
+        RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), true);
+
+        System.out.println(subsystem.getPose()+" Real Angle: "+subsystem.getPigeonAngle());
 
   }
 
