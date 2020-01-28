@@ -27,7 +27,8 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+//import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.utilities.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.io.IOException;
@@ -180,16 +181,19 @@ public class RobotContainer {
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(robotConstants.getDriveConstants().getkDriveKinematics());
 
+    
+    //config.setReversed(true);
     // An example trajectory to follow. All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(),
+        List.of(new Translation2d(-36, -36),
+        new Translation2d(0, -36)),
         // End 3 meters straight ahead of where we started, facing forward
         //new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-        new Pose2d(0,36, Rotation2d.fromDegrees(90)), config);
-
+        new Pose2d(0,0, Rotation2d.fromDegrees(90)), config);
+        
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
         robotConstants.getDriveConstants().getkDriveKinematics(),
@@ -204,6 +208,7 @@ public class RobotContainer {
         m_robotDrive
 
     );
+    
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));

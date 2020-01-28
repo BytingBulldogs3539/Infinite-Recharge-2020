@@ -173,35 +173,35 @@ public final class CompConstants extends Constants
         }
 
         public boolean getkFrontLeftDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearLeftDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontRightDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearRightDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontLeftDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearLeftDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontRightDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearRightDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontLeftTurningReversed() {

@@ -47,13 +47,14 @@ public class DriveSubsystem extends SubsystemBase {
   private final PigeonIMU m_gyro = new PigeonIMU(RobotContainer.robotConstants.getDriveConstants().getkPigeonID());
 
   // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(), getAngle());
+  SwerveDriveOdometry m_odometry;
 
   /**
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
     m_gyro.setYaw(0);
+    m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(), getAngle());
   }
 
   /**

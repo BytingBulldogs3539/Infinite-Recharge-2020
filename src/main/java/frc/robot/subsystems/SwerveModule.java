@@ -102,7 +102,7 @@ public class SwerveModule {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-        m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? 1 : -1) * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
+        m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1) * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
         new Rotation2d(getAngle()));
   }
 
