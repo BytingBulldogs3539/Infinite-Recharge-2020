@@ -173,35 +173,35 @@ public final class CompConstants extends Constants
         }
 
         public boolean getkFrontLeftDriveEncoderReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearLeftDriveEncoderReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontRightDriveEncoderReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearRightDriveEncoderReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontLeftDriveReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearLeftDriveReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontRightDriveReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearRightDriveReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontLeftTurningReversed() {
@@ -238,7 +238,7 @@ public final class CompConstants extends Constants
         }
 
         public boolean getkGyroReversed() {
-            return true;
+            return false;
         }
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
@@ -330,7 +330,7 @@ public final class CompConstants extends Constants
         }
 
         public double getkMaxAccelerationINPerSecondSquared() {
-            return 20;
+            return 80;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecond() {
@@ -342,11 +342,19 @@ public final class CompConstants extends Constants
         }
 
         public double getkPXController() {
-            return .001;
+            return .076;
         }
 
         public double getkPYController() {
-            return .001;
+            return .076;
+        }
+
+        public double getkDXController() {
+            return .033;
+        }
+
+        public double getkDYController() {
+            return .033;
         }
 
         public double getkPThetaController() {

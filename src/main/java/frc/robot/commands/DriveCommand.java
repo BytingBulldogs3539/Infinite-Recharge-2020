@@ -33,11 +33,11 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
 
-    subsystem.drive(RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
-        RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
-        RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), true);
+    subsystem.drive(-RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
+        -RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
+        -RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), true);
 
-        System.out.println(subsystem.getPose()+" Real Angle: "+subsystem.getPigeonAngle());
+        System.out.println(subsystem.getHeading() + "   "+ subsystem.getAngle());
 
   }
 

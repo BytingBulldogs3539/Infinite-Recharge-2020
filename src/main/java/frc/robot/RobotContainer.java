@@ -47,7 +47,7 @@ import frc.robot.utilities.Constants;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive;
+  public final DriveSubsystem m_robotDrive;
 
   // The driver's controller
   public static XboxController m_driverController;
@@ -180,7 +180,7 @@ public class RobotContainer {
     robotConstants.getAutoConstants().getkMaxAccelerationINPerSecondSquared())
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(robotConstants.getDriveConstants().getkDriveKinematics());
-
+    //config.setReversed(true);
     
     //config.setReversed(true);
     // An example trajectory to follow. All units in meters.
@@ -188,19 +188,18 @@ public class RobotContainer {
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(-36, -36),
-        new Translation2d(0, -36)),
+        List.of(),
         // End 3 meters straight ahead of where we started, facing forward
         //new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-        new Pose2d(0,0, Rotation2d.fromDegrees(90)), config);
+        new Pose2d(50,50, Rotation2d.fromDegrees(90)), config);
         
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
         robotConstants.getDriveConstants().getkDriveKinematics(),
 
         // Position controllers
-        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0, 0), 
-        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0, 0),
+        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0, robotConstants.getAutoConstants().getkDXController()), 
+        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0, robotConstants.getAutoConstants().getkDYController()),
         new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0, robotConstants.getAutoConstants().getkThetaControllerConstraints()),
 
         m_robotDrive::setModuleStates,

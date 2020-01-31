@@ -172,6 +172,10 @@ public abstract class Constants {
 
         public abstract double getkPYController();
 
+        public abstract double getkDXController();
+
+        public abstract double getkDYController();
+
         public abstract double getkPThetaController();
 
         public abstract TrapezoidProfile.Constraints getkThetaControllerConstraints();

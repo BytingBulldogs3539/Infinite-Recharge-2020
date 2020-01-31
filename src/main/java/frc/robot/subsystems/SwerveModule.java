@@ -24,14 +24,14 @@ import frc.robot.RobotContainer;
 
 public class SwerveModule {
   public String name;
-  private final CANSparkMax m_driveMotor;
-  private final CANSparkMax m_turningMotor;
+  public final CANSparkMax m_driveMotor;
+  public final CANSparkMax m_turningMotor;
 
   private final boolean driveEncoderReversed;
 
   private final CANEncoder m_driveEncoder;
 
-  private final Encoder m_turningEncoder;
+  public final Encoder m_turningEncoder;
 
   private final PIDController m_drivePIDController = new PIDController(RobotContainer.robotConstants.getModuleConstants().getkPModuleDriveController(), 0, 0);
 
@@ -61,7 +61,7 @@ public class SwerveModule {
     m_turningMotor.setInverted(reverseTurn);
 
     m_driveMotor.setIdleMode(IdleMode.kBrake);
-    m_turningMotor.setIdleMode(IdleMode.kBrake);
+    m_turningMotor.setIdleMode(IdleMode.kCoast);
 
 
 
@@ -102,7 +102,7 @@ public class SwerveModule {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-        m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1) * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
+      getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
         new Rotation2d(getAngle()));
   }
 
@@ -115,10 +115,9 @@ public class SwerveModule {
     // Calculate the drive output from the drive PID controller.
     state = optimizeModuleAngle(state, getAngle());
 
-    final var driveOutput = m_drivePIDController.calculate(m_driveEncoder.getVelocity()
-        * ((driveEncoderReversed) ? 1 : -1) * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
+    final var driveOutput = m_drivePIDController.calculate(getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
         state.speedMetersPerSecond);
-    SmartDashboard.putNumber("Current Speed", m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? 1 : -1)
+    SmartDashboard.putNumber("Current Speed", getDriveVel()
         * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps());
     SmartDashboard.putNumber("Drive Speed", state.speedMetersPerSecond);
 
@@ -143,6 +142,15 @@ public class SwerveModule {
   public void resetEncoders() {
     m_driveEncoder.setPosition(0);
     m_turningEncoder.reset();
+  }
+
+  public double getDrivePos()
+  {
+    return m_driveMotor.getEncoder().getPosition()* ((driveEncoderReversed) ? -1 : 1);
+  }
+  public double getDriveVel()
+  {
+    return m_driveEncoder.getVelocity()* ((driveEncoderReversed) ? -1 : 1);
   }
 
   public double getAngle() {

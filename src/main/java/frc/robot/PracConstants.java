@@ -173,35 +173,35 @@ public final class PracConstants extends Constants
         }
 
         public boolean getkFrontLeftDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearLeftDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontRightDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearRightDriveEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontLeftDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearLeftDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontRightDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkRearRightDriveReversed() {
-            return true;
+            return false;
         }
 
         public boolean getkFrontLeftTurningReversed() {
@@ -238,7 +238,7 @@ public final class PracConstants extends Constants
         }
 
         public boolean getkGyroReversed() {
-            return false;
+            return true;
         }
 
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
@@ -330,7 +330,7 @@ public final class PracConstants extends Constants
         }
 
         public double getkMaxAccelerationINPerSecondSquared() {
-            return 160.44*1.5;
+            return 80;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecond() {
@@ -342,15 +342,23 @@ public final class PracConstants extends Constants
         }
 
         public double getkPXController() {
-            return 1;
+            return .076;
         }
 
         public double getkPYController() {
-            return 1;
+            return .076;
+        }
+
+        public double getkDXController() {
+            return .033;
+        }
+
+        public double getkDYController() {
+            return .033;
         }
 
         public double getkPThetaController() {
-            return 1;
+            return 1.6;
         }
 
         // Constraint for the motion profilied robot angle controller

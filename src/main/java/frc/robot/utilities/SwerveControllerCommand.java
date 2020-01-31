@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -118,7 +119,17 @@ public class SwerveControllerCommand extends CommandBase {
     var desiredState = m_trajectory.sample(curTime);
     var desiredPose = desiredState.poseMeters;
 
-    var poseError = m_pose.get().relativeTo(desiredPose);
+    SmartDashboard.putNumber("Expected X", desiredPose.getTranslation().getX());
+    SmartDashboard.putNumber("Expected Y", desiredPose.getTranslation().getY());
+
+    SmartDashboard.putNumber("Real X", m_pose.get().getTranslation().getX());
+    SmartDashboard.putNumber("Real Y", m_pose.get().getTranslation().getY());
+
+    var poseError = desiredPose.relativeTo(m_pose.get());
+
+    SmartDashboard.putNumber("Error X", poseError.getTranslation().getX());
+    
+    SmartDashboard.putNumber("Error Y", poseError.getTranslation().getY());
 
     double targetXVel = m_xController.calculate(
         m_pose.get().getTranslation().getX(),

@@ -31,7 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningReversed());
 
-  private final SwerveModule m_frontRight = new SwerveModule("Front Right Module",
+  public final SwerveModule m_frontRight = new SwerveModule("Front Right Module",
   RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningMotorPort(),
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveReversed(),
@@ -64,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Rotation2d getAngle() {
     // Negating the angle because WPILib gyros are CW positive.
-    return Rotation2d.fromDegrees(getPigeonAngle() * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? 1.0 : -1.0));  }
+    return Rotation2d.fromDegrees(getPigeonAngle());  }
 
   @Override
   public void periodic() {
@@ -149,6 +149,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
     m_rearRight.setDesiredState(desiredStates[3]);
+    System.out.println(desiredStates[0].angle);
   }
 
   /**
@@ -172,7 +173,7 @@ public class DriveSubsystem extends SubsystemBase {
   {
     double[] ypr = new double[3];
     m_gyro.getYawPitchRoll(ypr);
-    return ypr[0];
+    return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
   }
 
   /**
@@ -182,7 +183,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getHeading() {
     
-    return Math.IEEEremainder(getPigeonAngle(), 360) * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
+    return Math.IEEEremainder(getPigeonAngle(), 360);
   }
 
   // The pigeon does not return a rate and it does'nt seem to need it...
