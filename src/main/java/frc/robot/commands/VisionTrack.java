@@ -29,7 +29,7 @@ public class VisionTrack extends PIDCommand {
         // The controller that the command will use
         new PIDController(.035, 0.001, 0),
         // This should return the measurement
-        ()->VisionTrack.getVision(),
+        ()->subsystem.getVisionAngle(),
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
@@ -50,15 +50,7 @@ public class VisionTrack extends PIDCommand {
 
 
   }
-  public static double getVision()
-  {
-    double value = RobotContainer.myCam.getEntry("yaw").getDouble(0);
-    if(!RobotContainer.myCam.getEntry("is_valid").getBoolean(false))
-    {
-      value = 0;
-    }
-    return value;
-  }
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

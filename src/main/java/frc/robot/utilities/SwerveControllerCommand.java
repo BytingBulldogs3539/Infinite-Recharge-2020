@@ -49,6 +49,9 @@ public class SwerveControllerCommand extends CommandBase {
   private final PIDController m_yController;
   private final ProfiledPIDController m_thetaController;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
+  private final Supplier<Double> m_targetSupplier;
+  private final boolean m_shouldVisionTrack;
+  private final Supplier<Boolean> m_targetIsAvail;
 
   /**
    * Constructs a new SwerveControllerCommand that when executed will follow the provided
@@ -85,6 +88,9 @@ public class SwerveControllerCommand extends CommandBase {
                                ProfiledPIDController thetaController,
 
                                Consumer<SwerveModuleState[]> outputModuleStates,
+                               Supplier<Boolean> targetIsAvail,
+                               Supplier<Double> targetSupplier,
+                               Boolean shouldVisionTrack,
                                Subsystem... requirements) {
     m_trajectory = requireNonNullParam(trajectory, "trajectory", "SwerveControllerCommand");
     m_pose = requireNonNullParam(pose, "pose", "SwerveControllerCommand");
@@ -99,6 +105,13 @@ public class SwerveControllerCommand extends CommandBase {
 
     m_outputModuleStates = requireNonNullParam(outputModuleStates,
       "frontLeftOutput", "SwerveControllerCommand");
+
+      m_targetIsAvail = requireNonNullParam(targetIsAvail,
+      "targetIsAvail", "SwerveControllerCommand");
+      m_targetSupplier = requireNonNullParam(targetSupplier,
+      "targetSuplier", "SwerveControllerCommand");
+      m_shouldVisionTrack = requireNonNullParam(shouldVisionTrack,
+      "shouldVisionTrack", "SwerveControllerCommand");
     addRequirements(requirements);
   }
 
@@ -141,9 +154,31 @@ public class SwerveControllerCommand extends CommandBase {
 
     // The robot will go to the desired rotation of the final pose in the trajectory,
     // not following the poses at individual states.
-    double targetAngularVel = m_thetaController.calculate(
-        m_pose.get().getRotation().getRadians(),
-        m_finalPose.getRotation().getRadians());
+    double targetAngularVel;
+    System.out.println(m_shouldVisionTrack + " " +m_targetIsAvail.get());
+    if(m_shouldVisionTrack)
+    {
+      if(m_targetIsAvail.get())
+      {
+        targetAngularVel =  m_thetaController.calculate(
+         m_targetSupplier.get(),
+          0);
+          System.out.println(targetAngularVel);
+      }
+      else
+      {
+        targetAngularVel = m_thetaController.calculate(
+          m_pose.get().getRotation().getRadians(),
+          m_finalPose.getRotation().getRadians());
+      }
+    }
+    else
+    {
+      targetAngularVel = m_thetaController.calculate(
+          m_pose.get().getRotation().getRadians(),
+          m_finalPose.getRotation().getRadians());
+    }
+    
 
     double vRef = desiredState.velocityMetersPerSecond;
 

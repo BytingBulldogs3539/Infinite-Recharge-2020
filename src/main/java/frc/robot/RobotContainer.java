@@ -63,8 +63,6 @@ public class RobotContainer {
   private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe5,
       0x18 };
 
-  public static final NetworkTableInstance table = NetworkTableInstance.getDefault();
-  public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("Microsoft LifeCam HD-3000");
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -191,7 +189,7 @@ public class RobotContainer {
         List.of(),
         // End 3 meters straight ahead of where we started, facing forward
         //new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-        new Pose2d(50,50, Rotation2d.fromDegrees(90)), config);
+        new Pose2d(0,-75, Rotation2d.fromDegrees(0)), config);
         
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
@@ -203,6 +201,12 @@ public class RobotContainer {
         new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0, robotConstants.getAutoConstants().getkThetaControllerConstraints()),
 
         m_robotDrive::setModuleStates,
+
+        m_robotDrive::getVisionSeeing,
+
+        m_robotDrive::getVisionAngle,
+
+        true,
 
         m_robotDrive
 

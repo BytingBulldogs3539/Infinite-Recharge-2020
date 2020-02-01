@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
@@ -48,6 +50,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
+
+  public static final NetworkTableInstance table = NetworkTableInstance.getDefault();
+  public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("Microsoft LifeCam HD-3000");
 
   /**
    * Creates a new DriveSubsystem.
@@ -149,7 +154,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
     m_rearRight.setDesiredState(desiredStates[3]);
-    System.out.println(desiredStates[0].angle);
   }
 
   /**
@@ -184,6 +188,21 @@ public class DriveSubsystem extends SubsystemBase {
   public double getHeading() {
     
     return Math.IEEEremainder(getPigeonAngle(), 360);
+  }
+
+  public boolean getVisionSeeing()
+  {
+    if(myCam.getEntry("isValid").getBoolean(false))
+    {
+      return true;
+    } 
+    return false;
+  }
+
+  public double getVisionAngle()
+  {
+    double value = Math.toRadians(myCam.getEntry("targetYaw").getDouble(0));
+    return value;
   }
 
   // The pigeon does not return a rate and it does'nt seem to need it...

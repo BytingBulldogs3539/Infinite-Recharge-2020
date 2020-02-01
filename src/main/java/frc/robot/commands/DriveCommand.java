@@ -37,7 +37,6 @@ public class DriveCommand extends CommandBase {
         -RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
         -RobotContainer.m_driverController.getX(GenericHID.Hand.kRight), true);
 
-        System.out.println(subsystem.getHeading() + "   "+ subsystem.getAngle());
 
   }
 

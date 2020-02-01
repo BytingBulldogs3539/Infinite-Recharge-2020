@@ -330,7 +330,7 @@ public final class CompConstants extends Constants
         }
 
         public double getkMaxAccelerationINPerSecondSquared() {
-            return 80;
+            return 20;
         }
 
         public double getkMaxAngularSpeedRadiansPerSecond() {
