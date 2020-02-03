@@ -35,8 +35,11 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionTrack;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utilities.Constants;
 
 /*
@@ -48,9 +51,11 @@ import frc.robot.utilities.Constants;
 public class RobotContainer {
   // The robot's subsystems
   public final DriveSubsystem m_robotDrive;
-
+  public final ShooterSubsystem m_ShooterSubsystem;
+  public final IntakeSubsystem m_IntakeSubsystem;
   // The driver's controller
   public static XboxController m_driverController;
+  public static XboxController m_opController;
 
   // The constants of the robot
   public static Constants robotConstants;
@@ -112,6 +117,8 @@ public class RobotContainer {
     }
 
     m_robotDrive = new DriveSubsystem();
+    m_ShooterSubsystem = new ShooterSubsystem();
+    m_IntakeSubsystem = new IntakeSubsystem();
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
@@ -127,8 +134,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_driverController = new XboxController(robotConstants.getOIConstants().getkDriverControllerPort());
+    m_opController = new XboxController(robotConstants.getOIConstants().getkOpControllerPort());
     JoystickButton button = new JoystickButton(m_driverController, 1);
     button.toggleWhenPressed(new VisionTrack(m_robotDrive));
+    JoystickButton buttonb = new JoystickButton(m_driverController, 1);
+    buttonb.whenPressed(new ShooterCommand(m_ShooterSubsystem, 5000));
   }
 
   /**

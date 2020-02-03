@@ -7,13 +7,24 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class BallIndexerSubsystem extends SubsystemBase {
+  VictorSPX ballIndexerSpx = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
+
   /**
    * Creates a new BallIndexerSubsystem.
    */
   public BallIndexerSubsystem() {
+  }
+
+  public void setMotorPower(double speed){
+    ballIndexerSpx.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

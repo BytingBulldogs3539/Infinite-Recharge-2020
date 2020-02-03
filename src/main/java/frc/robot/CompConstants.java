@@ -57,6 +57,13 @@ public final class CompConstants extends Constants
         }
 
         @Override
+        public int getIndexMotorID()
+        {
+            // TODO: Real ID
+            return 0;
+        }
+
+        @Override
         public int getClimbMotorAID()
         {
             // TODO: Real ID
@@ -321,7 +328,9 @@ public final class CompConstants extends Constants
     public class OIConstants extends Constants.OIConstants {
         public int getkDriverControllerPort() {
             return 0;
-
+        }
+        public int getkOpControllerPort() {
+            return 1;
         }
     }
     public class AutoConstants extends Constants.AutoConstants {
@@ -366,6 +375,33 @@ public final class CompConstants extends Constants
             return new TrapezoidProfile.Constraints(getkMaxAngularSpeedRadiansPerSecond(), getkMaxAngularSpeedRadiansPerSecondSquared());
         }
     }
+    public class ShooterConstants extends Constants.ShooterConstants{
+
+        @Override
+        public double getkP() {
+            // TODO tune values
+            return 0;
+        }
+
+        @Override
+        public double getkI() {
+            // TODO tune values
+            return 0;
+        }
+
+        @Override
+        public double getkD() {
+            // TODO tune values
+            return 0;
+        }
+
+        @Override
+        public double getkF() {
+            // TODO tune values
+            return 0;
+        }
+        
+    }
 
     private RobotIDConstants robotIDConstants = new RobotIDConstants();
 
@@ -376,6 +412,8 @@ public final class CompConstants extends Constants
     private OIConstants robotOIConstants = new OIConstants();
 
     private AutoConstants robotAutoConstants = new AutoConstants();
+
+    private ShooterConstants robotShooterConstants = new ShooterConstants();
 
     @Override
     public frc.robot.utilities.Constants.RobotIDConstants getRobotIDConstants() {
@@ -400,6 +438,11 @@ public final class CompConstants extends Constants
     @Override
     public frc.robot.utilities.Constants.AutoConstants getAutoConstants() {
         return robotAutoConstants;
+    }
+
+    @Override
+    public frc.robot.utilities.Constants.ShooterConstants getShooterConstants() {
+        return robotShooterConstants;
     }
 
 }
