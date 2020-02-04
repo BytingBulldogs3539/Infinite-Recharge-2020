@@ -11,11 +11,16 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class ShooterSubsystem extends SubsystemBase {
+
+  AnalogInput analog = new AnalogInput(RobotContainer.robotConstants.getRobotIDConstants().getShooterPotentiometerID());
+  Servo servo = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoID());
 
   // Shooter motor
   TalonFX shooterMotor = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getShooterMotorID());
@@ -58,6 +63,23 @@ public class ShooterSubsystem extends SubsystemBase {
   //     v Should not be void
   public double getVelocity() {
     return shooterMotor.getSelectedSensorVelocity()/2048.0*600.0;
+  }
+
+  public double getAnalog() {
+    return analog.getValue();
+  }
+  
+  public double getSetpoint() {
+    // TODO: change to wanted angle
+    return SmartDashboard.getNumber("Servo Target", 1500);
+  }
+
+  public void setServoSpeed(double speed) {
+    servo.set(speed);
+  }
+
+  public double getDegrees() {
+    return (getAnalog() / (RobotContainer.robotConstants.getShooterConstants().getShooterABSEncoderLimit() / RobotContainer.robotConstants.getShooterConstants().getShooterServoDegreeTurnLimit())) / 4.0;
   }
 
   @Override

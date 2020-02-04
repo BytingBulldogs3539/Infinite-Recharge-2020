@@ -52,6 +52,9 @@ public abstract class Constants {
         public abstract int getSpinnerMotorID();
 
         public abstract I2C.Port getColorSensorPort();
+
+        public abstract int getShooterPotentiometerID();
+        public abstract int getShooterServoID();
     }
 
     public abstract class DriveConstants {
@@ -191,5 +194,8 @@ public abstract class Constants {
         public abstract double getkI();
         public abstract double getkD();
         public abstract double getkF();
+
+        public abstract double getShooterServoDegreeTurnLimit();
+        public abstract double getShooterABSEncoderLimit();
     }
 }

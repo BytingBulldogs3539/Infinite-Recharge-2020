@@ -92,6 +92,18 @@ public final class PracConstants extends Constants
         }
 
         @Override
+        public int getShooterServoID()
+        {
+            return 0;
+        }
+
+        @Override
+        public int getShooterPotentiometerID()
+        {
+            return 0;
+        }
+
+        @Override
         public Port getColorSensorPort()
         {
             return Port.kOnboard;
@@ -399,6 +411,18 @@ public final class PracConstants extends Constants
         public double getkF() {
             // TODO tune values
             return 0;
+        }
+
+        @Override
+        public double getShooterServoDegreeTurnLimit() {
+            // TODO figure out proper value
+            return 295.0;
+        }
+
+        @Override
+        public double getShooterABSEncoderLimit() {
+            // TODO figure out proper value
+            return 3993.0;
         }
         
     }

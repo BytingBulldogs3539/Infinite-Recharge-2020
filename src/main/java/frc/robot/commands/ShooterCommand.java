@@ -23,7 +23,7 @@ public class ShooterCommand extends CommandBase {
 
   public ShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(subsystem, indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
@@ -38,6 +38,7 @@ public class ShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println(subsystem.getDegrees());
     if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >= targetRPM+100)){
       indexerSubsystem.setMotorPower(1);
     };
@@ -46,6 +47,7 @@ public class ShooterCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    subsystem.setVelocity(0);
   }
 
   // Returns true when the command should end.

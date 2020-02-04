@@ -37,6 +37,7 @@ import java.net.NetworkInterface;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionTrack;
+import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -53,6 +54,7 @@ public class RobotContainer {
   public final DriveSubsystem m_robotDrive;
   public final ShooterSubsystem m_ShooterSubsystem;
   public final IntakeSubsystem m_IntakeSubsystem;
+  public final BallIndexerSubsystem m_BallIndexerSubsystem;
   // The driver's controller
   public static XboxController m_driverController;
   public static XboxController m_opController;
@@ -119,6 +121,7 @@ public class RobotContainer {
     m_robotDrive = new DriveSubsystem();
     m_ShooterSubsystem = new ShooterSubsystem();
     m_IntakeSubsystem = new IntakeSubsystem();
+    m_BallIndexerSubsystem = new BallIndexerSubsystem();
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
@@ -138,7 +141,7 @@ public class RobotContainer {
     JoystickButton button = new JoystickButton(m_driverController, 1);
     button.toggleWhenPressed(new VisionTrack(m_robotDrive));
     JoystickButton buttonb = new JoystickButton(m_driverController, 1);
-    buttonb.whenPressed(new ShooterCommand(m_ShooterSubsystem, 5000));
+    buttonb.whenPressed(new ShooterCommand(m_ShooterSubsystem, 5000, m_BallIndexerSubsystem));
   }
 
   /**
