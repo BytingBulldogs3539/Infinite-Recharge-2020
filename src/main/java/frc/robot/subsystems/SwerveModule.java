@@ -7,12 +7,15 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.utilities.PIDController;
 import frc.robot.utilities.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -31,7 +34,8 @@ public class SwerveModule {
 
   private final CANEncoder m_driveEncoder;
 
-  public final Encoder m_turningEncoder;
+  public final CANCoder m_turningEncoder;
+  private final CANCoderConfiguration m_turningEncoderConfiguration = new CANCoderConfiguration();
 
   private final PIDController m_drivePIDController = new PIDController(RobotContainer.robotConstants.getModuleConstants().getkPModuleDriveController(), 0, 0);
 
@@ -47,7 +51,7 @@ public class SwerveModule {
    * @param driveMotorChannel   ID for the drive motor.
    * @param turningMotorChannel ID for the turning motor.
    */
-  public SwerveModule(String name, int driveMotorChannel, int turningMotorChannel, int[] turningEncoderPorts,
+  public SwerveModule(String name, int driveMotorChannel, int turningMotorChannel, CANCoder turningEncoderPort, double magnetOffsetDegrees,
       boolean driveEncoderReversed, boolean turningEncoderReversed, boolean reverseDrive, boolean reverseTurn) {
     this.name = name;
     // Create two CANSparkMax Motor controllers assuming brushless mode that control
@@ -69,18 +73,18 @@ public class SwerveModule {
     this.m_driveEncoder = m_driveMotor.getEncoder();
 
     // Create and store away the turning motor.
-    this.m_turningEncoder = new Encoder(turningEncoderPorts[0], turningEncoderPorts[1]);
+    this.m_turningEncoder = turningEncoderPort;//new CANCoder(turningEncoderPort);
 
     // Set whether drive encoder should be reversed or not
     this.driveEncoderReversed = driveEncoderReversed;
 
-    // Set the distance (in this case, angle) per pulse for the turning encoder.
-    // This is the the angle through an entire rotation (2 * wpi::math::pi)
-    // divided by the encoder resolution.
-    m_turningEncoder.setDistancePerPulse(RobotContainer.robotConstants.getModuleConstants().getkTurningEncoderDistancePerPulse());
-
     // Set whether turning encoder should be reversed or not.
-    m_turningEncoder.setReverseDirection(turningEncoderReversed);
+    m_turningEncoderConfiguration.sensorDirection = turningEncoderReversed;
+    m_turningEncoderConfiguration.magnetOffsetDegrees = magnetOffsetDegrees;
+    m_turningEncoderConfiguration.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+    m_turningEncoderConfiguration.absoluteSensorRange = AbsoluteSensorRange.Signed_PlusMinus180;
+
+    this.m_turningEncoder.configAllSettings(m_turningEncoderConfiguration);
 
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous.
@@ -91,8 +95,6 @@ public class SwerveModule {
     SendableRegistry.setName(m_turningPIDController, String.format("%s %s", name, "Turning PID Controller"));
     SendableRegistry.setName(m_drivePIDController, String.format("%s %s", name, "Drive PID Controller"));
 
-    // Encoders.
-    SendableRegistry.setName(m_turningEncoder, String.format("%s %s", name, "Turning Encoder"));
   }
 
   /**
@@ -141,7 +143,7 @@ public class SwerveModule {
 
   public void resetEncoders() {
     m_driveEncoder.setPosition(0);
-    m_turningEncoder.reset();
+    m_turningEncoder.setPosition(0);
   }
 
   public double getDrivePos()
@@ -154,7 +156,7 @@ public class SwerveModule {
   }
 
   public double getAngle() {
-    double enc = m_turningEncoder.getDistance();
+    double enc = Math.toRadians(m_turningEncoder.getAbsolutePosition());
     // double angle = 0;
     // if (Math.sin(enc) < 0)
     // angle = -Math.acos(Math.cos(enc));

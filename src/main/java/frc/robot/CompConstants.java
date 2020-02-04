@@ -101,7 +101,7 @@ public final class CompConstants extends Constants
         }
 
         public int getkFrontRightDriveMotorPort() {
-            return 4;
+            return 3;
         }
 
         public int getkRearRightDriveMotorPort() {
@@ -117,7 +117,7 @@ public final class CompConstants extends Constants
         }
 
         public int getkFrontRightTurningMotorPort() {
-            return 3;
+            return 4;
         }
 
         public int getkRearRightTurningMotorPort() {
@@ -157,19 +157,19 @@ public final class CompConstants extends Constants
         }
 
         public boolean getkFrontLeftTurningEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearLeftTurningEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontRightTurningEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkRearRightTurningEncoderReversed() {
-            return false;
+            return true;
         }
 
         public boolean getkFrontLeftDriveEncoderReversed() {

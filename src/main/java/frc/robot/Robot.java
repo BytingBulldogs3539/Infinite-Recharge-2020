@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     m_robotContainer.m_robotDrive.m_frontRight.m_turningMotor.set(.1);
-    System.out.println(m_robotContainer.m_robotDrive.m_frontRight.m_turningEncoder.getDistance());
+    System.out.println(m_robotContainer.m_robotDrive.m_frontRight.m_turningEncoder.getPosition());
 
   }
 }

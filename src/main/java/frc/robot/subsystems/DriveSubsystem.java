@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -23,25 +24,27 @@ import frc.robot.RobotContainer;
 @SuppressWarnings("PMD.ExcessiveImports")
 public class DriveSubsystem extends SubsystemBase {
   // Robot swerve modules
+public CANCoder encoder = new CANCoder(15);
+
   public final SwerveModule m_frontLeft = new SwerveModule("Front Left Module", RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveMotorPort(),
-  RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderPorts(),
+  RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningMotorPort(), encoder, 211.113,
   RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderReversed(),
   RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningReversed());
 
   private final SwerveModule m_rearLeft = new SwerveModule("Back Left Module", RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveMotorPort(),
-  RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderPorts(),
+  RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningMotorPort(),encoder, 211.113,
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningReversed());
 
   public final SwerveModule m_frontRight = new SwerveModule("Front Right Module",
   RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveEncoderReversed(),
+  encoder, 211.113, RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningReversed());
 
   private final SwerveModule m_rearRight = new SwerveModule("Back Right Module",
   RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveEncoderReversed(),
+  encoder, 211.113, RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningReversed());
 
