@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
@@ -30,6 +31,9 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    subsystem.setPercentOutput(RobotContainer.m_opController.getRawAxis(3)-(-RobotContainer.m_opController.getRawAxis(2)));
+    //the Right Trigger (3) minus the negative Left Trigger (2), giving ranges from -1 to 1
+
     // subsystem.drive(RobotContainer.m_driverController.get);
   }
 

@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
  */
 public abstract class Constants {
 
-    public RobotIDConstants robotIDConstants;
-    public DriveConstants robotDriveConstants;
-    public ModuleConstants robotModuleConstants;
-    public OIConstants robotOIConstants;
-    public AutoConstants robotAutoConstants;
+    private RobotIDConstants robotIDConstants;
+    private DriveConstants robotDriveConstants;
+    private ModuleConstants robotModuleConstants;
+    private OIConstants robotOIConstants;
+    private AutoConstants robotAutoConstants;
+    private ShooterConstants robotShooterConstants;
 
     public abstract RobotIDConstants getRobotIDConstants();
 
@@ -32,6 +33,8 @@ public abstract class Constants {
 
     public abstract AutoConstants getAutoConstants();
 
+    public abstract ShooterConstants getShooterConstants();
+
     public abstract class RobotIDConstants {
         public abstract int getIntakeMotorID();
 
@@ -39,6 +42,7 @@ public abstract class Constants {
         public abstract int getElevatorLiftMotorID();
 
         public abstract int getShooterMotorID();
+        public abstract int getIndexMotorID();
 
         public abstract int getClimbMotorAID();
         public abstract int getClimbMotorBID();
@@ -48,6 +52,9 @@ public abstract class Constants {
         public abstract int getSpinnerMotorID();
 
         public abstract I2C.Port getColorSensorPort();
+
+        public abstract int getShooterPotentiometerID();
+        public abstract int getShooterServoID();
     }
 
     public abstract class DriveConstants {
@@ -156,7 +163,7 @@ public abstract class Constants {
 
     public abstract class OIConstants {
         public abstract int getkDriverControllerPort();
-
+        public abstract int getkOpControllerPort();
     }
 
     public abstract class AutoConstants {
@@ -180,5 +187,15 @@ public abstract class Constants {
 
         public abstract TrapezoidProfile.Constraints getkThetaControllerConstraints();
 
+    }
+
+    public abstract class ShooterConstants{
+        public abstract double getkP();
+        public abstract double getkI();
+        public abstract double getkD();
+        public abstract double getkF();
+
+        public abstract double getShooterServoDegreeTurnLimit();
+        public abstract double getShooterABSEncoderLimit();
     }
 }
