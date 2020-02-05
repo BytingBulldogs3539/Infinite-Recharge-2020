@@ -8,23 +8,23 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class BallIndexerSubsystem extends SubsystemBase {
-  VictorSPX ballIndexerSpx = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
+  TalonSRX ballIndexerSrx = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
 
   /**
    * Creates a new BallIndexerSubsystem.
    */
   public BallIndexerSubsystem() {
+    ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIntakeMotorInverted());
   }
 
-  public void setMotorPower(double speed){
-    ballIndexerSpx.set(ControlMode.PercentOutput, speed);
+  public void setPercentOutput(double speed){
+    ballIndexerSrx.set(ControlMode.PercentOutput, speed);
   }
 
   @Override

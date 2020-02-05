@@ -7,6 +7,8 @@
 
 package frc.robot.utilities;
 
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
@@ -15,13 +17,6 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
  * An interface conta
  */
 public abstract class Constants {
-
-    private RobotIDConstants robotIDConstants;
-    private DriveConstants robotDriveConstants;
-    private ModuleConstants robotModuleConstants;
-    private OIConstants robotOIConstants;
-    private AutoConstants robotAutoConstants;
-    private ShooterConstants robotShooterConstants;
 
     public abstract RobotIDConstants getRobotIDConstants();
 
@@ -32,6 +27,10 @@ public abstract class Constants {
     public abstract OIConstants getOIConstants();
 
     public abstract AutoConstants getAutoConstants();
+
+    public abstract IntakeConstants getIntakeConstants();
+
+    public abstract BallIndexerConstants getBallIndexerConstants();
 
     public abstract ShooterConstants getShooterConstants();
 
@@ -189,13 +188,24 @@ public abstract class Constants {
 
     }
 
+    public abstract class IntakeConstants
+    {
+        public abstract MotorType getIntakeMotorType();
+        public abstract boolean getIntakeMotorInverted();
+    }
+
+    public abstract class BallIndexerConstants
+    {
+        public abstract boolean getIntakeMotorInverted();
+    }
+
     public abstract class ShooterConstants{
         public abstract double getkP();
         public abstract double getkI();
         public abstract double getkD();
         public abstract double getkF();
 
-        public abstract double getShooterServoDegreeTurnLimit();
-        public abstract double getShooterABSEncoderLimit();
+        public abstract double getPotOffset();
+		public abstract boolean getShooterMotorInverted();
     }
 }

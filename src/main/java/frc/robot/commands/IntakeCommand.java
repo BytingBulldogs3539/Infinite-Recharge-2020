@@ -31,10 +31,8 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subsystem.setPercentOutput(RobotContainer.m_opController.getRawAxis(3)-(-RobotContainer.m_opController.getRawAxis(2)));
-    //the Right Trigger (3) minus the negative Left Trigger (2), giving ranges from -1 to 1
-
-    // subsystem.drive(RobotContainer.m_driverController.get);
+    subsystem.setPercentOutput(RobotContainer.m_opController.getRightTrigger()-RobotContainer.m_opController.getLeftTrigger());
+    //the Right Trigger minus the negative Left Trigger, giving ranges from -1 to 1
   }
 
   // Called once the command ends or is interrupted.

@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +20,7 @@ import frc.robot.RobotContainer;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  AnalogInput analog = new AnalogInput(RobotContainer.robotConstants.getRobotIDConstants().getShooterPotentiometerID());
+  AnalogPotentiometer potentiometer = new AnalogPotentiometer(RobotContainer.robotConstants.getRobotIDConstants().getShooterPotentiometerID(), 67.5, RobotContainer.robotConstants.getShooterConstants().getPotOffset());
   Servo servo = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoID());
 
   // Shooter motor
@@ -30,16 +31,17 @@ public class ShooterSubsystem extends SubsystemBase {
    * Creates a new ShooterSubsystem.
    */
   public ShooterSubsystem() {
-    shooterMotor.setInverted(InvertType.InvertMotorOutput);
+    shooterMotor.setInverted(RobotContainer.robotConstants.getShooterConstants().getShooterMotorInverted());
     shooterMotor.config_kP(0, RobotContainer.robotConstants.getShooterConstants().getkP());
     shooterMotor.config_kI(0, RobotContainer.robotConstants.getShooterConstants().getkI());
     shooterMotor.config_kD(0, RobotContainer.robotConstants.getShooterConstants().getkD());
     shooterMotor.config_kF(0, RobotContainer.robotConstants.getShooterConstants().getkF());
+
   }
 
   /**
    * 
-   * @param speed
+   * @param speed a value between 1 (full forward) and -1 (full reverse)
    * 
    */
   public void setPercentOutput(double speed) {
@@ -48,7 +50,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   /**
    * Sets the motor RPM of the shooter
-   * @param velocity the motor RPM
+   * @param velocity the motor RPM (max motor rpm is about 5500)
    * 
    */
   public void setVelocity(double velocity) {
@@ -57,29 +59,24 @@ public class ShooterSubsystem extends SubsystemBase {
 
   /**
    * 
-   * Returns the current velocity of the motor.
+   * @return the current velocity of the motor in rpm.
    * 
    */
-  //     v Should not be void
   public double getVelocity() {
     return shooterMotor.getSelectedSensorVelocity()/2048.0*600.0;
   }
 
-  public double getAnalog() {
-    return analog.getValue();
+  public double getHoodAngle() {
+    return potentiometer.get();
   }
   
-  public double getSetpoint() {
+  public double setHoodAngle() {
     // TODO: change to wanted angle
     return SmartDashboard.getNumber("Servo Target", 1500);
   }
 
   public void setServoSpeed(double speed) {
     servo.set(speed);
-  }
-
-  public double getDegrees() {
-    return (getAnalog() / (RobotContainer.robotConstants.getShooterConstants().getShooterABSEncoderLimit() / RobotContainer.robotConstants.getShooterConstants().getShooterServoDegreeTurnLimit())) / 4.0;
   }
 
   @Override

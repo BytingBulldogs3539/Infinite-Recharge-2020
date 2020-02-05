@@ -7,21 +7,24 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.commands.IntakeCommand;
 
 public class IntakeSubsystem extends SubsystemBase {
 
   // Intake motor
-  VictorSPX intakeMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getIntakeMotorID());
+  CANSparkMax intakeMotor = new CANSparkMax(RobotContainer.robotConstants.getRobotIDConstants().getIntakeMotorID(), RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorType());
 
   /**
    * Creates a new IntakeSubsystem.
    */
   public IntakeSubsystem() {
+    intakeMotor.setInverted(RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorInverted());
+    setDefaultCommand(new IntakeCommand(this));
   }
 
   /**
@@ -30,7 +33,8 @@ public class IntakeSubsystem extends SubsystemBase {
    * 
    */
   public void setPercentOutput(double speed) {
-  intakeMotor.set(ControlMode.PercentOutput, speed);
+    //System.out.println(speed);
+    intakeMotor.set(speed);
   }
 
   @Override

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
@@ -32,7 +34,7 @@ public final class PracConstants extends Constants
         @Override
         public int getIntakeMotorID()
         {
-            return 73;
+            return 9;
         }
 
         @Override
@@ -53,14 +55,14 @@ public final class PracConstants extends Constants
         public int getShooterMotorID()
         {
             // TODO: Real ID
-            return 0;
+            return 16;
         }
 
         @Override
         public int getIndexMotorID()
         {
             // TODO: Real ID
-            return 0;
+            return 11;
         }
 
         @Override
@@ -110,153 +112,175 @@ public final class PracConstants extends Constants
         }
     }
 
-    public class DriveConstants extends Constants.DriveConstants {
-        public int getkFrontLeftDriveMotorPort() {
+    public class DriveConstants extends Constants.DriveConstants
+    {
+        public int getkFrontLeftDriveMotorPort()
+        {
             return 2;
         }
 
-        public int getkRearLeftDriveMotorPort() {
+        public int getkRearLeftDriveMotorPort()
+        {
             return 7;
         }
 
-        public int getkFrontRightDriveMotorPort() {
-            return 4;
-        }
-
-        public int getkRearRightDriveMotorPort() {
-            return 5;
-        }
-
-        public int getkFrontLeftTurningMotorPort() {
-            return 1;
-        }
-
-        public int getkRearLeftTurningMotorPort() {
-            return 8;
-        }
-
-        public int getkFrontRightTurningMotorPort() {
+        public int getkFrontRightDriveMotorPort()
+        {
             return 3;
         }
 
-        public int getkRearRightTurningMotorPort() {
+        public int getkRearRightDriveMotorPort()
+        {
+            return 5;
+        }
+
+        public int getkFrontLeftTurningMotorPort()
+        {
+            return 1;
+        }
+
+        public int getkRearLeftTurningMotorPort()
+        {
+            return 8;
+        }
+
+        public int getkFrontRightTurningMotorPort()
+        {
+            return 4;
+        }
+
+        public int getkRearRightTurningMotorPort()
+        {
             return 6;
         }
 
-        public int getkPigeonID() {
+        public int getkPigeonID()
+        {
             return 25;
         }
 
-        public int[] getkFrontLeftTurningEncoderPorts() {
-            return new int[] {
-                2,
-                3
-            };
+        public int[] getkFrontLeftTurningEncoderPorts()
+        {
+            return new int[] { 2, 3 };
         }
 
-        public int[] getkRearLeftTurningEncoderPorts() {
-            return new int[] {
-                4,
-                5
-            };
+        public int[] getkRearLeftTurningEncoderPorts()
+        {
+            return new int[] { 4, 5 };
         }
 
-        public int[] getkFrontRightTurningEncoderPorts() {
-            return new int[] {
-                0,
-                1
-            };
+        public int[] getkFrontRightTurningEncoderPorts()
+        {
+            return new int[] { 0, 1 };
         }
 
-        public int[] getkRearRightTurningEncoderPorts() {
-            return new int[] {
-                6,
-                7
-            };
+        public int[] getkRearRightTurningEncoderPorts()
+        {
+            return new int[] { 6, 7 };
         }
 
-        public boolean getkFrontLeftTurningEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkRearLeftTurningEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkFrontRightTurningEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkRearRightTurningEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkFrontLeftDriveEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkRearLeftDriveEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkFrontRightDriveEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkRearRightDriveEncoderReversed() {
-            return false;
-        }
-
-        public boolean getkFrontLeftDriveReversed() {
+        public boolean getkFrontLeftTurningEncoderReversed()
+        {
             return true;
         }
 
-        public boolean getkRearLeftDriveReversed() {
+        public boolean getkRearLeftTurningEncoderReversed()
+        {
             return true;
         }
 
-        public boolean getkFrontRightDriveReversed() {
+        public boolean getkFrontRightTurningEncoderReversed()
+        {
             return true;
         }
 
-        public boolean getkRearRightDriveReversed() {
+        public boolean getkRearRightTurningEncoderReversed()
+        {
             return true;
         }
 
-        public boolean getkFrontLeftTurningReversed() {
+        public boolean getkFrontLeftDriveEncoderReversed()
+        {
             return false;
         }
 
-        public boolean getkRearLeftTurningReversed() {
+        public boolean getkRearLeftDriveEncoderReversed()
+        {
             return false;
         }
 
-        public boolean getkFrontRightTurningReversed() {
+        public boolean getkFrontRightDriveEncoderReversed()
+        {
             return false;
         }
 
-        public boolean getkRearRightTurningReversed() {
+        public boolean getkRearRightDriveEncoderReversed()
+        {
             return false;
         }
 
-        public double getkTrackWidth() {
+        public boolean getkFrontLeftDriveReversed()
+        {
+            return true;
+        }
+
+        public boolean getkRearLeftDriveReversed()
+        {
+            return true;
+        }
+
+        public boolean getkFrontRightDriveReversed()
+        {
+            return true;
+        }
+
+        public boolean getkRearRightDriveReversed()
+        {
+            return true;
+        }
+
+        public boolean getkFrontLeftTurningReversed()
+        {
+            return false;
+        }
+
+        public boolean getkRearLeftTurningReversed()
+        {
+            return false;
+        }
+
+        public boolean getkFrontRightTurningReversed()
+        {
+            return false;
+        }
+
+        public boolean getkRearRightTurningReversed()
+        {
+            return false;
+        }
+
+        public double getkTrackWidth()
+        {
             return 30;
         }
 
         // Distance between centers of right and left wheels on robot
-        public double getkWheelBase() {
+        public double getkWheelBase()
+        {
             return 30;
         }
 
         // Distance between front and back wheels on robot
-        public SwerveDriveKinematics getkDriveKinematics() {
+        public SwerveDriveKinematics getkDriveKinematics()
+        {
             return new SwerveDriveKinematics(new Translation2d(getkWheelBase() / 2, getkTrackWidth() / 2),
-                new Translation2d(getkWheelBase() / 2, -getkTrackWidth() / 2),
-                new Translation2d(-getkWheelBase() / 2, getkTrackWidth() / 2),
-                new Translation2d(-getkWheelBase() / 2, -getkTrackWidth() / 2));
+                    new Translation2d(getkWheelBase() / 2, -getkTrackWidth() / 2),
+                    new Translation2d(-getkWheelBase() / 2, getkTrackWidth() / 2),
+                    new Translation2d(-getkWheelBase() / 2, -getkTrackWidth() / 2));
         }
 
-        public boolean getkGyroReversed() {
+        public boolean getkGyroReversed()
+        {
             return false;
         }
 
@@ -267,125 +291,177 @@ public final class PracConstants extends Constants
         // The RobotPy Characterization Toolsuite provides a convenient tool for
         // obtaining these
         // values for your robot.
-        public double getksVolts() {
+        public double getksVolts()
+        {
             return 1;
         }
 
-        public double getkvVoltSecondsPerMeter() {
+        public double getkvVoltSecondsPerMeter()
+        {
             return 0.8;
         }
 
-        public double getkaVoltSecondsSquaredPerMeter() {
+        public double getkaVoltSecondsSquaredPerMeter()
+        {
             return 0.15;
         }
 
-        public double getkMaxSpeedINPerSecond() {
+        public double getkMaxSpeedINPerSecond()
+        {
             return 160.44;
         }
 
-        public double getkMaxTurnSpeedRadPerSecond() {
+        public double getkMaxTurnSpeedRadPerSecond()
+        {
             return 10.6;
 
         }
     }
 
-    public class ModuleConstants extends Constants.ModuleConstants {
-        public double getkMaxModuleAngularSpeedRadiansPerSecond() {
+    public class ModuleConstants extends Constants.ModuleConstants
+    {
+        public double getkMaxModuleAngularSpeedRadiansPerSecond()
+        {
             return (50 * Math.PI);
         }
 
-        public double getkMaxModuleAngularAccelerationRadiansPerSecondSquared() {
+        public double getkMaxModuleAngularAccelerationRadiansPerSecondSquared()
+        {
             return (50 * Math.PI);
         }
 
-        public int getkTurningEncoderCPR() {
+        public int getkTurningEncoderCPR()
+        {
             return 1024;
         }
 
-        public int getkDriveEncoderCPR() {
+        public int getkDriveEncoderCPR()
+        {
             return 233;
         }
 
-        public double getkWheelDiameterIN() {
+        public double getkWheelDiameterIN()
+        {
             return 3.0;
         }
 
-        public double getkDriveEncoderDistancePerPulse() {
+        public double getkDriveEncoderDistancePerPulse()
+        {
             return ((getkWheelDiameterIN() * Math.PI) / (double) getkDriveEncoderCPR());
         }
 
-        public double getkDriveEncoderRpmToInps() {
+        public double getkDriveEncoderRpmToInps()
+        {
             return (157.44 / 5676.0);
         }
 
-        public double getkTurningEncoderDistancePerPulse() {
+        public double getkTurningEncoderDistancePerPulse()
+        {
             return
             // Assumes the encoders are on a 1:1 reduction with the module shaft.
             (2 * Math.PI) / (double) getkTurningEncoderCPR();
         }
 
-        public double getkPModuleTurningController() {
+        public double getkPModuleTurningController()
+        {
             return .5;
         }
 
-        public double getkPModuleDriveController() {
+        public double getkPModuleDriveController()
+        {
             return .0005;
         }
 
-        public double getkFModuleDriveController() {
+        public double getkFModuleDriveController()
+        {
             return .006;
 
         }
     }
-    public class OIConstants extends Constants.OIConstants {
-        public int getkDriverControllerPort() {
+
+    public class OIConstants extends Constants.OIConstants
+    {
+        public int getkDriverControllerPort()
+        {
             return 0;
         }
-        public int getkOpControllerPort() {
+
+        public int getkOpControllerPort()
+        {
             return 1;
         }
     }
-    public class AutoConstants extends Constants.AutoConstants {
-        public double getkMaxSpeedINPerSecond() {
+
+    public class AutoConstants extends Constants.AutoConstants
+    {
+        public double getkMaxSpeedINPerSecond()
+        {
             return 160.44;
         }
 
-        public double getkMaxAccelerationINPerSecondSquared() {
+        public double getkMaxAccelerationINPerSecondSquared()
+        {
             return 20;
         }
 
-        public double getkMaxAngularSpeedRadiansPerSecond() {
+        public double getkMaxAngularSpeedRadiansPerSecond()
+        {
             return 10.6;
         }
 
-        public double getkMaxAngularSpeedRadiansPerSecondSquared() {
+        public double getkMaxAngularSpeedRadiansPerSecondSquared()
+        {
             return 10.6;
         }
 
-        public double getkPXController() {
+        public double getkPXController()
+        {
             return .076;
         }
 
-        public double getkPYController() {
+        public double getkPYController()
+        {
             return .076;
         }
 
-        public double getkDXController() {
+        public double getkDXController()
+        {
             return .033;
         }
 
-        public double getkDYController() {
+        public double getkDYController()
+        {
             return .033;
         }
 
-        public double getkPThetaController() {
+        public double getkPThetaController()
+        {
             return 1.6;
         }
 
         // Constraint for the motion profilied robot angle controller
-        public TrapezoidProfile.Constraints getkThetaControllerConstraints() {
-            return new TrapezoidProfile.Constraints(getkMaxAngularSpeedRadiansPerSecond(), getkMaxAngularSpeedRadiansPerSecondSquared());
+        public TrapezoidProfile.Constraints getkThetaControllerConstraints()
+        {
+            return new TrapezoidProfile.Constraints(getkMaxAngularSpeedRadiansPerSecond(),
+                    getkMaxAngularSpeedRadiansPerSecondSquared());
         }
+    }
+
+    public class IntakeConstants extends Constants.IntakeConstants
+    {
+
+        @Override
+        public MotorType getIntakeMotorType()
+        {
+            return MotorType.kBrushless;
+        }
+
+        @Override
+        public boolean getIntakeMotorInverted()
+        {
+            return true;
+        }
+
     }
     public class ShooterConstants extends Constants.ShooterConstants{
 
@@ -414,16 +490,18 @@ public final class PracConstants extends Constants
         }
 
         @Override
-        public double getShooterServoDegreeTurnLimit() {
-            // TODO figure out proper value
-            return 295.0;
+        public double getPotOffset()
+        {
+            // TODO Auto-generated method stub
+            return 0;
         }
 
         @Override
-        public double getShooterABSEncoderLimit() {
-            // TODO figure out proper value
-            return 3993.0;
+        public boolean getShooterMotorInverted()
+        {
+            return true;
         }
+
         
     }
 
@@ -436,6 +514,8 @@ public final class PracConstants extends Constants
     private OIConstants robotOIConstants = new OIConstants();
 
     private AutoConstants robotAutoConstants = new AutoConstants();
+
+    private IntakeConstants robotIntakeConstants = new IntakeConstants();
 
     private ShooterConstants robotShooterConstants = new ShooterConstants();
 
@@ -467,6 +547,12 @@ public final class PracConstants extends Constants
     @Override
     public frc.robot.utilities.Constants.ShooterConstants getShooterConstants() {
         return robotShooterConstants;
+    }
+
+    @Override
+    public IntakeConstants getIntakeConstants()
+    {
+        return robotIntakeConstants;
     }
 
 }

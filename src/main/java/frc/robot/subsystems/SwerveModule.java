@@ -157,12 +157,6 @@ public class SwerveModule {
 
   public double getAngle() {
     double enc = Math.toRadians(m_turningEncoder.getAbsolutePosition());
-    // double angle = 0;
-    // if (Math.sin(enc) < 0)
-    // angle = -Math.acos(Math.cos(enc));
-    // else
-    // angle = Math.acos(Math.cos(enc));
-    // return angle;
     return enc;
   }
 

@@ -8,9 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.BallIndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
@@ -23,7 +21,7 @@ public class ShooterCommand extends CommandBase {
 
   public ShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem, indexerSubsystem);
+    addRequirements(subsystem);//, indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
@@ -32,22 +30,23 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystem.setVelocity(targetRPM);
+    subsystem.setPercentOutput(targetRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(subsystem.getDegrees());
-    if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >= targetRPM+100)){
-      indexerSubsystem.setMotorPower(1);
-    };
+    //System.out.println(subsystem.getDegrees());
+    // if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >= targetRPM+100)){
+    //   indexerSubsystem.setPercentOutput(1);
+    // };
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.setVelocity(0);
+    subsystem.setPercentOutput(0);
+    //indexerSubsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

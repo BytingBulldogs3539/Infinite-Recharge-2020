@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.io.IOException;
 import java.net.NetworkInterface;
 
+import frc.robot.commands.BallIndexerCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionTrack;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utilities.Constants;
+import frc.robot.utilities.LogitechF310;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -56,8 +58,8 @@ public class RobotContainer {
   public final IntakeSubsystem m_IntakeSubsystem;
   public final BallIndexerSubsystem m_BallIndexerSubsystem;
   // The driver's controller
-  public static XboxController m_driverController;
-  public static XboxController m_opController;
+  public static LogitechF310 m_driverController;
+  public static LogitechF310 m_opController;
 
   // The constants of the robot
   public static Constants robotConstants;
@@ -136,12 +138,14 @@ public class RobotContainer {
    * calling passing it to a {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_driverController = new XboxController(robotConstants.getOIConstants().getkDriverControllerPort());
-    m_opController = new XboxController(robotConstants.getOIConstants().getkOpControllerPort());
-    JoystickButton button = new JoystickButton(m_driverController, 1);
-    button.toggleWhenPressed(new VisionTrack(m_robotDrive));
-    JoystickButton buttonb = new JoystickButton(m_driverController, 1);
-    buttonb.whenPressed(new ShooterCommand(m_ShooterSubsystem, 5000, m_BallIndexerSubsystem));
+    m_driverController = new LogitechF310(robotConstants.getOIConstants().getkDriverControllerPort());
+    m_opController = new LogitechF310(robotConstants.getOIConstants().getkOpControllerPort());
+
+    //m_driverController.buttonA.whenHeld(visionCommand);
+
+    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
+    m_opController.buttonA.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, 1));
+    m_opController.buttonY.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, -1));
   }
 
   /**
