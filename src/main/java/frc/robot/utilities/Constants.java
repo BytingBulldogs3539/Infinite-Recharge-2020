@@ -32,6 +32,8 @@ public abstract class Constants {
 
     public abstract BallIndexerConstants getBallIndexerConstants();
 
+    public abstract ClimbConstants getClimbConstants();
+
     public abstract ShooterConstants getShooterConstants();
 
     public abstract class RobotIDConstants {
@@ -43,8 +45,8 @@ public abstract class Constants {
         public abstract int getShooterMotorID();
         public abstract int getIndexMotorID();
 
-        public abstract int getClimbMotorAID();
-        public abstract int getClimbMotorBID();
+        public abstract int getClimbMotorLID();
+        public abstract int getClimbMotorRID();
 
         public abstract int getBuddyClimbMotorID();
         
@@ -75,13 +77,21 @@ public abstract class Constants {
 
         public abstract int getkPigeonID();
 
-        public abstract int[] getkFrontLeftTurningEncoderPorts();
+        public abstract int getkFrontLeftTurningEncoderPorts();
 
-        public abstract int[] getkRearLeftTurningEncoderPorts();
+        public abstract int getkRearLeftTurningEncoderPorts();
 
-        public abstract int[] getkFrontRightTurningEncoderPorts();
+        public abstract int getkFrontRightTurningEncoderPorts();
 
-        public abstract int[] getkRearRightTurningEncoderPorts();
+        public abstract int getkRearRightTurningEncoderPorts();
+
+        public abstract double getkFrontLeftTurningEncoderOffset();
+
+        public abstract double getkRearLeftTurningEncoderOffset();
+
+        public abstract double getkFrontRightTurningEncoderOffset();
+
+        public abstract double getkRearRightTurningEncoderOffset();
 
         public abstract boolean getkFrontLeftTurningEncoderReversed();
 
@@ -140,8 +150,6 @@ public abstract class Constants {
 
         public abstract double getkMaxModuleAngularAccelerationRadiansPerSecondSquared();
 
-        public abstract int getkTurningEncoderCPR();
-
         public abstract int getkDriveEncoderCPR();
 
         public abstract double getkWheelDiameterIN();
@@ -149,8 +157,6 @@ public abstract class Constants {
         public abstract double getkDriveEncoderDistancePerPulse();
 
         public abstract double getkDriveEncoderRpmToInps();
-
-        public abstract double getkTurningEncoderDistancePerPulse();
 
         public abstract double getkPModuleTurningController();
 
@@ -196,9 +202,14 @@ public abstract class Constants {
 
     public abstract class BallIndexerConstants
     {
-        public abstract boolean getIntakeMotorInverted();
+        public abstract boolean getIndexMotorInverted();
+        public abstract boolean getIndexMotorBrake();
     }
-
+    public abstract class ClimbConstants
+    {
+        public abstract boolean getClimbMotorInverted();
+        public abstract boolean getClimbMotorBrake();
+    }
     public abstract class ShooterConstants{
         public abstract double getkP();
         public abstract double getkI();

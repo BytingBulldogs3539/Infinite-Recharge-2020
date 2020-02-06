@@ -66,17 +66,17 @@ public final class PracConstants extends Constants
         }
 
         @Override
-        public int getClimbMotorAID()
+        public int getClimbMotorLID()
         {
             // TODO: Real ID
-            return 0;
+            return 10;
         }
 
         @Override
-        public int getClimbMotorBID()
+        public int getClimbMotorRID()
         {
             // TODO: Real ID
-            return 0;
+            return 15;
         }
 
         @Override
@@ -116,42 +116,42 @@ public final class PracConstants extends Constants
     {
         public int getkFrontLeftDriveMotorPort()
         {
-            return 2;
+            return 7;
         }
 
         public int getkRearLeftDriveMotorPort()
         {
-            return 7;
+            return 2;
         }
 
         public int getkFrontRightDriveMotorPort()
         {
-            return 3;
+            return 5;
         }
 
         public int getkRearRightDriveMotorPort()
         {
-            return 5;
+            return 3;
         }
 
         public int getkFrontLeftTurningMotorPort()
         {
-            return 1;
+            return 8;
         }
 
         public int getkRearLeftTurningMotorPort()
         {
-            return 8;
+            return 1;
         }
 
         public int getkFrontRightTurningMotorPort()
         {
-            return 4;
+            return 6;
         }
 
         public int getkRearRightTurningMotorPort()
         {
-            return 6;
+            return 4;
         }
 
         public int getkPigeonID()
@@ -159,24 +159,24 @@ public final class PracConstants extends Constants
             return 25;
         }
 
-        public int[] getkFrontLeftTurningEncoderPorts()
+        public int getkFrontLeftTurningEncoderPorts()
         {
-            return new int[] { 2, 3 };
+            return 30;
         }
 
-        public int[] getkRearLeftTurningEncoderPorts()
+        public int getkRearLeftTurningEncoderPorts()
         {
-            return new int[] { 4, 5 };
+            return 32;
         }
 
-        public int[] getkFrontRightTurningEncoderPorts()
+        public int getkFrontRightTurningEncoderPorts()
         {
-            return new int[] { 0, 1 };
+            return 33;
         }
 
-        public int[] getkRearRightTurningEncoderPorts()
+        public int getkRearRightTurningEncoderPorts()
         {
-            return new int[] { 6, 7 };
+            return 31;
         }
 
         public boolean getkFrontLeftTurningEncoderReversed()
@@ -308,13 +308,37 @@ public final class PracConstants extends Constants
 
         public double getkMaxSpeedINPerSecond()
         {
-            return 160.44;
+            return 176.52;
         }
 
         public double getkMaxTurnSpeedRadPerSecond()
         {
             return 10.6;
 
+        }
+
+        @Override
+        public double getkFrontLeftTurningEncoderOffset()
+        {
+            return 162.949;
+        }
+
+        @Override
+        public double getkRearLeftTurningEncoderOffset()
+        {
+            return 165.674;
+        }
+
+        @Override
+        public double getkFrontRightTurningEncoderOffset()
+        {
+            return 95.801;
+        }
+
+        @Override
+        public double getkRearRightTurningEncoderOffset()
+        {
+            return 24.609;
         }
     }
 
@@ -330,19 +354,14 @@ public final class PracConstants extends Constants
             return (50 * Math.PI);
         }
 
-        public int getkTurningEncoderCPR()
-        {
-            return 1024;
-        }
-
         public int getkDriveEncoderCPR()
         {
-            return 233;
+            return 229;
         }
 
         public double getkWheelDiameterIN()
         {
-            return 3.0;
+            return 4.0;
         }
 
         public double getkDriveEncoderDistancePerPulse()
@@ -355,21 +374,14 @@ public final class PracConstants extends Constants
             return (157.44 / 5676.0);
         }
 
-        public double getkTurningEncoderDistancePerPulse()
-        {
-            return
-            // Assumes the encoders are on a 1:1 reduction with the module shaft.
-            (2 * Math.PI) / (double) getkTurningEncoderCPR();
-        }
-
         public double getkPModuleTurningController()
         {
-            return .5;
+            return .25;
         }
 
         public double getkPModuleDriveController()
         {
-            return .0005;
+            return .0001;
         }
 
         public double getkFModuleDriveController()
@@ -463,6 +475,36 @@ public final class PracConstants extends Constants
         }
 
     }
+    public class BallIndexerConstants extends Constants.BallIndexerConstants
+    {
+
+        @Override
+        public boolean getIndexMotorInverted()
+        {
+            return true;
+        }
+        @Override
+        public boolean getIndexMotorBrake()
+        {
+            return true;
+        }
+        
+    }
+    public class ClimbConstants extends Constants.ClimbConstants
+    {
+
+        @Override
+        public boolean getClimbMotorInverted()
+        {
+            return true;
+        }
+        @Override
+        public boolean getClimbMotorBrake()
+        {
+            return true;
+        }
+        
+    }
     public class ShooterConstants extends Constants.ShooterConstants{
 
         @Override
@@ -499,7 +541,7 @@ public final class PracConstants extends Constants
         @Override
         public boolean getShooterMotorInverted()
         {
-            return true;
+            return false;
         }
 
         
@@ -516,6 +558,10 @@ public final class PracConstants extends Constants
     private AutoConstants robotAutoConstants = new AutoConstants();
 
     private IntakeConstants robotIntakeConstants = new IntakeConstants();
+
+    private BallIndexerConstants robotBallIndexerConstants = new BallIndexerConstants();
+
+    private ClimbConstants robotClimberConstants = new ClimbConstants();
 
     private ShooterConstants robotShooterConstants = new ShooterConstants();
 
@@ -553,6 +599,18 @@ public final class PracConstants extends Constants
     public IntakeConstants getIntakeConstants()
     {
         return robotIntakeConstants;
+    }
+
+    @Override
+    public BallIndexerConstants getBallIndexerConstants()
+    {
+        return robotBallIndexerConstants;
+    }
+
+    @Override
+    public ClimbConstants getClimbConstants()
+    {
+        return robotClimberConstants;
     }
 
 }

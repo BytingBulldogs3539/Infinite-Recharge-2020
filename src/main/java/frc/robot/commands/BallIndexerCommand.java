@@ -27,7 +27,6 @@ public class BallIndexerCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Running");
     subsystem.setPercentOutput(speed);
   }
 

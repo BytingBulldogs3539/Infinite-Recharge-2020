@@ -15,16 +15,19 @@ public class ClimbCommand extends CommandBase {
    * Creates a new ClimbCommand.
    */
   ClimbSubsystem subsystem;
+  double percentOutput = 0;
 
-  public ClimbCommand(ClimbSubsystem subsystem) {
+  public ClimbCommand(ClimbSubsystem subsystem, double percentOutput) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
+    this.percentOutput = percentOutput;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.setPercentOutput(percentOutput);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,6 +38,7 @@ public class ClimbCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    subsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

@@ -35,10 +35,12 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 
 import frc.robot.commands.BallIndexerCommand;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionTrack;
 import frc.robot.subsystems.BallIndexerSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -55,6 +57,7 @@ public class RobotContainer {
   // The robot's subsystems
   public final DriveSubsystem m_robotDrive;
   public final ShooterSubsystem m_ShooterSubsystem;
+  public final ClimbSubsystem m_ClimbSubsystem;
   public final IntakeSubsystem m_IntakeSubsystem;
   public final BallIndexerSubsystem m_BallIndexerSubsystem;
   // The driver's controller
@@ -124,6 +127,7 @@ public class RobotContainer {
     m_ShooterSubsystem = new ShooterSubsystem();
     m_IntakeSubsystem = new IntakeSubsystem();
     m_BallIndexerSubsystem = new BallIndexerSubsystem();
+    m_ClimbSubsystem = new ClimbSubsystem();
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
@@ -146,6 +150,7 @@ public class RobotContainer {
     m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
     m_opController.buttonA.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, 1));
     m_opController.buttonY.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, -1));
+    m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1));
   }
 
   /**

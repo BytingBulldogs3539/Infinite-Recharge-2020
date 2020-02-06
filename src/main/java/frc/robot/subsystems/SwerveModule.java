@@ -51,7 +51,7 @@ public class SwerveModule {
    * @param driveMotorChannel   ID for the drive motor.
    * @param turningMotorChannel ID for the turning motor.
    */
-  public SwerveModule(String name, int driveMotorChannel, int turningMotorChannel, CANCoder turningEncoderPort, double magnetOffsetDegrees,
+  public SwerveModule(String name, int driveMotorChannel, int turningMotorChannel, int turningEncoderPort, double magnetOffsetDegrees,
       boolean driveEncoderReversed, boolean turningEncoderReversed, boolean reverseDrive, boolean reverseTurn) {
     this.name = name;
     // Create two CANSparkMax Motor controllers assuming brushless mode that control
@@ -73,7 +73,7 @@ public class SwerveModule {
     this.m_driveEncoder = m_driveMotor.getEncoder();
 
     // Create and store away the turning motor.
-    this.m_turningEncoder = turningEncoderPort;//new CANCoder(turningEncoderPort);
+    this.m_turningEncoder = new CANCoder(turningEncoderPort);
 
     // Set whether drive encoder should be reversed or not
     this.driveEncoderReversed = driveEncoderReversed;

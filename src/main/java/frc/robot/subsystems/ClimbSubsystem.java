@@ -7,21 +7,51 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class ClimbSubsystem extends SubsystemBase {
 
-  // TODO: find a better naming scheme for these motors
-  TalonSRX climbMotorA = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorAID());
-  TalonSRX climbMotorB = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorBID());
+  VictorSPX climbMotorL = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorLID());
+  VictorSPX climbMotorB = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorRID());
 
   /**
    * Creates a new ClimbSubsystem.
    */
   public ClimbSubsystem() {
+    if(RobotContainer.robotConstants.getClimbConstants().getClimbMotorBrake())
+    {
+      climbMotorL.setNeutralMode(NeutralMode.Brake);
+      climbMotorB.setNeutralMode(NeutralMode.Brake);
+    }
+    else
+    {
+      climbMotorL.setNeutralMode(NeutralMode.Coast);
+      climbMotorB.setNeutralMode(NeutralMode.Coast);
+    }
+    climbMotorL.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+    climbMotorB.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+  }
+
+  public void setPercentOutput(double power)
+  {
+    climbMotorL.set(ControlMode.PercentOutput, power);
+    climbMotorB.set(ControlMode.PercentOutput, power);
+
+  }
+  public void setPercentOutputL(double power)
+  {
+    climbMotorL.set(ControlMode.PercentOutput, power);
+
+  }
+  public void setPercentOutputR(double power)
+  {
+    climbMotorB.set(ControlMode.PercentOutput, power);
+
   }
 
   @Override

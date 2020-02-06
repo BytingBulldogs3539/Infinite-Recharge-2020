@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +21,11 @@ public class BallIndexerSubsystem extends SubsystemBase {
    * Creates a new BallIndexerSubsystem.
    */
   public BallIndexerSubsystem() {
-    ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIntakeMotorInverted());
+    ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorInverted());
+    if(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorBrake())
+      ballIndexerSrx.setNeutralMode(NeutralMode.Brake);
+    else
+      ballIndexerSrx.setNeutralMode(NeutralMode.Coast);
   }
 
   public void setPercentOutput(double speed){
