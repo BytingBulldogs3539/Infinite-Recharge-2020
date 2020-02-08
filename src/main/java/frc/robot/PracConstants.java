@@ -101,7 +101,7 @@ public final class PracConstants extends Constants
         }
 
         public int getkFrontRightDriveMotorPort() {
-            return 4;
+            return 3;
         }
 
         public int getkRearRightDriveMotorPort() {
@@ -117,7 +117,7 @@ public final class PracConstants extends Constants
         }
 
         public int getkFrontRightTurningMotorPort() {
-            return 3;
+            return 4;
         }
 
         public int getkRearRightTurningMotorPort() {
