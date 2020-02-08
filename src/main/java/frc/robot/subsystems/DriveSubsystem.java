@@ -57,7 +57,7 @@ public class DriveSubsystem extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
-    Robot.m_robotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(), getAngle());
   }
 

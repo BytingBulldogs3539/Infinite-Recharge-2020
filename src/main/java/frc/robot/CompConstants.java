@@ -349,7 +349,7 @@ public final class CompConstants extends Constants
 
         public int getkDriveEncoderCPR()
         {
-            return 229;
+            return 240;
         }
 
         public double getkWheelDiameterIN()
@@ -364,7 +364,7 @@ public final class CompConstants extends Constants
 
         public double getkDriveEncoderRpmToInps()
         {
-            return (157.44 / 5676.0);
+            return (217.92/ 5676.0);
         }
 
         public double getkPModuleTurningController()
@@ -401,7 +401,7 @@ public final class CompConstants extends Constants
     {
         public double getkMaxSpeedINPerSecond()
         {
-            return 160.44;
+            return 217.92;
         }
 
         public double getkMaxAccelerationINPerSecondSquared()
@@ -424,6 +424,7 @@ public final class CompConstants extends Constants
             return .076;
         }
 
+        
         public double getkPYController()
         {
             return .076;

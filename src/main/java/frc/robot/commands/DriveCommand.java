@@ -37,7 +37,7 @@ public class DriveCommand extends CommandBase {
         -RobotContainer.m_driverController.getLeftStickX(),
         -RobotContainer.m_driverController.getRightStickX(), true);
         //System.out.println("Y1:"+RobotContainer.m_driverController.getLeftStickY()+"X:1"+-RobotContainer.m_driverController.getLeftStickX()+"X2: "+-RobotContainer.m_driverController.getRightStickX());
-
+        System.out.println(subsystem.getPose());
 
   }
 
