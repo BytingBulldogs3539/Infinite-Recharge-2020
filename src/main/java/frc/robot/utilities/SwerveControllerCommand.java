@@ -29,16 +29,19 @@ import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
  * ProfiledPIDController ({@link ProfiledPIDController}) to follow a trajectory
  * {@link Trajectory} with a swerve drive.
  *
- * <p>This command outputs the raw desired Swerve Module States ({@link SwerveModuleState})
- * in an array. The desired wheel and module rotation velocities should be taken
- * from those and used in velocity PIDs.
+ * <p>
+ * This command outputs the raw desired Swerve Module States
+ * ({@link SwerveModuleState}) in an array. The desired wheel and module
+ * rotation velocities should be taken from those and used in velocity PIDs.
  *
- * <p>The robot angle controller does not follow the angle given by
- * the trajectory but rather goes to the angle given in the final state of the trajectory.
+ * <p>
+ * The robot angle controller does not follow the angle given by the trajectory
+ * but rather goes to the angle given in the final state of the trajectory.
  */
 
 @SuppressWarnings("MemberName")
-public class SwerveControllerCommand extends CommandBase {
+public class SwerveControllerCommand extends CommandBase
+{
   private final Timer m_timer = new Timer();
   private Pose2d m_finalPose;
 
@@ -54,69 +57,69 @@ public class SwerveControllerCommand extends CommandBase {
   private final Supplier<Boolean> m_targetIsAvail;
 
   /**
-   * Constructs a new SwerveControllerCommand that when executed will follow the provided
-   * trajectory. This command will not return output voltages but rather raw module states from the
-   * position controllers which need to be put into a velocity PID.
+   * Constructs a new SwerveControllerCommand that when executed will follow the
+   * provided trajectory. This command will not return output voltages but rather
+   * raw module states from the position controllers which need to be put into a
+   * velocity PID.
    *
-   * <p>Note: The controllers will *not* set the outputVolts to zero upon completion of the path-
-   * this is left to the user, since it is not appropriate for paths with nonstationary endstates.
+   * <p>
+   * Note: The controllers will *not* set the outputVolts to zero upon completion
+   * of the path- this is left to the user, since it is not appropriate for paths
+   * with nonstationary endstates.
    *
-   * <p>Note 2: The rotation controller will calculate the rotation based on the final pose
-   * in the trajectory, not the poses at each time step.
+   * <p>
+   * Note 2: The rotation controller will calculate the rotation based on the
+   * final pose in the trajectory, not the poses at each time step.
    *
-   * @param trajectory         The trajectory to follow.
-   * @param pose               A function that supplies the robot pose - use one of
-   *                           the odometry classes to provide this.
-   * @param kinematics         The kinematics for the robot drivetrain.
-   * @param xController        The Trajectory Tracker PID controller
-   *                           for the robot's x position.
-   * @param yController        The Trajectory Tracker PID controller
-   *                           for the robot's y position.
-   * @param thetaController    The Trajectory Tracker PID controller
-   *                           for angle for the robot.
-   * @param outputModuleStates The raw output module states from the
-   *                           position controllers.
-   * @param requirements       The subsystems to require.
+   * @param trajectory
+   *                             The trajectory to follow.
+   * @param pose
+   *                             A function that supplies the robot pose - use one
+   *                             of the odometry classes to provide this.
+   * @param kinematics
+   *                             The kinematics for the robot drivetrain.
+   * @param xController
+   *                             The Trajectory Tracker PID controller for the
+   *                             robot's x position.
+   * @param yController
+   *                             The Trajectory Tracker PID controller for the
+   *                             robot's y position.
+   * @param thetaController
+   *                             The Trajectory Tracker PID controller for angle
+   *                             for the robot.
+   * @param outputModuleStates
+   *                             The raw output module states from the position
+   *                             controllers.
+   * @param requirements
+   *                             The subsystems to require.
    */
 
   @SuppressWarnings("ParameterName")
-  public SwerveControllerCommand(Trajectory trajectory,
-                               Supplier<Pose2d> pose,
-                               SwerveDriveKinematics kinematics,
-                               PIDController xController,
-                               PIDController yController,
-                               ProfiledPIDController thetaController,
+  public SwerveControllerCommand(Trajectory trajectory, Supplier<Pose2d> pose, SwerveDriveKinematics kinematics,
+      PIDController xController, PIDController yController, ProfiledPIDController thetaController,
 
-                               Consumer<SwerveModuleState[]> outputModuleStates,
-                               Supplier<Boolean> targetIsAvail,
-                               Supplier<Double> targetSupplier,
-                               Boolean shouldVisionTrack,
-                               Subsystem... requirements) {
+      Consumer<SwerveModuleState[]> outputModuleStates, Supplier<Boolean> targetIsAvail,
+      Supplier<Double> targetSupplier, Boolean shouldVisionTrack, Subsystem... requirements)
+  {
     m_trajectory = requireNonNullParam(trajectory, "trajectory", "SwerveControllerCommand");
     m_pose = requireNonNullParam(pose, "pose", "SwerveControllerCommand");
     m_kinematics = requireNonNullParam(kinematics, "kinematics", "SwerveControllerCommand");
 
-    m_xController = requireNonNullParam(xController,
-      "xController", "SwerveControllerCommand");
-    m_yController = requireNonNullParam(yController,
-      "xController", "SwerveControllerCommand");
-    m_thetaController = requireNonNullParam(thetaController,
-      "thetaController", "SwerveControllerCommand");
+    m_xController = requireNonNullParam(xController, "xController", "SwerveControllerCommand");
+    m_yController = requireNonNullParam(yController, "xController", "SwerveControllerCommand");
+    m_thetaController = requireNonNullParam(thetaController, "thetaController", "SwerveControllerCommand");
 
-    m_outputModuleStates = requireNonNullParam(outputModuleStates,
-      "frontLeftOutput", "SwerveControllerCommand");
+    m_outputModuleStates = requireNonNullParam(outputModuleStates, "frontLeftOutput", "SwerveControllerCommand");
 
-      m_targetIsAvail = requireNonNullParam(targetIsAvail,
-      "targetIsAvail", "SwerveControllerCommand");
-      m_targetSupplier = requireNonNullParam(targetSupplier,
-      "targetSuplier", "SwerveControllerCommand");
-      m_shouldVisionTrack = requireNonNullParam(shouldVisionTrack,
-      "shouldVisionTrack", "SwerveControllerCommand");
+    m_targetIsAvail = requireNonNullParam(targetIsAvail, "targetIsAvail", "SwerveControllerCommand");
+    m_targetSupplier = requireNonNullParam(targetSupplier, "targetSuplier", "SwerveControllerCommand");
+    m_shouldVisionTrack = requireNonNullParam(shouldVisionTrack, "shouldVisionTrack", "SwerveControllerCommand");
     addRequirements(requirements);
   }
 
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     // Sample final pose to get robot rotation
     m_finalPose = m_trajectory.sample(m_trajectory.getTotalTimeSeconds()).poseMeters;
 
@@ -126,7 +129,8 @@ public class SwerveControllerCommand extends CommandBase {
 
   @Override
   @SuppressWarnings("LocalVariableName")
-  public void execute() {
+  public void execute()
+  {
     double curTime = m_timer.get();
 
     var desiredState = m_trajectory.sample(curTime);
@@ -141,44 +145,38 @@ public class SwerveControllerCommand extends CommandBase {
     var poseError = desiredPose.relativeTo(m_pose.get());
 
     SmartDashboard.putNumber("Error X", poseError.getTranslation().getX());
-    
+
     SmartDashboard.putNumber("Error Y", poseError.getTranslation().getY());
 
-    double targetXVel = m_xController.calculate(
-        m_pose.get().getTranslation().getX(),
+    double targetXVel = m_xController.calculate(m_pose.get().getTranslation().getX(),
         desiredPose.getTranslation().getX());
 
-    double targetYVel = m_yController.calculate(
-        m_pose.get().getTranslation().getY(),
+    double targetYVel = m_yController.calculate(m_pose.get().getTranslation().getY(),
         desiredPose.getTranslation().getY());
 
-    // The robot will go to the desired rotation of the final pose in the trajectory,
+    // The robot will go to the desired rotation of the final pose in the
+    // trajectory,
     // not following the poses at individual states.
     double targetAngularVel;
-    System.out.println(m_shouldVisionTrack + " " +m_targetIsAvail.get());
-    if(m_shouldVisionTrack)
+    System.out.println(m_shouldVisionTrack + " " + m_targetIsAvail.get());
+    if (m_shouldVisionTrack)
     {
-      if(m_targetIsAvail.get())
+      if (m_targetIsAvail.get())
       {
-        targetAngularVel =  m_thetaController.calculate(
-         m_targetSupplier.get(),
-          0);
-          System.out.println(targetAngularVel);
+        targetAngularVel = m_thetaController.calculate(m_targetSupplier.get(), 0);
+        System.out.println(targetAngularVel);
       }
       else
       {
-        targetAngularVel = m_thetaController.calculate(
-          m_pose.get().getRotation().getRadians(),
-          m_finalPose.getRotation().getRadians());
+        targetAngularVel = m_thetaController.calculate(m_pose.get().getRotation().getRadians(),
+            m_finalPose.getRotation().getRadians());
       }
     }
     else
     {
-      targetAngularVel = m_thetaController.calculate(
-          m_pose.get().getRotation().getRadians(),
+      targetAngularVel = m_thetaController.calculate(m_pose.get().getRotation().getRadians(),
           m_finalPose.getRotation().getRadians());
     }
-    
 
     double vRef = desiredState.velocityMetersPerSecond;
 
@@ -194,12 +192,14 @@ public class SwerveControllerCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_timer.stop();
   }
 
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return m_timer.hasPeriodPassed(m_trajectory.getTotalTimeSeconds());
   }
 }

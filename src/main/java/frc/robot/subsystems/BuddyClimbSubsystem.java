@@ -12,7 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class BuddyClimbSubsystem extends SubsystemBase {
+public class BuddyClimbSubsystem extends SubsystemBase
+{
 
   // Buddy climb motor
   VictorSPX buddyClimbMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getBuddyClimbMotorID());
@@ -20,11 +21,13 @@ public class BuddyClimbSubsystem extends SubsystemBase {
   /**
    * Creates a new BuddyClimbSubsystem.
    */
-  public BuddyClimbSubsystem() {
+  public BuddyClimbSubsystem()
+  {
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 }

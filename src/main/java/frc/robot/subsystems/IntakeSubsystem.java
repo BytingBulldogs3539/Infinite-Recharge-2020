@@ -16,39 +16,48 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.utilities.ByteDoubleSolenoid;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase
+{
 
   // Intake motor
-  CANSparkMax intakeMotor = new CANSparkMax(RobotContainer.robotConstants.getRobotIDConstants().getIntakeMotorID(), RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorType());
+  CANSparkMax intakeMotor = new CANSparkMax(RobotContainer.robotConstants.getRobotIDConstants().getIntakeMotorID(),
+      RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorType());
   Compressor compressor = new Compressor(RobotContainer.robotConstants.getRobotIDConstants().getPCMID());
-  ByteDoubleSolenoid intakSolenoid = new ByteDoubleSolenoid(RobotContainer.robotConstants.getRobotIDConstants().getPCMID(),
-   RobotContainer.robotConstants.getRobotIDConstants().getIntakeSolinoidOn(),
-    RobotContainer.robotConstants.getRobotIDConstants().getIntakeSolinoidOff(),
-     RobotContainer.robotConstants.getIntakeConstants().getDefaultIntakeDirection());
+  ByteDoubleSolenoid intakSolenoid = new ByteDoubleSolenoid(
+      RobotContainer.robotConstants.getRobotIDConstants().getPCMID(),
+      RobotContainer.robotConstants.getRobotIDConstants().getIntakeSolinoidOn(),
+      RobotContainer.robotConstants.getRobotIDConstants().getIntakeSolinoidOff(),
+      RobotContainer.robotConstants.getIntakeConstants().getDefaultIntakeDirection());
+
   /**
    * Creates a new IntakeSubsystem.
    */
-  public IntakeSubsystem() {
+  public IntakeSubsystem()
+  {
     intakeMotor.setInverted(RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorInverted());
-    //setDefaultCommand(new IntakeCommand(this));
+    // setDefaultCommand(new IntakeCommand(this));
     setCompressor(true);
   }
 
   /**
    * 
-   * @param speed Motor power between -1 (reverse) and 1 (forwards/intake)
+   * @param speed
+   *                Motor power between -1 (reverse) and 1 (forwards/intake)
    * 
    */
-  public void setPercentOutput(double speed) {
+  public void setPercentOutput(double speed)
+  {
     intakeMotor.set(speed);
   }
+
   /**
    * 
-   * @param onOff false for compressor off true for compressor on.
+   * @param onOff
+   *                false for compressor off true for compressor on.
    */
   public void setCompressor(boolean onOff)
   {
-    if(onOff)
+    if (onOff)
       compressor.start();
     else
       compressor.stop();
@@ -56,14 +65,15 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setIntakeSolinoid(boolean state)
   {
-    if(state)
+    if (state)
       intakSolenoid.set(Value.kForward);
     else
       intakSolenoid.set(Value.kReverse);
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 }

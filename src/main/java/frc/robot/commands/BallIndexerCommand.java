@@ -10,27 +10,30 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallIndexerSubsystem;
 
-public class BallIndexerCommand extends CommandBase {
+public class BallIndexerCommand extends CommandBase
+{
   /**
    * Creates a new BallIndexerCommand.
    */
   BallIndexerSubsystem subsystem;
-  public BallIndexerCommand(BallIndexerSubsystem subsystem) {
+
+  public BallIndexerCommand(BallIndexerSubsystem subsystem)
+  {
     addRequirements(subsystem);
     this.subsystem = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
+  public void initialize()
   {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
+  public void execute()
   {
-    if(subsystem.getBallSensorState())
+    if (subsystem.getBallSensorState())
       subsystem.setPercentOutput(1);
     else
       subsystem.setPercentOutput(0);
@@ -39,12 +42,14 @@ public class BallIndexerCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

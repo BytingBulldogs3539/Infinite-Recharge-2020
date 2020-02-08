@@ -56,7 +56,8 @@ import frc.robot.utilities.LogitechF310;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer
+{
   // The robot's subsystems
   public final ShooterSubsystem m_ShooterSubsystem;
   public final ClimbSubsystem m_ClimbSubsystem;
@@ -65,7 +66,6 @@ public class RobotContainer {
   public final BuddyClimbSubsystem m_BuddyClimbSubsystem;
   public final SpinnerSubsystem m_SpinnerSubsystem;
   public final DriveSubsystem m_robotDrive;
-
 
   // The driver's controller
   public static LogitechF310 m_driverController;
@@ -82,39 +82,46 @@ public class RobotContainer {
   private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe5,
       0x18 };
 
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer()
+  {
 
     boolean competitionBot = false;
     boolean practiceBot = false;
 
     List<byte[]> macAddresses;
-    try {
+    try
+    {
       macAddresses = getMacAddresses();
-    } catch (IOException e) {
+    }
+    catch (IOException e)
+    {
       // Don't crash, just log the stacktrace and continue without any mac addresses.
       DriverStation.reportError("Error Retrieving Mac Addresses", false);
       macAddresses = new ArrayList<>();
     }
 
-    for (byte[] macAddress : macAddresses) {
+    for (byte[] macAddress : macAddresses)
+    {
       // First check if we are the competition bot
-      if (Arrays.compare(COMPETITION_BOT_MAC_ADDRESS, macAddress) == 0) {
+      if (Arrays.compare(COMPETITION_BOT_MAC_ADDRESS, macAddress) == 0)
+      {
         competitionBot = true;
         break;
       }
 
       // Next check if we are the practice bot
-      if (Arrays.compare(PRACTICE_BOT_MAC_ADDRESS, macAddress) == 0) {
+      if (Arrays.compare(PRACTICE_BOT_MAC_ADDRESS, macAddress) == 0)
+      {
         practiceBot = true;
         break;
       }
     }
 
-    if (!competitionBot && !practiceBot) {
+    if (!competitionBot && !practiceBot)
+    {
       String[] macAddressStrings = macAddresses.stream().map(RobotContainer::macToString).toArray(String[]::new);
 
       SmartDashboard.putStringArray("MAC Addresses", macAddressStrings);
@@ -126,7 +133,8 @@ public class RobotContainer {
       competitionBot = true;
     }
 
-    if (competitionBot) {
+    if (competitionBot)
+    {
       robotConstants = new CompConstants();
     }
 
@@ -142,7 +150,7 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
     configureButtonBindings();
-   
+
   }
 
   /**
@@ -151,28 +159,29 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * calling passing it to a {@link JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings()
+  {
     m_driverController = new LogitechF310(robotConstants.getOIConstants().getkDriverControllerPort());
     m_opController = new LogitechF310(robotConstants.getOIConstants().getkOpControllerPort());
 
-    //m_driverController.buttonA.whenHeld(visionCommand);
+    // m_driverController.buttonA.whenHeld(visionCommand);
 
     m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
     m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, 1));
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, -1));
 
-    //m_opController.buttonY.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, -1));
-    //m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
+    // m_opController.buttonY.whenHeld(new
+    // BallIndexerCommand(m_BallIndexerSubsystem, -1));
+    // m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
 
-
-    m_opController.buttonPadLeft.whenPressed(new ShooterChirpCommand(m_ShooterSubsystem, true,3));
-    SmartDashboard.putData("Climb Up Left",new ClimbCommand(m_ClimbSubsystem,-.2,0));
-    SmartDashboard.putData("Climb Up Right",new ClimbCommand(m_ClimbSubsystem,0,-.2));
-    SmartDashboard.putData("Climb Down Left",new ClimbCommand(m_ClimbSubsystem,.2,0));
-    SmartDashboard.putData("Climb Down Right",new ClimbCommand(m_ClimbSubsystem,0,.2));
-    SmartDashboard.putData("Climb Up Both",new ClimbCommand(m_ClimbSubsystem,-.2,-.2));
+    SmartDashboard.putData("Play ", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp" true, 3));
+    SmartDashboard.putData("Climb Up Left", new ClimbCommand(m_ClimbSubsystem, -.2, 0));
+    SmartDashboard.putData("Climb Up Right", new ClimbCommand(m_ClimbSubsystem, 0, -.2));
+    SmartDashboard.putData("Climb Down Left", new ClimbCommand(m_ClimbSubsystem, .2, 0));
+    SmartDashboard.putData("Climb Down Right", new ClimbCommand(m_ClimbSubsystem, 0, .2));
+    SmartDashboard.putData("Climb Up Both", new ClimbCommand(m_ClimbSubsystem, -.2, -.2));
   }
 
   /**
@@ -180,17 +189,20 @@ public class RobotContainer {
    *
    * @return the MAC addresses of all network adapters.
    */
-  private static List<byte[]> getMacAddresses() throws IOException {
+  private static List<byte[]> getMacAddresses() throws IOException
+  {
     List<byte[]> macAddresses = new ArrayList<>();
 
     Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
     NetworkInterface networkInterface;
-    while (networkInterfaces.hasMoreElements()) {
+    while (networkInterfaces.hasMoreElements())
+    {
       networkInterface = networkInterfaces.nextElement();
 
       byte[] address = networkInterface.getHardwareAddress();
-      if (address == null) {
+      if (address == null)
+      {
         continue;
       }
 
@@ -200,10 +212,13 @@ public class RobotContainer {
     return macAddresses;
   }
 
-  private static String macToString(byte[] address) {
+  private static String macToString(byte[] address)
+  {
     StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < address.length; i++) {
-      if (i != 0) {
+    for (int i = 0; i < address.length; i++)
+    {
+      if (i != 0)
+      {
         builder.append(':');
       }
       builder.append(String.format("%02X", address[i]));
@@ -216,15 +231,16 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand()
+  {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(robotConstants.getAutoConstants().getkMaxSpeedINPerSecond(),
-    robotConstants.getAutoConstants().getkMaxAccelerationINPerSecondSquared())
+        robotConstants.getAutoConstants().getkMaxAccelerationINPerSecondSquared())
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(robotConstants.getDriveConstants().getkDriveKinematics());
-    //config.setReversed(true);
-    
-    //config.setReversed(true);
+    // config.setReversed(true);
+
+    // config.setReversed(true);
     // An example trajectory to follow. All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
@@ -232,17 +248,20 @@ public class RobotContainer {
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(),
         // End 3 meters straight ahead of where we started, facing forward
-        //new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-        new Pose2d(0,-75, Rotation2d.fromDegrees(0)), config);
-        
+        // new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
+        new Pose2d(0, -75, Rotation2d.fromDegrees(0)), config);
+
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
         robotConstants.getDriveConstants().getkDriveKinematics(),
 
         // Position controllers
-        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0, robotConstants.getAutoConstants().getkDXController()), 
-        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0, robotConstants.getAutoConstants().getkDYController()),
-        new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0, robotConstants.getAutoConstants().getkThetaControllerConstraints()),
+        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0,
+            robotConstants.getAutoConstants().getkDXController()),
+        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0,
+            robotConstants.getAutoConstants().getkDYController()),
+        new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0,
+            robotConstants.getAutoConstants().getkThetaControllerConstraints()),
 
         m_robotDrive::setModuleStates,
 
@@ -255,7 +274,6 @@ public class RobotContainer {
         m_robotDrive
 
     );
-    
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));

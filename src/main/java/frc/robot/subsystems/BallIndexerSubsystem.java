@@ -26,27 +26,31 @@ public class BallIndexerSubsystem extends SubsystemBase
   /**
    * Creates a new BallIndexerSubsystem.
    */
-  public BallIndexerSubsystem() {
+  public BallIndexerSubsystem()
+  {
     pigeon = new PigeonIMU(ballIndexerSrx);
     ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorInverted());
-    if(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorBrake())
+    if (RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorBrake())
       ballIndexerSrx.setNeutralMode(NeutralMode.Brake);
     else
       ballIndexerSrx.setNeutralMode(NeutralMode.Coast);
 
-      setDefaultCommand(new BallIndexerCommand(this));
+    setDefaultCommand(new BallIndexerCommand(this));
   }
 
-  public void setPercentOutput(double speed){
+  public void setPercentOutput(double speed)
+  {
     ballIndexerSrx.set(ControlMode.PercentOutput, speed);
   }
+
   public boolean getBallSensorState()
   {
     return !ballSensor.get();
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 }

@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
  * controller to avoid unwanted behavior.
  */
 @SuppressWarnings("PMD.TooManyMethods")
-public class ProfiledPIDController implements Sendable {
+public class ProfiledPIDController implements Sendable
+{
     private static int instances;
 
     private PIDController m_controller;
@@ -31,13 +32,18 @@ public class ProfiledPIDController implements Sendable {
      * Allocates a ProfiledPIDController with the given constants for Kp, Ki, and
      * Kd.
      *
-     * @param Kp          The proportional coefficient.
-     * @param Ki          The integral coefficient.
-     * @param Kd          The derivative coefficient.
-     * @param constraints Velocity and acceleration constraints for goal.
+     * @param Kp
+     *                        The proportional coefficient.
+     * @param Ki
+     *                        The integral coefficient.
+     * @param Kd
+     *                        The derivative coefficient.
+     * @param constraints
+     *                        Velocity and acceleration constraints for goal.
      */
     @SuppressWarnings("ParameterName")
-    public ProfiledPIDController(double Kp, double Ki, double Kd, TrapezoidProfile.Constraints constraints) {
+    public ProfiledPIDController(double Kp, double Ki, double Kd, TrapezoidProfile.Constraints constraints)
+    {
         this(Kp, Ki, Kd, constraints, 0.02);
     }
 
@@ -45,16 +51,22 @@ public class ProfiledPIDController implements Sendable {
      * Allocates a ProfiledPIDController with the given constants for Kp, Ki, and
      * Kd.
      *
-     * @param Kp          The proportional coefficient.
-     * @param Ki          The integral coefficient.
-     * @param Kd          The derivative coefficient.
-     * @param constraints Velocity and acceleration constraints for goal.
-     * @param period      The period between controller updates in seconds. The
-     *                    default is 0.02 seconds.
+     * @param Kp
+     *                        The proportional coefficient.
+     * @param Ki
+     *                        The integral coefficient.
+     * @param Kd
+     *                        The derivative coefficient.
+     * @param constraints
+     *                        Velocity and acceleration constraints for goal.
+     * @param period
+     *                        The period between controller updates in seconds. The
+     *                        default is 0.02 seconds.
      */
     @SuppressWarnings("ParameterName")
     public ProfiledPIDController(double Kp, double Ki, double Kd, TrapezoidProfile.Constraints constraints,
-            double period) {
+            double period)
+    {
         m_controller = new PIDController(Kp, Ki, Kd, period);
         m_constraints = constraints;
         instances++;
@@ -67,42 +79,52 @@ public class ProfiledPIDController implements Sendable {
      * <p>
      * Sets the proportional, integral, and differential coefficients.
      *
-     * @param Kp Proportional coefficient
-     * @param Ki Integral coefficient
-     * @param Kd Differential coefficient
+     * @param Kp
+     *               Proportional coefficient
+     * @param Ki
+     *               Integral coefficient
+     * @param Kd
+     *               Differential coefficient
      */
     @SuppressWarnings("ParameterName")
-    public void setPID(double Kp, double Ki, double Kd) {
+    public void setPID(double Kp, double Ki, double Kd)
+    {
         m_controller.setPID(Kp, Ki, Kd);
     }
 
     /**
      * Sets the proportional coefficient of the PID controller gain.
      *
-     * @param Kp proportional coefficient
+     * @param Kp
+     *               proportional coefficient
      */
     @SuppressWarnings("ParameterName")
-    public void setP(double Kp) {
+    public void setP(double Kp)
+    {
         m_controller.setP(Kp);
     }
 
     /**
      * Sets the integral coefficient of the PID controller gain.
      *
-     * @param Ki integral coefficient
+     * @param Ki
+     *               integral coefficient
      */
     @SuppressWarnings("ParameterName")
-    public void setI(double Ki) {
+    public void setI(double Ki)
+    {
         m_controller.setI(Ki);
     }
 
     /**
      * Sets the differential coefficient of the PID controller gain.
      *
-     * @param Kd differential coefficient
+     * @param Kd
+     *               differential coefficient
      */
     @SuppressWarnings("ParameterName")
-    public void setD(double Kd) {
+    public void setD(double Kd)
+    {
         m_controller.setD(Kd);
     }
 
@@ -111,7 +133,8 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return proportional coefficient
      */
-    public double getP() {
+    public double getP()
+    {
         return m_controller.getP();
     }
 
@@ -120,7 +143,8 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return integral coefficient
      */
-    public double getI() {
+    public double getI()
+    {
         return m_controller.getI();
     }
 
@@ -129,7 +153,8 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return differential coefficient
      */
-    public double getD() {
+    public double getD()
+    {
         return m_controller.getD();
     }
 
@@ -138,32 +163,38 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return The period of the controller.
      */
-    public double getPeriod() {
+    public double getPeriod()
+    {
         return m_controller.getPeriod();
     }
 
     /**
      * Sets the goal for the ProfiledPIDController.
      *
-     * @param goal The desired goal state.
+     * @param goal
+     *                 The desired goal state.
      */
-    public void setGoal(TrapezoidProfile.State goal) {
+    public void setGoal(TrapezoidProfile.State goal)
+    {
         m_goal = goal;
     }
 
     /**
      * Sets the goal for the ProfiledPIDController.
      *
-     * @param goal The desired goal position.
+     * @param goal
+     *                 The desired goal position.
      */
-    public void setGoal(double goal) {
+    public void setGoal(double goal)
+    {
         m_goal = new TrapezoidProfile.State(goal, 0);
     }
 
     /**
      * Gets the goal for the ProfiledPIDController.
      */
-    public TrapezoidProfile.State getGoal() {
+    public TrapezoidProfile.State getGoal()
+    {
         return m_goal;
     }
 
@@ -173,16 +204,19 @@ public class ProfiledPIDController implements Sendable {
      * <p>
      * This will return false until at least one input value has been computed.
      */
-    public boolean atGoal() {
+    public boolean atGoal()
+    {
         return atSetpoint() && m_goal.equals(m_setpoint);
     }
 
     /**
      * Set velocity and acceleration constraints for goal.
      *
-     * @param constraints Velocity and acceleration constraints for goal.
+     * @param constraints
+     *                        Velocity and acceleration constraints for goal.
      */
-    public void setConstraints(TrapezoidProfile.Constraints constraints) {
+    public void setConstraints(TrapezoidProfile.Constraints constraints)
+    {
         m_constraints = constraints;
     }
 
@@ -191,7 +225,8 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return The current setpoint.
      */
-    public TrapezoidProfile.State getSetpoint() {
+    public TrapezoidProfile.State getSetpoint()
+    {
         return m_setpoint;
     }
 
@@ -201,7 +236,8 @@ public class ProfiledPIDController implements Sendable {
      * <p>
      * This will return false until at least one input value has been computed.
      */
-    public boolean atSetpoint() {
+    public boolean atSetpoint()
+    {
         return m_controller.atSetpoint();
     }
 
@@ -213,17 +249,21 @@ public class ProfiledPIDController implements Sendable {
      * them to be the same point and automatically calculates the shortest route to
      * the setpoint.
      *
-     * @param minimumInput The minimum value expected from the input.
-     * @param maximumInput The maximum value expected from the input.
+     * @param minimumInput
+     *                         The minimum value expected from the input.
+     * @param maximumInput
+     *                         The maximum value expected from the input.
      */
-    public void enableContinuousInput(double minimumInput, double maximumInput) {
+    public void enableContinuousInput(double minimumInput, double maximumInput)
+    {
         m_controller.enableContinuousInput(minimumInput, maximumInput);
     }
 
     /**
      * Disables continuous input.
      */
-    public void disableContinuousInput() {
+    public void disableContinuousInput()
+    {
         m_controller.disableContinuousInput();
     }
 
@@ -234,29 +274,37 @@ public class ProfiledPIDController implements Sendable {
      * When the cap is reached, the integrator value is added to the controller
      * output rather than the integrator value times the integral gain.
      *
-     * @param minimumIntegral The minimum value of the integrator.
-     * @param maximumIntegral The maximum value of the integrator.
+     * @param minimumIntegral
+     *                            The minimum value of the integrator.
+     * @param maximumIntegral
+     *                            The maximum value of the integrator.
      */
-    public void setIntegratorRange(double minimumIntegral, double maximumIntegral) {
+    public void setIntegratorRange(double minimumIntegral, double maximumIntegral)
+    {
         m_controller.setIntegratorRange(minimumIntegral, maximumIntegral);
     }
 
     /**
      * Sets the error which is considered tolerable for use with atSetpoint().
      *
-     * @param positionTolerance Position error which is tolerable.
+     * @param positionTolerance
+     *                              Position error which is tolerable.
      */
-    public void setTolerance(double positionTolerance) {
+    public void setTolerance(double positionTolerance)
+    {
         setTolerance(positionTolerance, Double.POSITIVE_INFINITY);
     }
 
     /**
      * Sets the error which is considered tolerable for use with atSetpoint().
      *
-     * @param positionTolerance Position error which is tolerable.
-     * @param velocityTolerance Velocity error which is tolerable.
+     * @param positionTolerance
+     *                              Position error which is tolerable.
+     * @param velocityTolerance
+     *                              Velocity error which is tolerable.
      */
-    public void setTolerance(double positionTolerance, double velocityTolerance) {
+    public void setTolerance(double positionTolerance, double velocityTolerance)
+    {
         m_controller.setTolerance(positionTolerance, velocityTolerance);
     }
 
@@ -265,24 +313,29 @@ public class ProfiledPIDController implements Sendable {
      *
      * @return The error.
      */
-    public double getPositionError() {
+    public double getPositionError()
+    {
         return m_controller.getPositionError();
     }
 
     /**
      * Returns the change in error per second.
      */
-    public double getVelocityError() {
+    public double getVelocityError()
+    {
         return m_controller.getVelocityError();
     }
 
     /**
      * Returns the next output of the PID controller.
      *
-     * @param measurement The current measurement of the process variable.
+     * @param measurement
+     *                        The current measurement of the process variable.
      */
-    public double calculate(double measurement) {
-        if (m_controller.isContinuousInputEnabled()) {
+    public double calculate(double measurement)
+    {
+        if (m_controller.isContinuousInputEnabled())
+        {
             // Get error which is smallest distance between goal and measurement
             double error = m_controller.getContinuousError(m_goal.position - measurement);
 
@@ -305,10 +358,13 @@ public class ProfiledPIDController implements Sendable {
     /**
      * Returns the next output of the PID controller.
      *
-     * @param measurement The current measurement of the process variable.
-     * @param goal        The new goal of the controller.
+     * @param measurement
+     *                        The current measurement of the process variable.
+     * @param goal
+     *                        The new goal of the controller.
      */
-    public double calculate(double measurement, TrapezoidProfile.State goal) {
+    public double calculate(double measurement, TrapezoidProfile.State goal)
+    {
         setGoal(goal);
         return calculate(measurement);
     }
@@ -316,10 +372,13 @@ public class ProfiledPIDController implements Sendable {
     /**
      * Returns the next output of the PIDController.
      *
-     * @param measurement The current measurement of the process variable.
-     * @param goal        The new goal of the controller.
+     * @param measurement
+     *                        The current measurement of the process variable.
+     * @param goal
+     *                        The new goal of the controller.
      */
-    public double calculate(double measurement, double goal) {
+    public double calculate(double measurement, double goal)
+    {
         setGoal(goal);
         return calculate(measurement);
     }
@@ -327,11 +386,15 @@ public class ProfiledPIDController implements Sendable {
     /**
      * Returns the next output of the PID controller.
      *
-     * @param measurement The current measurement of the process variable.
-     * @param goal        The new goal of the controller.
-     * @param constraints Velocity and acceleration constraints for goal.
+     * @param measurement
+     *                        The current measurement of the process variable.
+     * @param goal
+     *                        The new goal of the controller.
+     * @param constraints
+     *                        Velocity and acceleration constraints for goal.
      */
-    public double calculate(double measurement, TrapezoidProfile.State goal, TrapezoidProfile.Constraints constraints) {
+    public double calculate(double measurement, TrapezoidProfile.State goal, TrapezoidProfile.Constraints constraints)
+    {
         setConstraints(constraints);
         return calculate(measurement, goal);
     }
@@ -339,9 +402,11 @@ public class ProfiledPIDController implements Sendable {
     /**
      * Reset the previous error and the integral term.
      *
-     * @param measurement The current measured State of the system.
+     * @param measurement
+     *                        The current measured State of the system.
      */
-    public void reset(TrapezoidProfile.State measurement) {
+    public void reset(TrapezoidProfile.State measurement)
+    {
         m_controller.reset();
         m_setpoint = measurement;
     }
@@ -349,25 +414,31 @@ public class ProfiledPIDController implements Sendable {
     /**
      * Reset the previous error and the integral term.
      *
-     * @param measuredPosition The current measured position of the system.
-     * @param measuredVelocity The current measured velocity of the system.
+     * @param measuredPosition
+     *                             The current measured position of the system.
+     * @param measuredVelocity
+     *                             The current measured velocity of the system.
      */
-    public void reset(double measuredPosition, double measuredVelocity) {
+    public void reset(double measuredPosition, double measuredVelocity)
+    {
         reset(new TrapezoidProfile.State(measuredPosition, measuredVelocity));
     }
 
     /**
      * Reset the previous error and the integral term.
      *
-     * @param measuredPosition The current measured position of the system. The
-     *                         velocity is assumed to be zero.
+     * @param measuredPosition
+     *                             The current measured position of the system. The
+     *                             velocity is assumed to be zero.
      */
-    public void reset(double measuredPosition) {
+    public void reset(double measuredPosition)
+    {
         reset(measuredPosition, 0.0);
     }
 
     @Override
-    public void initSendable(SendableBuilder builder) {
+    public void initSendable(SendableBuilder builder)
+    {
         builder.setSmartDashboardType("ProfiledPIDController");
         builder.addDoubleProperty("p", this::getP, this::setP);
         builder.addDoubleProperty("i", this::getI, this::setI);

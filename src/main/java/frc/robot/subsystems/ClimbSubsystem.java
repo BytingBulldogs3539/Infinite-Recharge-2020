@@ -14,7 +14,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class ClimbSubsystem extends SubsystemBase {
+public class ClimbSubsystem extends SubsystemBase
+{
 
   VictorSPX climbMotorL = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorLID());
   VictorSPX climbMotorR = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorRID());
@@ -23,8 +24,9 @@ public class ClimbSubsystem extends SubsystemBase {
   /**
    * Creates a new ClimbSubsystem.
    */
-  public ClimbSubsystem() {
-    if(RobotContainer.robotConstants.getClimbConstants().getClimbMotorBrake())
+  public ClimbSubsystem()
+  {
+    if (RobotContainer.robotConstants.getClimbConstants().getClimbMotorBrake())
     {
       climbMotorL.setNeutralMode(NeutralMode.Brake);
       climbMotorR.setNeutralMode(NeutralMode.Brake);
@@ -34,7 +36,7 @@ public class ClimbSubsystem extends SubsystemBase {
       climbMotorL.setNeutralMode(NeutralMode.Coast);
       climbMotorR.setNeutralMode(NeutralMode.Coast);
     }
-    
+
     climbMotorL.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
     climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
   }
@@ -45,11 +47,13 @@ public class ClimbSubsystem extends SubsystemBase {
     climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
+
   public void setPercentOutputL(double power)
   {
     climbMotorL.set(ControlMode.PercentOutput, power);
 
   }
+
   public void setPercentOutputR(double power)
   {
     climbMotorR.set(ControlMode.PercentOutput, power);
@@ -57,7 +61,8 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 }

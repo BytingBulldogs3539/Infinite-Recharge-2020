@@ -17,28 +17,36 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
 /**
- * A command that controls an output with a {@link PIDController}.  Runs forever by default - to add
- * exit conditions and/or other behavior, subclass this class.  The controller calculation and
- * output are performed synchronously in the command's execute() method.
+ * A command that controls an output with a {@link PIDController}. Runs forever
+ * by default - to add exit conditions and/or other behavior, subclass this
+ * class. The controller calculation and output are performed synchronously in
+ * the command's execute() method.
  */
-public class PIDCommand extends CommandBase {
+public class PIDCommand extends CommandBase
+{
   protected final PIDController m_controller;
   protected DoubleSupplier m_measurement;
   protected DoubleSupplier m_setpoint;
   protected DoubleConsumer m_useOutput;
 
   /**
-   * Creates a new PIDCommand, which controls the given output with a PIDController.
+   * Creates a new PIDCommand, which controls the given output with a
+   * PIDController.
    *
-   * @param controller        the controller that controls the output.
-   * @param measurementSource the measurement of the process variable
-   * @param setpointSource    the controller's setpoint
-   * @param useOutput         the controller's output
-   * @param requirements      the subsystems required by this command
+   * @param controller
+   *                            the controller that controls the output.
+   * @param measurementSource
+   *                            the measurement of the process variable
+   * @param setpointSource
+   *                            the controller's setpoint
+   * @param useOutput
+   *                            the controller's output
+   * @param requirements
+   *                            the subsystems required by this command
    */
-  public PIDCommand(PIDController controller, DoubleSupplier measurementSource,
-                    DoubleSupplier setpointSource, DoubleConsumer useOutput,
-                    Subsystem... requirements) {
+  public PIDCommand(PIDController controller, DoubleSupplier measurementSource, DoubleSupplier setpointSource,
+      DoubleConsumer useOutput, Subsystem... requirements)
+  {
     requireNonNullParam(controller, "controller", "SynchronousPIDCommand");
     requireNonNullParam(measurementSource, "measurementSource", "SynchronousPIDCommand");
     requireNonNullParam(setpointSource, "setpointSource", "SynchronousPIDCommand");
@@ -52,33 +60,41 @@ public class PIDCommand extends CommandBase {
   }
 
   /**
-   * Creates a new PIDCommand, which controls the given output with a PIDController.
+   * Creates a new PIDCommand, which controls the given output with a
+   * PIDController.
    *
-   * @param controller        the controller that controls the output.
-   * @param measurementSource the measurement of the process variable
-   * @param setpoint          the controller's setpoint
-   * @param useOutput         the controller's output
-   * @param requirements      the subsystems required by this command
+   * @param controller
+   *                            the controller that controls the output.
+   * @param measurementSource
+   *                            the measurement of the process variable
+   * @param setpoint
+   *                            the controller's setpoint
+   * @param useOutput
+   *                            the controller's output
+   * @param requirements
+   *                            the subsystems required by this command
    */
-  public PIDCommand(PIDController controller, DoubleSupplier measurementSource,
-                    double setpoint, DoubleConsumer useOutput,
-                    Subsystem... requirements) {
+  public PIDCommand(PIDController controller, DoubleSupplier measurementSource, double setpoint,
+      DoubleConsumer useOutput, Subsystem... requirements)
+  {
     this(controller, measurementSource, () -> setpoint, useOutput, requirements);
   }
 
   @Override
-  public void initialize() {
+  public void initialize()
+  {
     m_controller.reset();
   }
 
   @Override
-  public void execute() {
-    m_useOutput.accept(m_controller.calculate(m_measurement.getAsDouble(),
-                                              m_setpoint.getAsDouble()));
+  public void execute()
+  {
+    m_useOutput.accept(m_controller.calculate(m_measurement.getAsDouble(), m_setpoint.getAsDouble()));
   }
 
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
     m_useOutput.accept(0);
   }
 
@@ -87,7 +103,8 @@ public class PIDCommand extends CommandBase {
    *
    * @return The PIDController
    */
-  public PIDController getController() {
+  public PIDController getController()
+  {
     return m_controller;
   }
 }

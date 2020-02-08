@@ -16,29 +16,30 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class VisionTrack extends PIDCommand {
+public class VisionTrack extends PIDCommand
+{
   /**
    * Creates a new VisionTrack.
    */
-  
+
   DriveSubsystem subsystem;
 
-
-  public VisionTrack(DriveSubsystem subsystem) {
+  public VisionTrack(DriveSubsystem subsystem)
+  {
     super(
         // The controller that the command will use
         new PIDController(.035, 0.001, 0),
         // This should return the measurement
-        ()->subsystem.getVisionAngle(),
+        () -> subsystem.getVisionAngle(),
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
-        output -> {
+        output ->
+        {
           // Use the output here
           System.out.println(-output);
-          subsystem.drive(.25*RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
-          .25*RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft),
-          -output*.5, true);
+          subsystem.drive(.25 * RobotContainer.m_driverController.getY(GenericHID.Hand.kLeft),
+              .25 * RobotContainer.m_driverController.getX(GenericHID.Hand.kLeft), -output * .5, true);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -48,12 +49,12 @@ public class VisionTrack extends PIDCommand {
     getController().setIntegratorZone(2);
     getController().setTolerance(.5);
 
-
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

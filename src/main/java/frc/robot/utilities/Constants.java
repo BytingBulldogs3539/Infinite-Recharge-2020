@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 /**
  * An interface conta
  */
-public abstract class Constants {
+public abstract class Constants
+{
 
     public abstract RobotIDConstants getRobotIDConstants();
 
@@ -36,33 +37,41 @@ public abstract class Constants {
 
     public abstract ShooterConstants getShooterConstants();
 
-    public abstract class RobotIDConstants {
+    public abstract class RobotIDConstants
+    {
         public abstract int getIntakeMotorID();
 
         public abstract int getShooterMotorID();
+
         public abstract int getIndexMotorID();
 
         public abstract int getClimbMotorLID();
+
         public abstract int getClimbMotorRID();
+
         public abstract int getAdjusterID();
 
         public abstract int getBuddyClimbMotorID();
-        
+
         public abstract int getSpinnerMotorID();
 
         public abstract I2C.Port getColorSensorPort();
 
         public abstract int getShooterPotentiometerID();
+
         public abstract int getShooterServoID();
 
         public abstract int getBallSensorPort();
 
         public abstract int getPCMID();
-        public abstract int getIntakeSolinoidOn();
-        public abstract int getIntakeSolinoidOff();
-        }
 
-    public abstract class DriveConstants {
+        public abstract int getIntakeSolinoidOn();
+
+        public abstract int getIntakeSolinoidOff();
+    }
+
+    public abstract class DriveConstants
+    {
         public abstract int getkFrontLeftDriveMotorPort();
 
         public abstract int getkRearLeftDriveMotorPort();
@@ -143,7 +152,8 @@ public abstract class Constants {
 
     }
 
-    public abstract class ModuleConstants {
+    public abstract class ModuleConstants
+    {
         public abstract double getkMaxModuleAngularSpeedRadiansPerSecond();
 
         public abstract double getkMaxModuleAngularAccelerationRadiansPerSecondSquared();
@@ -164,12 +174,15 @@ public abstract class Constants {
 
     }
 
-    public abstract class OIConstants {
+    public abstract class OIConstants
+    {
         public abstract int getkDriverControllerPort();
+
         public abstract int getkOpControllerPort();
     }
 
-    public abstract class AutoConstants {
+    public abstract class AutoConstants
+    {
         public abstract double getkMaxSpeedINPerSecond();
 
         public abstract double getkMaxAccelerationINPerSecondSquared();
@@ -195,31 +208,43 @@ public abstract class Constants {
     public abstract class IntakeConstants
     {
         public abstract MotorType getIntakeMotorType();
+
         public abstract boolean getIntakeMotorInverted();
-		public abstract boolean getDefaultIntakeDirection();
+
+        public abstract boolean getDefaultIntakeDirection();
     }
 
     public abstract class BallIndexerConstants
     {
         public abstract boolean getIndexMotorInverted();
+
         public abstract boolean getIndexMotorBrake();
     }
+
     public abstract class ClimbConstants
     {
         public abstract boolean getClimbMotorInverted();
+
         public abstract boolean getClimbMotorBrake();
 
         public abstract boolean getClimbAdjusterMotorInverted();
+
         public abstract boolean getClimbAdjusterMotorBrake();
 
     }
-    public abstract class ShooterConstants{
+
+    public abstract class ShooterConstants
+    {
         public abstract double getkP();
+
         public abstract double getkI();
+
         public abstract double getkD();
+
         public abstract double getkF();
 
         public abstract double getPotOffset();
-		public abstract boolean getShooterMotorInverted();
+
+        public abstract boolean getShooterMotorInverted();
     }
 }

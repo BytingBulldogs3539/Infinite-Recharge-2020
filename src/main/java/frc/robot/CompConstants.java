@@ -84,14 +84,14 @@ public final class CompConstants extends Constants
         @Override
         public int getShooterServoID()
         {
-            //TODO: Enter Real ID
+            // TODO: Enter Real ID
             return 0;
         }
 
         @Override
         public int getShooterPotentiometerID()
         {
-            //TODO: Enter Real ID
+            // TODO: Enter Real ID
             return 0;
         }
 
@@ -364,7 +364,7 @@ public final class CompConstants extends Constants
 
         public double getkDriveEncoderRpmToInps()
         {
-            return (217.92/ 5676.0);
+            return (217.92 / 5676.0);
         }
 
         public double getkPModuleTurningController()
@@ -424,7 +424,6 @@ public final class CompConstants extends Constants
             return .076;
         }
 
-        
         public double getkPYController()
         {
             return .076;
@@ -475,6 +474,7 @@ public final class CompConstants extends Constants
         }
 
     }
+
     public class BallIndexerConstants extends Constants.BallIndexerConstants
     {
 
@@ -483,13 +483,15 @@ public final class CompConstants extends Constants
         {
             return true;
         }
+
         @Override
         public boolean getIndexMotorBrake()
         {
             return true;
         }
-        
+
     }
+
     public class ClimbConstants extends Constants.ClimbConstants
     {
 
@@ -498,6 +500,7 @@ public final class CompConstants extends Constants
         {
             return true;
         }
+
         @Override
         public boolean getClimbMotorBrake()
         {
@@ -515,30 +518,36 @@ public final class CompConstants extends Constants
         {
             return true;
         }
-        
+
     }
-    public class ShooterConstants extends Constants.ShooterConstants{
+
+    public class ShooterConstants extends Constants.ShooterConstants
+    {
 
         @Override
-        public double getkP() {
+        public double getkP()
+        {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkI() {
+        public double getkI()
+        {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkD() {
+        public double getkD()
+        {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkF() {
+        public double getkF()
+        {
             // TODO tune values
             return 0;
         }
@@ -556,7 +565,6 @@ public final class CompConstants extends Constants
             return false;
         }
 
-        
     }
 
     private RobotIDConstants robotIDConstants = new RobotIDConstants();
@@ -578,32 +586,38 @@ public final class CompConstants extends Constants
     private ShooterConstants robotShooterConstants = new ShooterConstants();
 
     @Override
-    public frc.robot.utilities.Constants.RobotIDConstants getRobotIDConstants() {
+    public frc.robot.utilities.Constants.RobotIDConstants getRobotIDConstants()
+    {
         return robotIDConstants;
     }
 
     @Override
-    public frc.robot.utilities.Constants.DriveConstants getDriveConstants() {
+    public frc.robot.utilities.Constants.DriveConstants getDriveConstants()
+    {
         return robotDriveConstants;
     }
 
     @Override
-    public frc.robot.utilities.Constants.ModuleConstants getModuleConstants() {
+    public frc.robot.utilities.Constants.ModuleConstants getModuleConstants()
+    {
         return robotModuleConstants;
     }
 
     @Override
-    public frc.robot.utilities.Constants.OIConstants getOIConstants() {
+    public frc.robot.utilities.Constants.OIConstants getOIConstants()
+    {
         return robotOIConstants;
     }
 
     @Override
-    public frc.robot.utilities.Constants.AutoConstants getAutoConstants() {
+    public frc.robot.utilities.Constants.AutoConstants getAutoConstants()
+    {
         return robotAutoConstants;
     }
 
     @Override
-    public frc.robot.utilities.Constants.ShooterConstants getShooterConstants() {
+    public frc.robot.utilities.Constants.ShooterConstants getShooterConstants()
+    {
         return robotShooterConstants;
     }
 

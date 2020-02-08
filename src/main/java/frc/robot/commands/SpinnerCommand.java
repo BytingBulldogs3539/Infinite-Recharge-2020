@@ -10,13 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SpinnerSubsystem;
 
-public class SpinnerCommand extends CommandBase {
+public class SpinnerCommand extends CommandBase
+{
   /**
    * Creates a new SpinnerCommand.
    */
   SpinnerSubsystem subsystem;
-  
-  public SpinnerCommand(SpinnerSubsystem subsystem) {
+
+  public SpinnerCommand(SpinnerSubsystem subsystem)
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
@@ -24,22 +26,26 @@ public class SpinnerCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize()
+  {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute()
+  {
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted)
+  {
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished()
+  {
     return false;
   }
 }

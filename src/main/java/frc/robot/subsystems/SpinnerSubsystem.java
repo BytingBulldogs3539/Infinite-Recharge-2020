@@ -15,62 +15,77 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class SpinnerSubsystem extends SubsystemBase {
-  
+public class SpinnerSubsystem extends SubsystemBase
+{
+
   // Spinner motor
   VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
-  ColorSensorV3 colorSensor = new ColorSensorV3(RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());  
+  ColorSensorV3 colorSensor = new ColorSensorV3(
+      RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
 
   /**
    * Creates a new SpinnerSubsystem.
    */
-  public SpinnerSubsystem() {
+  public SpinnerSubsystem()
+  {
   }
 
   Color color;
   double r, g, b;
-  enum Col {
-    BLUE,
-    GREEN,
-    RED,
-    YELLOW,
-    NONE
+
+  enum Col
+  {
+    BLUE, GREEN, RED, YELLOW, NONE
   }
-  public Col getCurrentColor() {
+
+  public Col getCurrentColor()
+  {
     color = colorSensor.getColor();
-    
-    if (r > g && r > b) {
+
+    if (r > g && r > b)
+    {
       return Col.RED;
-    } else if (Math.abs(b - g) < 0.1) {
+    }
+    else if (Math.abs(b - g) < 0.1)
+    {
       return Col.BLUE;
-    } else if (Math.abs(g - r) < 0.3 && b < 0.16) {
+    }
+    else if (Math.abs(g - r) < 0.3 && b < 0.16)
+    {
       return Col.YELLOW;
-    } else if (g > r && g > b) {
+    }
+    else if (g > r && g > b)
+    {
       return Col.GREEN;
-    } else {
+    }
+    else
+    {
       return Col.NONE;
     }
   }
 
   Col col, newCol;
-  public Col getOffsetColor() {
+
+  public Col getOffsetColor()
+  {
     col = this.getCurrentColor();
 
-    switch(col) {
-      case RED:
-        newCol = Col.BLUE;
+    switch (col)
+    {
+    case RED:
+      newCol = Col.BLUE;
       break;
-      case GREEN:
-        newCol = Col.YELLOW;
+    case GREEN:
+      newCol = Col.YELLOW;
       break;
-      case BLUE:
-        newCol = Col.RED;
+    case BLUE:
+      newCol = Col.RED;
       break;
-      case YELLOW:
-        newCol = Col.GREEN;
+    case YELLOW:
+      newCol = Col.GREEN;
       break;
-      case NONE:
-        newCol = Col.NONE;
+    case NONE:
+      newCol = Col.NONE;
       break;
     }
 
@@ -83,7 +98,8 @@ public class SpinnerSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
+  public void periodic()
+  {
     // This method will be called once per scheduler run
   }
 }
