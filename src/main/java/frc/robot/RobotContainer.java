@@ -38,6 +38,8 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterChirpCommand;
+
 import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.BuddyClimbSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -163,6 +165,9 @@ public class RobotContainer {
     //m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
+
+
+    m_opController.buttonPadLeft.whenPressed(new ShooterChirpCommand(m_ShooterSubsystem, true,3));
     SmartDashboard.putData("Climb Up Left",new ClimbCommand(m_ClimbSubsystem,-.2,0));
     SmartDashboard.putData("Climb Up Right",new ClimbCommand(m_ClimbSubsystem,0,-.2));
     SmartDashboard.putData("Climb Down Left",new ClimbCommand(m_ClimbSubsystem,.2,0));
