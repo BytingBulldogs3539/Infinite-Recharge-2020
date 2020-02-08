@@ -17,7 +17,8 @@ import frc.robot.RobotContainer;
 public class ClimbSubsystem extends SubsystemBase {
 
   VictorSPX climbMotorL = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorLID());
-  VictorSPX climbMotorB = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorRID());
+  VictorSPX climbMotorR = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorRID());
+  VictorSPX climbAdjuster = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getAdjusterID());
 
   /**
    * Creates a new ClimbSubsystem.
@@ -26,21 +27,22 @@ public class ClimbSubsystem extends SubsystemBase {
     if(RobotContainer.robotConstants.getClimbConstants().getClimbMotorBrake())
     {
       climbMotorL.setNeutralMode(NeutralMode.Brake);
-      climbMotorB.setNeutralMode(NeutralMode.Brake);
+      climbMotorR.setNeutralMode(NeutralMode.Brake);
     }
     else
     {
       climbMotorL.setNeutralMode(NeutralMode.Coast);
-      climbMotorB.setNeutralMode(NeutralMode.Coast);
+      climbMotorR.setNeutralMode(NeutralMode.Coast);
     }
+    
     climbMotorL.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
-    climbMotorB.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+    climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
   }
 
   public void setPercentOutput(double power)
   {
     climbMotorL.set(ControlMode.PercentOutput, power);
-    climbMotorB.set(ControlMode.PercentOutput, power);
+    climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
   public void setPercentOutputL(double power)
@@ -50,7 +52,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
   public void setPercentOutputR(double power)
   {
-    climbMotorB.set(ControlMode.PercentOutput, power);
+    climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
 

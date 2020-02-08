@@ -21,13 +21,11 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.utilities.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -35,15 +33,18 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 
 import frc.robot.commands.BallIndexerCommand;
+import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.VisionTrack;
 import frc.robot.subsystems.BallIndexerSubsystem;
+import frc.robot.subsystems.BuddyClimbSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SpinnerSubsystem;
 import frc.robot.utilities.Constants;
 import frc.robot.utilities.LogitechF310;
 
@@ -55,11 +56,15 @@ import frc.robot.utilities.LogitechF310;
  */
 public class RobotContainer {
   // The robot's subsystems
-  public final DriveSubsystem m_robotDrive;
   public final ShooterSubsystem m_ShooterSubsystem;
   public final ClimbSubsystem m_ClimbSubsystem;
   public final IntakeSubsystem m_IntakeSubsystem;
-  public final BallIndexerSubsystem m_BallIndexerSubsystem;
+  public static BallIndexerSubsystem m_BallIndexerSubsystem;
+  public final BuddyClimbSubsystem m_BuddyClimbSubsystem;
+  public final SpinnerSubsystem m_SpinnerSubsystem;
+  public final DriveSubsystem m_robotDrive;
+
+
   // The driver's controller
   public static LogitechF310 m_driverController;
   public static LogitechF310 m_opController;
@@ -123,11 +128,14 @@ public class RobotContainer {
       robotConstants = new CompConstants();
     }
 
-    m_robotDrive = new DriveSubsystem();
     m_ShooterSubsystem = new ShooterSubsystem();
     m_IntakeSubsystem = new IntakeSubsystem();
     m_BallIndexerSubsystem = new BallIndexerSubsystem();
     m_ClimbSubsystem = new ClimbSubsystem();
+    m_BuddyClimbSubsystem = new BuddyClimbSubsystem();
+    m_SpinnerSubsystem = new SpinnerSubsystem();
+    m_robotDrive = new DriveSubsystem();
+
     // Configure default commands
     m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
@@ -148,9 +156,18 @@ public class RobotContainer {
     //m_driverController.buttonA.whenHeld(visionCommand);
 
     m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
-    m_opController.buttonA.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, 1));
-    m_opController.buttonY.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, -1));
-    m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1));
+    m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, 1));
+    m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, -1));
+
+    //m_opController.buttonY.whenHeld(new BallIndexerCommand(m_BallIndexerSubsystem, -1));
+    //m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
+    m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
+    m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
+    SmartDashboard.putData("Climb Up Left",new ClimbCommand(m_ClimbSubsystem,-.2,0));
+    SmartDashboard.putData("Climb Up Right",new ClimbCommand(m_ClimbSubsystem,0,-.2));
+    SmartDashboard.putData("Climb Down Left",new ClimbCommand(m_ClimbSubsystem,.2,0));
+    SmartDashboard.putData("Climb Down Right",new ClimbCommand(m_ClimbSubsystem,0,.2));
+    SmartDashboard.putData("Climb Up Both",new ClimbCommand(m_ClimbSubsystem,-.2,-.2));
   }
 
   /**

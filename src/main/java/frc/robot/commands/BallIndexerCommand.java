@@ -15,30 +15,31 @@ public class BallIndexerCommand extends CommandBase {
    * Creates a new BallIndexerCommand.
    */
   BallIndexerSubsystem subsystem;
-  double speed;
-
-  public BallIndexerCommand(BallIndexerSubsystem subsystem, double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public BallIndexerCommand(BallIndexerSubsystem subsystem) {
     addRequirements(subsystem);
     this.subsystem = subsystem;
-    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    subsystem.setPercentOutput(speed);
+  public void initialize() 
+  {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() 
+  {
+    if(subsystem.getBallSensorState())
+      subsystem.setPercentOutput(1);
+    else
+      subsystem.setPercentOutput(0);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

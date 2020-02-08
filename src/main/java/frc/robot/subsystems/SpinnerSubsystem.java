@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.util.Color;
@@ -17,7 +18,7 @@ import frc.robot.RobotContainer;
 public class SpinnerSubsystem extends SubsystemBase {
   
   // Spinner motor
-  TalonSRX spinnerMotor = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
+  VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
   ColorSensorV3 colorSensor = new ColorSensorV3(RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());  
 
   /**
@@ -74,6 +75,11 @@ public class SpinnerSubsystem extends SubsystemBase {
     }
 
     return newCol;
+  }
+
+  public void setPercentOutput(double output)
+  {
+    spinnerMotor.set(ControlMode.PercentOutput, output);
   }
 
   @Override

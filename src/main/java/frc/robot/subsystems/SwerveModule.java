@@ -75,6 +75,8 @@ public class SwerveModule {
     // Create and store away the turning motor.
     this.m_turningEncoder = new CANCoder(turningEncoderPort);
 
+    m_turningEncoder.setPosition(m_turningEncoder.getAbsolutePosition());
+
     // Set whether drive encoder should be reversed or not
     this.driveEncoderReversed = driveEncoderReversed;
 
@@ -119,9 +121,6 @@ public class SwerveModule {
 
     final var driveOutput = m_drivePIDController.calculate(getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
         state.speedMetersPerSecond);
-    SmartDashboard.putNumber("Current Speed", getDriveVel()
-        * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps());
-    SmartDashboard.putNumber("Drive Speed", state.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.
     final var turnOutput = m_turningPIDController.calculate(getAngle(), state.angle.getRadians());
@@ -156,7 +155,7 @@ public class SwerveModule {
   }
 
   public double getAngle() {
-    double enc = Math.toRadians(m_turningEncoder.getAbsolutePosition());
+    double enc = Math.toRadians(m_turningEncoder.getPosition());
     return enc;
   }
 

@@ -8,29 +8,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.SpinnerSubsystem;
 
-public class ClimbCommand extends CommandBase {
+public class ClimbAdjustCommand extends CommandBase {
   /**
-   * Creates a new ClimbCommand.
+   * Creates a new ClimbAdjustCommand.
    */
-  ClimbSubsystem subsystem;
-  double percentOutputL = 0;
-  double percentOutputR = 0;
-
-  public ClimbCommand(ClimbSubsystem subsystem, double percentOutputL, double percentOutputR) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  double percentOutput;
+  SpinnerSubsystem subsystem;
+  public ClimbAdjustCommand(SpinnerSubsystem subsystem, double percentOutput) {
     addRequirements(subsystem);
-    this.subsystem = subsystem;
-    this.percentOutputR = percentOutputR;
-    this.percentOutputL = percentOutputL;
+    
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystem.setPercentOutputL(percentOutputL);
-    subsystem.setPercentOutputR(percentOutputR);
+    subsystem.setPercentOutput(percentOutput);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +36,6 @@ public class ClimbCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

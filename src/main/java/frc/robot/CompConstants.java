@@ -38,70 +38,60 @@ public final class CompConstants extends Constants
         }
 
         @Override
-        public int getElevatorBaseMotorID()
-        {
-            // TODO: Read ID
-            return 0;
-        }
-
-        @Override
-        public int getElevatorLiftMotorID()
-        {
-            // TODO: Real ID
-            return 0;
-        }
-
-        @Override
         public int getShooterMotorID()
         {
-            // TODO: Real ID
             return 16;
         }
 
         @Override
         public int getIndexMotorID()
         {
-            // TODO: Real ID
             return 11;
         }
 
         @Override
         public int getClimbMotorLID()
         {
-            // TODO: Real ID
             return 10;
         }
 
         @Override
         public int getClimbMotorRID()
         {
-            // TODO: Real ID
             return 15;
+        }
+
+        @Override
+        public int getAdjusterID()
+        {
+            // TODO Enter Real ID
+            return 12;
         }
 
         @Override
         public int getBuddyClimbMotorID()
         {
-            // TODO: Real ID
-            return 0;
+            // TODO: Enter Real ID
+            return 13;
         }
 
         @Override
         public int getSpinnerMotorID()
         {
-            // TODO: Real ID
-            return 0;
+            return 14;
         }
 
         @Override
         public int getShooterServoID()
         {
+            //TODO: Enter Real ID
             return 0;
         }
 
         @Override
         public int getShooterPotentiometerID()
         {
+            //TODO: Enter Real ID
             return 0;
         }
 
@@ -110,6 +100,31 @@ public final class CompConstants extends Constants
         {
             return Port.kOnboard;
         }
+
+        @Override
+        public int getPCMID()
+        {
+            return 20;
+        }
+
+        @Override
+        public int getIntakeSolinoidOn()
+        {
+            return 1;
+        }
+
+        @Override
+        public int getIntakeSolinoidOff()
+        {
+            return 0;
+        }
+
+        @Override
+        public int getBallSensorPort()
+        {
+            return 0;
+        }
+
     }
 
     public class DriveConstants extends Constants.DriveConstants
@@ -181,22 +196,22 @@ public final class CompConstants extends Constants
 
         public boolean getkFrontLeftTurningEncoderReversed()
         {
-            return true;
+            return false;
         }
 
         public boolean getkRearLeftTurningEncoderReversed()
         {
-            return true;
+            return false;
         }
 
         public boolean getkFrontRightTurningEncoderReversed()
         {
-            return true;
+            return false;
         }
 
         public boolean getkRearRightTurningEncoderReversed()
         {
-            return true;
+            return false;
         }
 
         public boolean getkFrontLeftDriveEncoderReversed()
@@ -241,22 +256,22 @@ public final class CompConstants extends Constants
 
         public boolean getkFrontLeftTurningReversed()
         {
-            return false;
+            return true;
         }
 
         public boolean getkRearLeftTurningReversed()
         {
-            return false;
+            return true;
         }
 
         public boolean getkFrontRightTurningReversed()
         {
-            return false;
+            return true;
         }
 
         public boolean getkRearRightTurningReversed()
         {
-            return false;
+            return true;
         }
 
         public double getkTrackWidth()
@@ -281,29 +296,7 @@ public final class CompConstants extends Constants
 
         public boolean getkGyroReversed()
         {
-            return false;
-        }
-
-        // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        // These characterization values MUST be determined either experimentally or
-        // theoretically
-        // for *your* robot's drive.
-        // The RobotPy Characterization Toolsuite provides a convenient tool for
-        // obtaining these
-        // values for your robot.
-        public double getksVolts()
-        {
-            return 1;
-        }
-
-        public double getkvVoltSecondsPerMeter()
-        {
-            return 0.8;
-        }
-
-        public double getkaVoltSecondsSquaredPerMeter()
-        {
-            return 0.15;
+            return true;
         }
 
         public double getkMaxSpeedINPerSecond()
@@ -320,25 +313,25 @@ public final class CompConstants extends Constants
         @Override
         public double getkFrontLeftTurningEncoderOffset()
         {
-            return -162.949;
+            return 14.502;
         }
 
         @Override
         public double getkRearLeftTurningEncoderOffset()
         {
-            return 165.674;
+            return -9.404297;
         }
 
         @Override
         public double getkFrontRightTurningEncoderOffset()
         {
-            return 95.801;
+            return -53.174;
         }
 
         @Override
         public double getkRearRightTurningEncoderOffset()
         {
-            return 24.609;
+            return -124.365;
         }
     }
 
@@ -376,7 +369,7 @@ public final class CompConstants extends Constants
 
         public double getkPModuleTurningController()
         {
-            return .25;
+            return .4;
         }
 
         public double getkPModuleDriveController()
@@ -474,6 +467,12 @@ public final class CompConstants extends Constants
             return true;
         }
 
+        @Override
+        public boolean getDefaultIntakeDirection()
+        {
+            return false;
+        }
+
     }
     public class BallIndexerConstants extends Constants.BallIndexerConstants
     {
@@ -500,6 +499,18 @@ public final class CompConstants extends Constants
         }
         @Override
         public boolean getClimbMotorBrake()
+        {
+            return true;
+        }
+
+        @Override
+        public boolean getClimbAdjusterMotorInverted()
+        {
+            return false;
+        }
+
+        @Override
+        public boolean getClimbAdjusterMotorBrake()
         {
             return true;
         }

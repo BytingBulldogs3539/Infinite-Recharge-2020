@@ -39,14 +39,12 @@ public abstract class Constants {
     public abstract class RobotIDConstants {
         public abstract int getIntakeMotorID();
 
-        public abstract int getElevatorBaseMotorID();
-        public abstract int getElevatorLiftMotorID();
-
         public abstract int getShooterMotorID();
         public abstract int getIndexMotorID();
 
         public abstract int getClimbMotorLID();
         public abstract int getClimbMotorRID();
+        public abstract int getAdjusterID();
 
         public abstract int getBuddyClimbMotorID();
         
@@ -56,7 +54,13 @@ public abstract class Constants {
 
         public abstract int getShooterPotentiometerID();
         public abstract int getShooterServoID();
-    }
+
+        public abstract int getBallSensorPort();
+
+        public abstract int getPCMID();
+        public abstract int getIntakeSolinoidOn();
+        public abstract int getIntakeSolinoidOff();
+        }
 
     public abstract class DriveConstants {
         public abstract int getkFrontLeftDriveMotorPort();
@@ -133,12 +137,6 @@ public abstract class Constants {
 
         public abstract boolean getkGyroReversed();
 
-        public abstract double getksVolts();
-
-        public abstract double getkvVoltSecondsPerMeter();
-
-        public abstract double getkaVoltSecondsSquaredPerMeter();
-
         public abstract double getkMaxSpeedINPerSecond();
 
         public abstract double getkMaxTurnSpeedRadPerSecond();
@@ -198,6 +196,7 @@ public abstract class Constants {
     {
         public abstract MotorType getIntakeMotorType();
         public abstract boolean getIntakeMotorInverted();
+		public abstract boolean getDefaultIntakeDirection();
     }
 
     public abstract class BallIndexerConstants
@@ -209,6 +208,10 @@ public abstract class Constants {
     {
         public abstract boolean getClimbMotorInverted();
         public abstract boolean getClimbMotorBrake();
+
+        public abstract boolean getClimbAdjusterMotorInverted();
+        public abstract boolean getClimbAdjusterMotorBrake();
+
     }
     public abstract class ShooterConstants{
         public abstract double getkP();

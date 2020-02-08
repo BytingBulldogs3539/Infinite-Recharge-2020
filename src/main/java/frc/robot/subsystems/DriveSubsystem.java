@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 @SuppressWarnings("PMD.ExcessiveImports")
@@ -29,7 +30,7 @@ public class DriveSubsystem extends SubsystemBase {
   RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderReversed(),
   RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningReversed());
 
-  private final SwerveModule m_rearLeft = new SwerveModule("Back Left Module", RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveMotorPort(),
+  public final SwerveModule m_rearLeft = new SwerveModule("Back Left Module", RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveMotorPort(),
   RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningMotorPort(),RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderOffset(),
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningReversed());
@@ -40,14 +41,11 @@ public class DriveSubsystem extends SubsystemBase {
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningReversed());
 
-  private final SwerveModule m_rearRight = new SwerveModule("Back Right Module",
+  public final SwerveModule m_rearRight = new SwerveModule("Back Right Module",
   RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveMotorPort(), RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningMotorPort(),
   RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderPorts(), RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderOffset(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveEncoderReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderReversed(), RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveReversed(),
       RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningReversed());
-
-  // The gyro sensor
-  private final PigeonIMU m_gyro = new PigeonIMU(RobotContainer.robotConstants.getDriveConstants().getkPigeonID());
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
@@ -59,7 +57,7 @@ public class DriveSubsystem extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
-    m_gyro.setYaw(0);
+    Robot.m_robotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(), getAngle());
   }
 
@@ -171,13 +169,14 @@ public class DriveSubsystem extends SubsystemBase {
    * Zeroes the heading of the robot.
    */
   public void zeroHeading() {
-    m_gyro.setYaw(0);
+    Robot.m_robotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
   }
 
   public double getPigeonAngle()
   {
+
     double[] ypr = new double[3];
-    m_gyro.getYawPitchRoll(ypr);
+    RobotContainer.m_BallIndexerSubsystem.pigeon.getYawPitchRoll(ypr);
     return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
   }
 
