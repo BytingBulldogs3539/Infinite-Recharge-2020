@@ -27,44 +27,44 @@ public class DriveSubsystem extends SubsystemBase
 {
   // Robot swerve modules
   public final SwerveModule m_frontLeft = new SwerveModule("Front Left Module",
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderPorts(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderOffset(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftDriveReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontLeftTurningReversed());
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftDriveMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftTurningEncoderPorts(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftTurningEncoderOffset(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftTurningEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontLeftTurningReversed());
 
   public final SwerveModule m_rearLeft = new SwerveModule("Back Left Module",
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderPorts(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderOffset(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftDriveReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearLeftTurningReversed());
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftDriveMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftTurningEncoderPorts(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftTurningEncoderOffset(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftTurningEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearLeftTurningReversed());
 
   public final SwerveModule m_frontRight = new SwerveModule("Front Right Module",
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderPorts(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderOffset(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightDriveReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkFrontRightTurningReversed());
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightDriveMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightTurningEncoderPorts(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightTurningEncoderOffset(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightTurningEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKFrontRightTurningReversed());
 
   public final SwerveModule m_rearRight = new SwerveModule("Back Right Module",
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningMotorPort(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderPorts(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderOffset(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningEncoderReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightDriveReversed(),
-      RobotContainer.robotConstants.getDriveConstants().getkRearRightTurningReversed());
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightDriveMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightTurningMotorPort(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightTurningEncoderPorts(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightTurningEncoderOffset(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightDriveEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightTurningEncoderReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightDriveReversed(),
+      RobotContainer.robotConstants.getDriveConstants().getKRearRightTurningReversed());
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase
   public DriveSubsystem()
   {
     RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
-    m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics(),
+    m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
         getAngle());
   }
 
@@ -87,15 +87,13 @@ public class DriveSubsystem extends SubsystemBase
    *
    * @return The angle of the robot.
    */
-  public Rotation2d getAngle()
-  {
+  public Rotation2d getAngle() {
     // Negating the angle because WPILib gyros are CW positive.
     return Rotation2d.fromDegrees(getPigeonAngle());
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(new Rotation2d(Math.toRadians(getHeading())), m_frontLeft.getState(), m_rearLeft.getState(),
         m_frontRight.getState(), m_rearRight.getState());
@@ -106,38 +104,28 @@ public class DriveSubsystem extends SubsystemBase
    *
    * @return The pose.
    */
-  public Pose2d getPose()
-  {
-    return m_odometry.getPoseMeters();
-  }
+  public Pose2d getPose() { return m_odometry.getPoseMeters(); }
 
   /**
    * Resets the odometry to the specified pose.
    *
-   * @param pose
-   *               The pose to which to set the odometry.
+   * @param pose The pose to which to set the odometry.
    */
-  public void resetOdometry(Pose2d pose)
-  {
+  public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(pose, getAngle());
   }
 
   /**
    * Method to drive the robot using joystick info.
    *
-   * @param xSpeed
-   *                        Speed of the robot in the x direction (forward).
-   * @param ySpeed
-   *                        Speed of the robot in the y direction (sideways).
-   * @param rot
-   *                        Angular rate of the robot.
-   * @param fieldRelative
-   *                        Whether the provided x and y speeds are relative to
-   *                        the field.
+   * @param xSpeed Speed of the robot in the x direction (forward).
+   * @param ySpeed Speed of the robot in the y direction (sideways).
+   * @param rot Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to the
+   *          field.
    */
   @SuppressWarnings("ParameterName")
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative)
-  {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     if (xSpeed >= .02 || xSpeed <= -.02)
       xSpeed = xSpeed * .5;
     else
@@ -159,10 +147,10 @@ public class DriveSubsystem extends SubsystemBase
     }
     else
     {
-      xSpeed *= RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond();
-      ySpeed *= RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond();
-      rot *= RobotContainer.robotConstants.getDriveConstants().getkMaxTurnSpeedRadPerSecond();
-      var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getkDriveKinematics()
+      xSpeed *= RobotContainer.robotConstants.getDriveConstants().getKMaxSpeedINPerSecond();
+      ySpeed *= RobotContainer.robotConstants.getDriveConstants().getKMaxSpeedINPerSecond();
+      rot *= RobotContainer.robotConstants.getDriveConstants().getKMaxTurnSpeedRadPerSecond();
+      var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics()
           .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
               : new ChassisSpeeds(xSpeed, ySpeed, rot));
       setModuleStates(swerveModuleStates);
@@ -170,8 +158,7 @@ public class DriveSubsystem extends SubsystemBase
 
   }
 
-  public void stopDrive()
-  {
+  public void stopDrive() {
     m_frontLeft.stopDrive();
     m_frontRight.stopDrive();
     m_rearLeft.stopDrive();
@@ -181,13 +168,11 @@ public class DriveSubsystem extends SubsystemBase
   /**
    * Sets the swerve ModuleStates.
    *
-   * @param desiredStates
-   *                        The desired SwerveModule states.
+   * @param desiredStates The desired SwerveModule states.
    */
-  public void setModuleStates(SwerveModuleState[] desiredStates)
-  {
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.normalizeWheelSpeeds(desiredStates,
-        RobotContainer.robotConstants.getDriveConstants().getkMaxSpeedINPerSecond());
+        RobotContainer.robotConstants.getDriveConstants().getKMaxSpeedINPerSecond());
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
@@ -197,8 +182,7 @@ public class DriveSubsystem extends SubsystemBase
   /**
    * Resets the drive encoders to currently read a position of 0.
    */
-  public void resetEncoders()
-  {
+  public void resetEncoders() {
     m_frontLeft.resetEncoders();
     m_rearLeft.resetEncoders();
     m_frontRight.resetEncoders();
@@ -208,17 +192,15 @@ public class DriveSubsystem extends SubsystemBase
   /**
    * Zeroes the heading of the robot.
    */
-  public void zeroHeading()
-  {
+  public void zeroHeading() {
     Robot.m_robotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
   }
 
-  public double getPigeonAngle()
-  {
+  public double getPigeonAngle() {
 
     double[] ypr = new double[3];
     RobotContainer.m_BallIndexerSubsystem.pigeon.getYawPitchRoll(ypr);
-    return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getkGyroReversed() ? -1.0 : 1.0);
+    return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getKGyroReversed() ? -1.0 : 1.0);
   }
 
   /**
@@ -226,23 +208,18 @@ public class DriveSubsystem extends SubsystemBase
    *
    * @return the robot's heading in degrees, from 180 to 180
    */
-  public double getHeading()
-  {
+  public double getHeading() {
 
     return Math.IEEEremainder(getPigeonAngle(), 360);
   }
 
-  public boolean getVisionSeeing()
-  {
+  public boolean getVisionSeeing() {
     if (myCam.getEntry("isValid").getBoolean(false))
-    {
-      return true;
-    }
+    { return true; }
     return false;
   }
 
-  public double getVisionAngle()
-  {
+  public double getVisionAngle() {
     double value = Math.toRadians(myCam.getEntry("targetYaw").getDouble(0));
     return value;
   }

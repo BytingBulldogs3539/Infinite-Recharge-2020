@@ -41,30 +41,25 @@ public class IntakeSubsystem extends SubsystemBase
 
   /**
    * 
-   * @param speed
-   *                Motor power between -1 (reverse) and 1 (forwards/intake)
+   * @param speed Motor power between -1 (reverse) and 1 (forwards/intake)
    * 
    */
-  public void setPercentOutput(double speed)
-  {
+  public void setPercentOutput(double speed) {
     intakeMotor.set(speed);
   }
 
   /**
    * 
-   * @param onOff
-   *                false for compressor off true for compressor on.
+   * @param onOff false for compressor off true for compressor on.
    */
-  public void setCompressor(boolean onOff)
-  {
+  public void setCompressor(boolean onOff) {
     if (onOff)
       compressor.start();
     else
       compressor.stop();
   }
 
-  public void setIntakeSolinoid(boolean state)
-  {
+  public void setIntakeSolinoid(boolean state) {
     if (state)
       intakSolenoid.set(Value.kForward);
     else
@@ -72,8 +67,7 @@ public class IntakeSubsystem extends SubsystemBase
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     // This method will be called once per scheduler run
   }
 }

@@ -39,23 +39,21 @@ public class SwerveModule
   private final CANCoderConfiguration m_turningEncoderConfiguration = new CANCoderConfiguration();
 
   private final PIDController m_drivePIDController = new PIDController(
-      RobotContainer.robotConstants.getModuleConstants().getkPModuleDriveController(), 0, 0);
+      RobotContainer.robotConstants.getModuleConstants().getKPModuleDriveController(), 0, 0);
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController = new ProfiledPIDController(
-      RobotContainer.robotConstants.getModuleConstants().getkPModuleTurningController(), 0, 0,
+      RobotContainer.robotConstants.getModuleConstants().getKPModuleTurningController(), 0, 0,
       new TrapezoidProfile.Constraints(
-          RobotContainer.robotConstants.getModuleConstants().getkMaxModuleAngularSpeedRadiansPerSecond(),
+          RobotContainer.robotConstants.getModuleConstants().getKMaxModuleAngularSpeedRadiansPerSecond(),
           RobotContainer.robotConstants.getModuleConstants()
-              .getkMaxModuleAngularAccelerationRadiansPerSecondSquared()));
+              .getKMaxModuleAngularAccelerationRadiansPerSecondSquared()));
 
   /**
    * Constructs a SwerveModule.
    *
-   * @param driveMotorChannel
-   *                              ID for the drive motor.
-   * @param turningMotorChannel
-   *                              ID for the turning motor.
+   * @param driveMotorChannel ID for the drive motor.
+   * @param turningMotorChannel ID for the turning motor.
    */
   public SwerveModule(String name, int driveMotorChannel, int turningMotorChannel, int turningEncoderPort,
       double magnetOffsetDegrees, boolean driveEncoderReversed, boolean turningEncoderReversed, boolean reverseDrive,
@@ -109,26 +107,23 @@ public class SwerveModule
    *
    * @return The current state of the module.
    */
-  public SwerveModuleState getState()
-  {
+  public SwerveModuleState getState() {
     return new SwerveModuleState(
-        getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
+        getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps(),
         new Rotation2d(getAngle()));
   }
 
   /**
    * Sets the desired state for the module.
    *
-   * @param state
-   *                Desired state with speed and angle.
+   * @param state Desired state with speed and angle.
    */
-  public void setDesiredState(SwerveModuleState state)
-  {
+  public void setDesiredState(SwerveModuleState state) {
     // Calculate the drive output from the drive PID controller.
     state = optimizeModuleAngle(state, getAngle());
 
     final var driveOutput = m_drivePIDController.calculate(
-        getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getkDriveEncoderRpmToInps(),
+        getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps(),
         state.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.
@@ -136,12 +131,11 @@ public class SwerveModule
 
     // Calculate the turning motor output from the turning PID controller.
     m_driveMotor.set(driveOutput
-        + RobotContainer.robotConstants.getModuleConstants().getkFModuleDriveController() * state.speedMetersPerSecond);
+        + RobotContainer.robotConstants.getModuleConstants().getKFModuleDriveController() * state.speedMetersPerSecond);
     m_turningMotor.set(turnOutput);
   }
 
-  public void stopDrive()
-  {
+  public void stopDrive() {
     m_driveMotor.set(0);
     m_turningMotor.set(0);
   }
@@ -151,24 +145,16 @@ public class SwerveModule
    * Zeros all the SwerveModule encoders.
    */
 
-  public void resetEncoders()
-  {
+  public void resetEncoders() {
     m_driveEncoder.setPosition(0);
     m_turningEncoder.setPosition(0);
   }
 
-  public double getDrivePos()
-  {
-    return m_driveMotor.getEncoder().getPosition() * ((driveEncoderReversed) ? -1 : 1);
-  }
+  public double getDrivePos() { return m_driveMotor.getEncoder().getPosition() * ((driveEncoderReversed) ? -1 : 1); }
 
-  public double getDriveVel()
-  {
-    return m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1);
-  }
+  public double getDriveVel() { return m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1); }
 
-  public double getAngle()
-  {
+  public double getAngle() {
     double enc = Math.toRadians(m_turningEncoder.getPosition());
     return enc;
   }
@@ -176,13 +162,10 @@ public class SwerveModule
   /**
    * Optimizes the angle of the module.
    *
-   * @param desiredState
-   *                       The new state of the module.
-   * @param angle
-   *                       The current angle of the module in radians.
+   * @param desiredState The new state of the module.
+   * @param angle The current angle of the module in radians.
    */
-  public static SwerveModuleState optimizeModuleAngle(SwerveModuleState desiredState, double angle)
-  {
+  public static SwerveModuleState optimizeModuleAngle(SwerveModuleState desiredState, double angle) {
     SwerveModuleState finalState = new SwerveModuleState(desiredState.speedMetersPerSecond,
         new Rotation2d(desiredState.angle.getRadians()));
     Rotation2d deltaAngle = Rotation2d.fromDegrees(desiredState.angle.getDegrees() - Math.toDegrees(angle));

@@ -32,353 +32,181 @@ public final class CompConstants extends Constants
     public class RobotIDConstants extends Constants.RobotIDConstants
     {
         @Override
-        public int getIntakeMotorID()
-        {
-            return 9;
-        }
+        public int getIntakeMotorID() { return 9; }
 
         @Override
-        public int getShooterMotorID()
-        {
-            return 16;
-        }
+        public int getShooterMotorID() { return 16; }
 
         @Override
-        public int getIndexMotorID()
-        {
-            return 11;
-        }
+        public int getIndexMotorID() { return 11; }
 
         @Override
-        public int getClimbMotorLID()
-        {
-            return 10;
-        }
+        public int getClimbMotorLID() { return 10; }
 
         @Override
-        public int getClimbMotorRID()
-        {
-            return 15;
-        }
+        public int getClimbMotorRID() { return 15; }
 
         @Override
-        public int getAdjusterID()
-        {
+        public int getAdjusterID() {
             // TODO Enter Real ID
             return 12;
         }
 
         @Override
-        public int getBuddyClimbMotorID()
-        {
+        public int getBuddyClimbMotorID() {
             // TODO: Enter Real ID
             return 13;
         }
 
         @Override
-        public int getSpinnerMotorID()
-        {
-            return 14;
-        }
+        public int getSpinnerMotorID() { return 14; }
 
         @Override
-        public int getShooterServoID()
-        {
+        public int getShooterServoID() {
             // TODO: Enter Real ID
             return 0;
         }
 
         @Override
-        public int getShooterPotentiometerID()
-        {
+        public int getShooterPotentiometerID() {
             // TODO: Enter Real ID
             return 0;
         }
 
         @Override
-        public Port getColorSensorPort()
-        {
-            return Port.kOnboard;
-        }
+        public Port getColorSensorPort() { return Port.kOnboard; }
 
         @Override
-        public int getPCMID()
-        {
-            return 20;
-        }
+        public int getPCMID() { return 20; }
 
         @Override
-        public int getIntakeSolinoidOn()
-        {
-            return 1;
-        }
+        public int getIntakeSolinoidOn() { return 1; }
 
         @Override
-        public int getIntakeSolinoidOff()
-        {
-            return 0;
-        }
+        public int getIntakeSolinoidOff() { return 0; }
 
         @Override
-        public int getBallSensorPort()
-        {
-            return 0;
-        }
+        public int getBallSensorPort() { return 0; }
 
     }
 
     public class DriveConstants extends Constants.DriveConstants
     {
-        public int getkFrontLeftDriveMotorPort()
-        {
-            return 7;
-        }
+        @Override
+        public int getKFrontLeftDriveMotorPort() { return 7; }
 
-        public int getkRearLeftDriveMotorPort()
-        {
-            return 2;
-        }
+        public int getKRearLeftDriveMotorPort() { return 2; }
 
-        public int getkFrontRightDriveMotorPort()
-        {
-            return 5;
-        }
+        public int getKFrontRightDriveMotorPort() { return 5; }
 
-        public int getkRearRightDriveMotorPort()
-        {
-            return 3;
-        }
+        public int getKRearRightDriveMotorPort() { return 3; }
 
-        public int getkFrontLeftTurningMotorPort()
-        {
-            return 8;
-        }
+        public int getKFrontLeftTurningMotorPort() { return 8; }
 
-        public int getkRearLeftTurningMotorPort()
-        {
-            return 1;
-        }
+        public int getKRearLeftTurningMotorPort() { return 1; }
 
-        public int getkFrontRightTurningMotorPort()
-        {
-            return 6;
-        }
+        public int getKFrontRightTurningMotorPort() { return 6; }
 
-        public int getkRearRightTurningMotorPort()
-        {
-            return 4;
-        }
+        public int getKRearRightTurningMotorPort() { return 4; }
 
-        public int getkPigeonID()
-        {
-            return 25;
-        }
+        public int getKPigeonID() { return 25; }
 
-        public int getkFrontLeftTurningEncoderPorts()
-        {
-            return 30;
-        }
+        public int getKFrontLeftTurningEncoderPorts() { return 30; }
 
-        public int getkRearLeftTurningEncoderPorts()
-        {
-            return 32;
-        }
+        public int getKRearLeftTurningEncoderPorts() { return 32; }
 
-        public int getkFrontRightTurningEncoderPorts()
-        {
-            return 33;
-        }
+        public int getKFrontRightTurningEncoderPorts() { return 33; }
 
-        public int getkRearRightTurningEncoderPorts()
-        {
-            return 31;
-        }
+        public int getKRearRightTurningEncoderPorts() { return 31; }
 
-        public boolean getkFrontLeftTurningEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKFrontLeftTurningEncoderReversed() { return false; }
 
-        public boolean getkRearLeftTurningEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKRearLeftTurningEncoderReversed() { return false; }
 
-        public boolean getkFrontRightTurningEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKFrontRightTurningEncoderReversed() { return false; }
 
-        public boolean getkRearRightTurningEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKRearRightTurningEncoderReversed() { return false; }
 
-        public boolean getkFrontLeftDriveEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKFrontLeftDriveEncoderReversed() { return false; }
 
-        public boolean getkRearLeftDriveEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKRearLeftDriveEncoderReversed() { return false; }
 
-        public boolean getkFrontRightDriveEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKFrontRightDriveEncoderReversed() { return false; }
 
-        public boolean getkRearRightDriveEncoderReversed()
-        {
-            return false;
-        }
+        public boolean getKRearRightDriveEncoderReversed() { return false; }
 
-        public boolean getkFrontLeftDriveReversed()
-        {
-            return true;
-        }
+        public boolean getKFrontLeftDriveReversed() { return true; }
 
-        public boolean getkRearLeftDriveReversed()
-        {
-            return true;
-        }
+        public boolean getKRearLeftDriveReversed() { return true; }
 
-        public boolean getkFrontRightDriveReversed()
-        {
-            return true;
-        }
+        public boolean getKFrontRightDriveReversed() { return true; }
 
-        public boolean getkRearRightDriveReversed()
-        {
-            return true;
-        }
+        public boolean getKRearRightDriveReversed() { return true; }
 
-        public boolean getkFrontLeftTurningReversed()
-        {
-            return true;
-        }
+        public boolean getKFrontLeftTurningReversed() { return true; }
 
-        public boolean getkRearLeftTurningReversed()
-        {
-            return true;
-        }
+        public boolean getKRearLeftTurningReversed() { return true; }
 
-        public boolean getkFrontRightTurningReversed()
-        {
-            return true;
-        }
+        public boolean getKFrontRightTurningReversed() { return true; }
 
-        public boolean getkRearRightTurningReversed()
-        {
-            return true;
-        }
+        public boolean getKRearRightTurningReversed() { return true; }
 
-        public double getkTrackWidth()
-        {
-            return 30;
-        }
+        public double getKTrackWidth() { return 30; }
 
         // Distance between centers of right and left wheels on robot
-        public double getkWheelBase()
-        {
-            return 30;
-        }
+        public double getKWheelBase() { return 30; }
 
         // Distance between front and back wheels on robot
-        public SwerveDriveKinematics getkDriveKinematics()
-        {
-            return new SwerveDriveKinematics(new Translation2d(getkWheelBase() / 2, getkTrackWidth() / 2),
-                    new Translation2d(getkWheelBase() / 2, -getkTrackWidth() / 2),
-                    new Translation2d(-getkWheelBase() / 2, getkTrackWidth() / 2),
-                    new Translation2d(-getkWheelBase() / 2, -getkTrackWidth() / 2));
+        public SwerveDriveKinematics getKDriveKinematics() {
+            return new SwerveDriveKinematics(new Translation2d(getKWheelBase() / 2, getKTrackWidth() / 2),
+                    new Translation2d(getKWheelBase() / 2, -getKTrackWidth() / 2),
+                    new Translation2d(-getKWheelBase() / 2, getKTrackWidth() / 2),
+                    new Translation2d(-getKWheelBase() / 2, -getKTrackWidth() / 2));
         }
 
-        public boolean getkGyroReversed()
-        {
-            return true;
-        }
+        public boolean getKGyroReversed() { return true; }
 
-        public double getkMaxSpeedINPerSecond()
-        {
-            return 176.52;
-        }
+        public double getKMaxSpeedINPerSecond() { return 176.52; }
 
-        public double getkMaxTurnSpeedRadPerSecond()
-        {
+        public double getKMaxTurnSpeedRadPerSecond() {
             return 10.6;
 
         }
 
         @Override
-        public double getkFrontLeftTurningEncoderOffset()
-        {
-            return 14.502;
-        }
+        public double getKFrontLeftTurningEncoderOffset() { return 14.502; }
 
         @Override
-        public double getkRearLeftTurningEncoderOffset()
-        {
-            return -9.404297;
-        }
+        public double getKRearLeftTurningEncoderOffset() { return -9.404297; }
 
         @Override
-        public double getkFrontRightTurningEncoderOffset()
-        {
-            return -53.174;
-        }
+        public double getKFrontRightTurningEncoderOffset() { return -53.174; }
 
         @Override
-        public double getkRearRightTurningEncoderOffset()
-        {
-            return -124.365;
-        }
+        public double getKRearRightTurningEncoderOffset() { return -124.365; }
     }
 
     public class ModuleConstants extends Constants.ModuleConstants
     {
-        public double getkMaxModuleAngularSpeedRadiansPerSecond()
-        {
-            return (50 * Math.PI);
+        public double getKMaxModuleAngularSpeedRadiansPerSecond() { return (50 * Math.PI); }
+
+        public double getKMaxModuleAngularAccelerationRadiansPerSecondSquared() { return (50 * Math.PI); }
+
+        public int getKDriveEncoderCPR() { return 240; }
+
+        public double getKWheelDiameterIN() { return 4.0; }
+
+        public double getKDriveEncoderDistancePerPulse() {
+            return ((getKWheelDiameterIN() * Math.PI) / (double) getKDriveEncoderCPR());
         }
 
-        public double getkMaxModuleAngularAccelerationRadiansPerSecondSquared()
-        {
-            return (50 * Math.PI);
-        }
+        public double getKDriveEncoderRpmToInps() { return (217.92 / 5676.0); }
 
-        public int getkDriveEncoderCPR()
-        {
-            return 240;
-        }
+        public double getKPModuleTurningController() { return .4; }
 
-        public double getkWheelDiameterIN()
-        {
-            return 4.0;
-        }
+        public double getKPModuleDriveController() { return .0001; }
 
-        public double getkDriveEncoderDistancePerPulse()
-        {
-            return ((getkWheelDiameterIN() * Math.PI) / (double) getkDriveEncoderCPR());
-        }
-
-        public double getkDriveEncoderRpmToInps()
-        {
-            return (217.92 / 5676.0);
-        }
-
-        public double getkPModuleTurningController()
-        {
-            return .4;
-        }
-
-        public double getkPModuleDriveController()
-        {
-            return .0001;
-        }
-
-        public double getkFModuleDriveController()
-        {
+        public double getKFModuleDriveController() {
             return .006;
 
         }
@@ -386,69 +214,35 @@ public final class CompConstants extends Constants
 
     public class OIConstants extends Constants.OIConstants
     {
-        public int getkDriverControllerPort()
-        {
-            return 0;
-        }
+        public int getKDriverControllerPort() { return 0; }
 
-        public int getkOpControllerPort()
-        {
-            return 1;
-        }
+        public int getKOpControllerPort() { return 1; }
     }
 
     public class AutoConstants extends Constants.AutoConstants
     {
-        public double getkMaxSpeedINPerSecond()
-        {
-            return 217.92;
-        }
+        public double getKMaxSpeedINPerSecond() { return 217.92; }
 
-        public double getkMaxAccelerationINPerSecondSquared()
-        {
-            return 20;
-        }
+        public double getKMaxAccelerationINPerSecondSquared() { return 20; }
 
-        public double getkMaxAngularSpeedRadiansPerSecond()
-        {
-            return 10.6;
-        }
+        public double getKMaxAngularSpeedRadiansPerSecond() { return 10.6; }
 
-        public double getkMaxAngularSpeedRadiansPerSecondSquared()
-        {
-            return 10.6;
-        }
+        public double getKMaxAngularSpeedRadiansPerSecondSquared() { return 10.6; }
 
-        public double getkPXController()
-        {
-            return .076;
-        }
+        public double getKPXController() { return .076; }
 
-        public double getkPYController()
-        {
-            return .076;
-        }
+        public double getKPYController() { return .076; }
 
-        public double getkDXController()
-        {
-            return .033;
-        }
+        public double getKDXController() { return .033; }
 
-        public double getkDYController()
-        {
-            return .033;
-        }
+        public double getKDYController() { return .033; }
 
-        public double getkPThetaController()
-        {
-            return 1.6;
-        }
+        public double getKPThetaController() { return 1.6; }
 
         // Constraint for the motion profilied robot angle controller
-        public TrapezoidProfile.Constraints getkThetaControllerConstraints()
-        {
-            return new TrapezoidProfile.Constraints(getkMaxAngularSpeedRadiansPerSecond(),
-                    getkMaxAngularSpeedRadiansPerSecondSquared());
+        public TrapezoidProfile.Constraints getKThetaControllerConstraints() {
+            return new TrapezoidProfile.Constraints(getKMaxAngularSpeedRadiansPerSecond(),
+                    getKMaxAngularSpeedRadiansPerSecondSquared());
         }
     }
 
@@ -456,22 +250,13 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public MotorType getIntakeMotorType()
-        {
-            return MotorType.kBrushless;
-        }
+        public MotorType getIntakeMotorType() { return MotorType.kBrushless; }
 
         @Override
-        public boolean getIntakeMotorInverted()
-        {
-            return true;
-        }
+        public boolean getIntakeMotorInverted() { return true; }
 
         @Override
-        public boolean getDefaultIntakeDirection()
-        {
-            return false;
-        }
+        public boolean getDefaultIntakeDirection() { return false; }
 
     }
 
@@ -479,16 +264,10 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public boolean getIndexMotorInverted()
-        {
-            return true;
-        }
+        public boolean getIndexMotorInverted() { return true; }
 
         @Override
-        public boolean getIndexMotorBrake()
-        {
-            return true;
-        }
+        public boolean getIndexMotorBrake() { return true; }
 
     }
 
@@ -496,28 +275,16 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public boolean getClimbMotorInverted()
-        {
-            return true;
-        }
+        public boolean getClimbMotorInverted() { return true; }
 
         @Override
-        public boolean getClimbMotorBrake()
-        {
-            return true;
-        }
+        public boolean getClimbMotorBrake() { return true; }
 
         @Override
-        public boolean getClimbAdjusterMotorInverted()
-        {
-            return false;
-        }
+        public boolean getClimbAdjusterMotorInverted() { return false; }
 
         @Override
-        public boolean getClimbAdjusterMotorBrake()
-        {
-            return true;
-        }
+        public boolean getClimbAdjusterMotorBrake() { return true; }
 
     }
 
@@ -525,45 +292,37 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public double getkP()
-        {
+        public double getKP() {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkI()
-        {
+        public double getKI() {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkD()
-        {
+        public double getKD() {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getkF()
-        {
+        public double getKF() {
             // TODO tune values
             return 0;
         }
 
         @Override
-        public double getPotOffset()
-        {
+        public double getPotOffset() {
             // TODO Auto-generated method stub
             return 0;
         }
 
         @Override
-        public boolean getShooterMotorInverted()
-        {
-            return false;
-        }
+        public boolean getShooterMotorInverted() { return false; }
 
     }
 
@@ -586,57 +345,30 @@ public final class CompConstants extends Constants
     private ShooterConstants robotShooterConstants = new ShooterConstants();
 
     @Override
-    public frc.robot.utilities.Constants.RobotIDConstants getRobotIDConstants()
-    {
-        return robotIDConstants;
-    }
+    public frc.robot.utilities.Constants.RobotIDConstants getRobotIDConstants() { return robotIDConstants; }
 
     @Override
-    public frc.robot.utilities.Constants.DriveConstants getDriveConstants()
-    {
-        return robotDriveConstants;
-    }
+    public frc.robot.utilities.Constants.DriveConstants getDriveConstants() { return robotDriveConstants; }
 
     @Override
-    public frc.robot.utilities.Constants.ModuleConstants getModuleConstants()
-    {
-        return robotModuleConstants;
-    }
+    public frc.robot.utilities.Constants.ModuleConstants getModuleConstants() { return robotModuleConstants; }
 
     @Override
-    public frc.robot.utilities.Constants.OIConstants getOIConstants()
-    {
-        return robotOIConstants;
-    }
+    public frc.robot.utilities.Constants.OIConstants getOIConstants() { return robotOIConstants; }
 
     @Override
-    public frc.robot.utilities.Constants.AutoConstants getAutoConstants()
-    {
-        return robotAutoConstants;
-    }
+    public frc.robot.utilities.Constants.AutoConstants getAutoConstants() { return robotAutoConstants; }
 
     @Override
-    public frc.robot.utilities.Constants.ShooterConstants getShooterConstants()
-    {
-        return robotShooterConstants;
-    }
+    public frc.robot.utilities.Constants.ShooterConstants getShooterConstants() { return robotShooterConstants; }
 
     @Override
-    public IntakeConstants getIntakeConstants()
-    {
-        return robotIntakeConstants;
-    }
+    public IntakeConstants getIntakeConstants() { return robotIntakeConstants; }
 
     @Override
-    public BallIndexerConstants getBallIndexerConstants()
-    {
-        return robotBallIndexerConstants;
-    }
+    public BallIndexerConstants getBallIndexerConstants() { return robotBallIndexerConstants; }
 
     @Override
-    public ClimbConstants getClimbConstants()
-    {
-        return robotClimberConstants;
-    }
+    public ClimbConstants getClimbConstants() { return robotClimberConstants; }
 
 }

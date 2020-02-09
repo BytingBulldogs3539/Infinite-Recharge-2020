@@ -71,27 +71,19 @@ public class SwerveControllerCommand extends CommandBase
    * Note 2: The rotation controller will calculate the rotation based on the
    * final pose in the trajectory, not the poses at each time step.
    *
-   * @param trajectory
-   *                             The trajectory to follow.
-   * @param pose
-   *                             A function that supplies the robot pose - use one
-   *                             of the odometry classes to provide this.
-   * @param kinematics
-   *                             The kinematics for the robot drivetrain.
-   * @param xController
-   *                             The Trajectory Tracker PID controller for the
-   *                             robot's x position.
-   * @param yController
-   *                             The Trajectory Tracker PID controller for the
-   *                             robot's y position.
-   * @param thetaController
-   *                             The Trajectory Tracker PID controller for angle
-   *                             for the robot.
-   * @param outputModuleStates
-   *                             The raw output module states from the position
-   *                             controllers.
-   * @param requirements
-   *                             The subsystems to require.
+   * @param trajectory The trajectory to follow.
+   * @param pose A function that supplies the robot pose - use one of the odometry
+   *          classes to provide this.
+   * @param kinematics The kinematics for the robot drivetrain.
+   * @param xController The Trajectory Tracker PID controller for the robot's x
+   *          position.
+   * @param yController The Trajectory Tracker PID controller for the robot's y
+   *          position.
+   * @param thetaController The Trajectory Tracker PID controller for angle for
+   *          the robot.
+   * @param outputModuleStates The raw output module states from the position
+   *          controllers.
+   * @param requirements The subsystems to require.
    */
 
   @SuppressWarnings("ParameterName")
@@ -118,8 +110,7 @@ public class SwerveControllerCommand extends CommandBase
   }
 
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     // Sample final pose to get robot rotation
     m_finalPose = m_trajectory.sample(m_trajectory.getTotalTimeSeconds()).poseMeters;
 
@@ -129,8 +120,7 @@ public class SwerveControllerCommand extends CommandBase
 
   @Override
   @SuppressWarnings("LocalVariableName")
-  public void execute()
-  {
+  public void execute() {
     double curTime = m_timer.get();
 
     var desiredState = m_trajectory.sample(curTime);
@@ -192,14 +182,10 @@ public class SwerveControllerCommand extends CommandBase
   }
 
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted) {
     m_timer.stop();
   }
 
   @Override
-  public boolean isFinished()
-  {
-    return m_timer.hasPeriodPassed(m_trajectory.getTotalTimeSeconds());
-  }
+  public boolean isFinished() { return m_timer.hasPeriodPassed(m_trajectory.getTotalTimeSeconds()); }
 }

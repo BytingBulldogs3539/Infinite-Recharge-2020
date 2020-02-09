@@ -32,21 +32,15 @@ public class TriggerButton extends Button
     /**
      * returns the current value of the trigger
      */
-    public double getValue()
-    {
-        return joystick.getRawAxis(triggerAxis);
-    }
+    public double getValue() { return joystick.getRawAxis(triggerAxis); }
 
     /**
      * Allows us to change the range of the button
      * 
-     * @param topRange
-     *                     The minimal value until the button deactivate.
-     * @param lowRange
-     *                     The minimal value until the button activates.
+     * @param topRange The minimal value until the button deactivate.
+     * @param lowRange The minimal value until the button activates.
      */
-    public void setRange(double topRange, double lowRange)
-    {
+    public void setRange(double topRange, double lowRange) {
         this.lowRange = lowRange;
         this.topRange = topRange;
     }
@@ -55,8 +49,7 @@ public class TriggerButton extends Button
      * returns weather the button is being "pressed" or not.
      */
     @Override
-    public boolean get()
-    {
+    public boolean get() {
         if (Math.abs(joystick.getRawAxis(triggerAxis)) > topRange)
         {
             isTriggered = true;

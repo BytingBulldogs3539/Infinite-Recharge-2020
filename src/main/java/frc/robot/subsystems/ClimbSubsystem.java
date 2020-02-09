@@ -41,28 +41,24 @@ public class ClimbSubsystem extends SubsystemBase
     climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
   }
 
-  public void setPercentOutput(double power)
-  {
+  public void setPercentOutput(double power) {
     climbMotorL.set(ControlMode.PercentOutput, power);
     climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
 
-  public void setPercentOutputL(double power)
-  {
+  public void setPercentOutputL(double power) {
     climbMotorL.set(ControlMode.PercentOutput, power);
 
   }
 
-  public void setPercentOutputR(double power)
-  {
+  public void setPercentOutputR(double power) {
     climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     // This method will be called once per scheduler run
   }
 }

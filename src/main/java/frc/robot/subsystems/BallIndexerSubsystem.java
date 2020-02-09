@@ -38,19 +38,14 @@ public class BallIndexerSubsystem extends SubsystemBase
     setDefaultCommand(new BallIndexerCommand(this));
   }
 
-  public void setPercentOutput(double speed)
-  {
+  public void setPercentOutput(double speed) {
     ballIndexerSrx.set(ControlMode.PercentOutput, speed);
   }
 
-  public boolean getBallSensorState()
-  {
-    return !ballSensor.get();
-  }
+  public boolean getBallSensorState() { return !ballSensor.get(); }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     // This method will be called once per scheduler run
   }
 }

@@ -42,10 +42,10 @@ public class ShooterSubsystem extends SubsystemBase
   public ShooterSubsystem()
   {
     shooterMotor.setInverted(RobotContainer.robotConstants.getShooterConstants().getShooterMotorInverted());
-    shooterMotor.config_kP(0, RobotContainer.robotConstants.getShooterConstants().getkP());
-    shooterMotor.config_kI(0, RobotContainer.robotConstants.getShooterConstants().getkI());
-    shooterMotor.config_kD(0, RobotContainer.robotConstants.getShooterConstants().getkD());
-    shooterMotor.config_kF(0, RobotContainer.robotConstants.getShooterConstants().getkF());
+    shooterMotor.config_kP(0, RobotContainer.robotConstants.getShooterConstants().getKP());
+    shooterMotor.config_kI(0, RobotContainer.robotConstants.getShooterConstants().getKI());
+    shooterMotor.config_kD(0, RobotContainer.robotConstants.getShooterConstants().getKD());
+    shooterMotor.config_kF(0, RobotContainer.robotConstants.getShooterConstants().getKF());
     _orchestra = new Orchestra(_instruments);
     _orchestra.addInstrument(shooterMotor);
 
@@ -53,24 +53,20 @@ public class ShooterSubsystem extends SubsystemBase
 
   /**
    * 
-   * @param speed
-   *                a value between 1 (full forward) and -1 (full reverse)
+   * @param speed a value between 1 (full forward) and -1 (full reverse)
    * 
    */
-  public void setPercentOutput(double speed)
-  {
+  public void setPercentOutput(double speed) {
     shooterMotor.set(ControlMode.PercentOutput, speed);
   }
 
   /**
    * Sets the motor RPM of the shooter
    * 
-   * @param velocity
-   *                   the motor RPM (max motor rpm is about 5700)
+   * @param velocity the motor RPM (max motor rpm is about 5700)
    * 
    */
-  public void setVelocity(double velocity)
-  {
+  public void setVelocity(double velocity) {
     shooterMotor.set(ControlMode.Velocity, velocity * 2048.0 / 600.0);
   }
 
@@ -79,39 +75,27 @@ public class ShooterSubsystem extends SubsystemBase
    * @return the current velocity of the motor in rpm.
    * 
    */
-  public double getVelocity()
-  {
-    return shooterMotor.getSelectedSensorVelocity() / 2048.0 * 600.0;
-  }
+  public double getVelocity() { return shooterMotor.getSelectedSensorVelocity() / 2048.0 * 600.0; }
 
   /**
    * 
    * @return returns the current Hood Angle in Degrees.
    */
-  public double getHoodAngle()
-  {
-    return potentiometer.get();
-  }
+  public double getHoodAngle() { return potentiometer.get(); }
 
   /**
    * 
-   * @param angle
-   *                the angle you want the hood to be at. (Zero will shoot the
-   *                ball high and 60 will shoot it low almost into the floor.) a
-   *                value of less than 0 or greater than 60 will disable pid.
+   * @param angle the angle you want the hood to be at. (Zero will shoot the ball
+   *          high and 60 will shoot it low almost into the floor.) a value of
+   *          less than 0 or greater than 60 will disable pid.
    */
-  public void setHoodAngle(double angle)
-  {
-    this.hoodAngle = angle;
-  }
+  public void setHoodAngle(double angle) { this.hoodAngle = angle; }
 
-  public void setServoSpeed(double speed)
-  {
+  public void setServoSpeed(double speed) {
     servo.set(speed);
   }
 
-  public void loadMusic(String path)
-  {
+  public void loadMusic(String path) {
     if (!path.equals(this.currentSong))
       _orchestra.loadMusic(path);
 
@@ -120,12 +104,10 @@ public class ShooterSubsystem extends SubsystemBase
   /**
    * Plays or pauses the current music file in the Talon fx
    * 
-   * @param play_pause
-   *                     True for play, False for pause
+   * @param play_pause True for play, False for pause
    * 
    */
-  public void PlayPauseChirp(boolean play_pause)
-  {
+  public void PlayPauseChirp(boolean play_pause) {
     if (play_pause)
     {
       _orchestra.play();
@@ -137,14 +119,12 @@ public class ShooterSubsystem extends SubsystemBase
     }
   }
 
-  public void StopChirp()
-  {
+  public void StopChirp() {
     _orchestra.stop();
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     SmartDashboard.putNumber("Curr Shooter Velocity", getVelocity());
   }
 }

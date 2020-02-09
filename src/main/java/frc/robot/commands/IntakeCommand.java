@@ -27,15 +27,13 @@ public class IntakeCommand extends CommandBase
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     subsystem.setIntakeSolinoid(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
+  public void execute() {
     subsystem.setPercentOutput(1);
 
     // the Right Trigger minus the negative Left Trigger, giving ranges from -1 to 1
@@ -43,8 +41,7 @@ public class IntakeCommand extends CommandBase
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted) {
     subsystem.setIntakeSolinoid(false);
     subsystem.setPercentOutput(0);
 
@@ -52,8 +49,5 @@ public class IntakeCommand extends CommandBase
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished()
-  {
-    return false;
-  }
+  public boolean isFinished() { return false; }
 }

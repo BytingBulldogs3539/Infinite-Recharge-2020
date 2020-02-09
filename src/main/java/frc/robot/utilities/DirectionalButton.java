@@ -53,11 +53,9 @@ public class DirectionalButton extends Button
 	 * Constructor of the directional button wrapper requires a GenericHID joystick
 	 * and a direction.
 	 * 
-	 * @param joystick
-	 *                      the joystick that this button is on.
-	 * @param direction
-	 *                      the direction enum the relates to the direction that
-	 *                      triggers this button.
+	 * @param joystick the joystick that this button is on.
+	 * @param direction the direction enum the relates to the direction that
+	 *            triggers this button.
 	 */
 
 	public DirectionalButton(GenericHID joystick, Direction direction)
@@ -102,18 +100,14 @@ public class DirectionalButton extends Button
 	 * 
 	 * @return the angle value of the directional button
 	 */
-	public int getPOV()
-	{
-		return joystick.getPOV();
-	}
+	public int getPOV() { return joystick.getPOV(); }
 
 	/**
 	 * Returns if the button is currently pressed.
 	 * 
 	 * @return a boolean which is true if the button is currently pressed.
 	 */
-	public boolean get()
-	{
+	public boolean get() {
 		if (joystick.getPOV() == neededAngle)
 		{
 			return true;
@@ -129,8 +123,5 @@ public class DirectionalButton extends Button
 	 * 
 	 * @return the direction enum of this button.
 	 */
-	public Direction getDirection()
-	{
-		return direction;
-	}
+	public Direction getDirection() { return direction; }
 }

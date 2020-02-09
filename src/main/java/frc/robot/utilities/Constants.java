@@ -72,136 +72,136 @@ public abstract class Constants
 
     public abstract class DriveConstants
     {
-        public abstract int getkFrontLeftDriveMotorPort();
+        public abstract int getKFrontLeftDriveMotorPort();
 
-        public abstract int getkRearLeftDriveMotorPort();
+        public abstract int getKRearLeftDriveMotorPort();
 
-        public abstract int getkFrontRightDriveMotorPort();
+        public abstract int getKFrontRightDriveMotorPort();
 
-        public abstract int getkRearRightDriveMotorPort();
+        public abstract int getKRearRightDriveMotorPort();
 
-        public abstract int getkFrontLeftTurningMotorPort();
+        public abstract int getKFrontLeftTurningMotorPort();
 
-        public abstract int getkRearLeftTurningMotorPort();
+        public abstract int getKRearLeftTurningMotorPort();
 
-        public abstract int getkFrontRightTurningMotorPort();
+        public abstract int getKFrontRightTurningMotorPort();
 
-        public abstract int getkRearRightTurningMotorPort();
+        public abstract int getKRearRightTurningMotorPort();
 
-        public abstract int getkPigeonID();
+        public abstract int getKPigeonID();
 
-        public abstract int getkFrontLeftTurningEncoderPorts();
+        public abstract int getKFrontLeftTurningEncoderPorts();
 
-        public abstract int getkRearLeftTurningEncoderPorts();
+        public abstract int getKRearLeftTurningEncoderPorts();
 
-        public abstract int getkFrontRightTurningEncoderPorts();
+        public abstract int getKFrontRightTurningEncoderPorts();
 
-        public abstract int getkRearRightTurningEncoderPorts();
+        public abstract int getKRearRightTurningEncoderPorts();
 
-        public abstract double getkFrontLeftTurningEncoderOffset();
+        public abstract double getKFrontLeftTurningEncoderOffset();
 
-        public abstract double getkRearLeftTurningEncoderOffset();
+        public abstract double getKRearLeftTurningEncoderOffset();
 
-        public abstract double getkFrontRightTurningEncoderOffset();
+        public abstract double getKFrontRightTurningEncoderOffset();
 
-        public abstract double getkRearRightTurningEncoderOffset();
+        public abstract double getKRearRightTurningEncoderOffset();
 
-        public abstract boolean getkFrontLeftTurningEncoderReversed();
+        public abstract boolean getKFrontLeftTurningEncoderReversed();
 
-        public abstract boolean getkRearLeftTurningEncoderReversed();
+        public abstract boolean getKRearLeftTurningEncoderReversed();
 
-        public abstract boolean getkFrontRightTurningEncoderReversed();
+        public abstract boolean getKFrontRightTurningEncoderReversed();
 
-        public abstract boolean getkRearRightTurningEncoderReversed();
+        public abstract boolean getKRearRightTurningEncoderReversed();
 
-        public abstract boolean getkFrontLeftDriveEncoderReversed();
+        public abstract boolean getKFrontLeftDriveEncoderReversed();
 
-        public abstract boolean getkRearLeftDriveEncoderReversed();
+        public abstract boolean getKRearLeftDriveEncoderReversed();
 
-        public abstract boolean getkFrontRightDriveEncoderReversed();
+        public abstract boolean getKFrontRightDriveEncoderReversed();
 
-        public abstract boolean getkRearRightDriveEncoderReversed();
+        public abstract boolean getKRearRightDriveEncoderReversed();
 
-        public abstract boolean getkFrontLeftDriveReversed();
+        public abstract boolean getKFrontLeftDriveReversed();
 
-        public abstract boolean getkRearLeftDriveReversed();
+        public abstract boolean getKRearLeftDriveReversed();
 
-        public abstract boolean getkFrontRightDriveReversed();
+        public abstract boolean getKFrontRightDriveReversed();
 
-        public abstract boolean getkRearRightDriveReversed();
+        public abstract boolean getKRearRightDriveReversed();
 
-        public abstract boolean getkFrontLeftTurningReversed();
+        public abstract boolean getKFrontLeftTurningReversed();
 
-        public abstract boolean getkRearLeftTurningReversed();
+        public abstract boolean getKRearLeftTurningReversed();
 
-        public abstract boolean getkFrontRightTurningReversed();
+        public abstract boolean getKFrontRightTurningReversed();
 
-        public abstract boolean getkRearRightTurningReversed();
+        public abstract boolean getKRearRightTurningReversed();
 
-        public abstract double getkTrackWidth();
+        public abstract double getKTrackWidth();
 
-        public abstract double getkWheelBase();
+        public abstract double getKWheelBase();
 
-        public abstract SwerveDriveKinematics getkDriveKinematics();
+        public abstract SwerveDriveKinematics getKDriveKinematics();
 
-        public abstract boolean getkGyroReversed();
+        public abstract boolean getKGyroReversed();
 
-        public abstract double getkMaxSpeedINPerSecond();
+        public abstract double getKMaxSpeedINPerSecond();
 
-        public abstract double getkMaxTurnSpeedRadPerSecond();
+        public abstract double getKMaxTurnSpeedRadPerSecond();
 
     }
 
     public abstract class ModuleConstants
     {
-        public abstract double getkMaxModuleAngularSpeedRadiansPerSecond();
+        public abstract double getKMaxModuleAngularSpeedRadiansPerSecond();
 
-        public abstract double getkMaxModuleAngularAccelerationRadiansPerSecondSquared();
+        public abstract double getKMaxModuleAngularAccelerationRadiansPerSecondSquared();
 
-        public abstract int getkDriveEncoderCPR();
+        public abstract int getKDriveEncoderCPR();
 
-        public abstract double getkWheelDiameterIN();
+        public abstract double getKWheelDiameterIN();
 
-        public abstract double getkDriveEncoderDistancePerPulse();
+        public abstract double getKDriveEncoderDistancePerPulse();
 
-        public abstract double getkDriveEncoderRpmToInps();
+        public abstract double getKDriveEncoderRpmToInps();
 
-        public abstract double getkPModuleTurningController();
+        public abstract double getKPModuleTurningController();
 
-        public abstract double getkPModuleDriveController();
+        public abstract double getKPModuleDriveController();
 
-        public abstract double getkFModuleDriveController();
+        public abstract double getKFModuleDriveController();
 
     }
 
     public abstract class OIConstants
     {
-        public abstract int getkDriverControllerPort();
+        public abstract int getKDriverControllerPort();
 
-        public abstract int getkOpControllerPort();
+        public abstract int getKOpControllerPort();
     }
 
     public abstract class AutoConstants
     {
-        public abstract double getkMaxSpeedINPerSecond();
+        public abstract double getKMaxSpeedINPerSecond();
 
-        public abstract double getkMaxAccelerationINPerSecondSquared();
+        public abstract double getKMaxAccelerationINPerSecondSquared();
 
-        public abstract double getkMaxAngularSpeedRadiansPerSecond();
+        public abstract double getKMaxAngularSpeedRadiansPerSecond();
 
-        public abstract double getkMaxAngularSpeedRadiansPerSecondSquared();
+        public abstract double getKMaxAngularSpeedRadiansPerSecondSquared();
 
-        public abstract double getkPXController();
+        public abstract double getKPXController();
 
-        public abstract double getkPYController();
+        public abstract double getKPYController();
 
-        public abstract double getkDXController();
+        public abstract double getKDXController();
 
-        public abstract double getkDYController();
+        public abstract double getKDYController();
 
-        public abstract double getkPThetaController();
+        public abstract double getKPThetaController();
 
-        public abstract TrapezoidProfile.Constraints getkThetaControllerConstraints();
+        public abstract TrapezoidProfile.Constraints getKThetaControllerConstraints();
 
     }
 
@@ -235,13 +235,13 @@ public abstract class Constants
 
     public abstract class ShooterConstants
     {
-        public abstract double getkP();
+        public abstract double getKP();
 
-        public abstract double getkI();
+        public abstract double getKI();
 
-        public abstract double getkD();
+        public abstract double getKD();
 
-        public abstract double getkF();
+        public abstract double getKF();
 
         public abstract double getPotOffset();
 

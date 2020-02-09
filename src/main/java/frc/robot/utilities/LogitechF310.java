@@ -36,9 +36,8 @@ public class LogitechF310 extends Joystick
 	 * Constructor of the LogitechF310 controller wrapper requires a port number
 	 * between 0-5.
 	 * 
-	 * @param port
-	 *                 the usb port number that the controller is plugged into(this
-	 *                 can be obtained through the driver station).
+	 * @param port the usb port number that the controller is plugged into(this can
+	 *            be obtained through the driver station).
 	 */
 	public LogitechF310(int port)
 	{
@@ -131,58 +130,42 @@ public class LogitechF310 extends Joystick
 	 * 
 	 * @return the left trigger value between 0 and 1.
 	 */
-	public double getLeftTrigger()
-	{
-		return getRawAxis(LEFT_TRIGGER);
-	}
+	public double getLeftTrigger() { return getRawAxis(LEFT_TRIGGER); }
 
 	/**
 	 * Returns the right trigger value this value should be between 0 and 1;
 	 * 
 	 * @return the right trigger value between 0 and 1.
 	 */
-	public double getRightTrigger()
-	{
-		return getRawAxis(RIGHT_TRIGGER);
-	}
+	public double getRightTrigger() { return getRawAxis(RIGHT_TRIGGER); }
 
 	/**
 	 * Returns the left stick x axis value this value should be between -1 and 1;
 	 * 
 	 * @return the left stick x axis value between -1 and 1.
 	 */
-	public double getLeftStickX()
-	{
-		return getRawAxis(X_AxisL);
-	}
+	public double getLeftStickX() { return getRawAxis(X_AxisL); }
 
 	/**
 	 * Returns the left stick y axis value this value should be between -1 and 1;
 	 * 
 	 * @return the left stick y axis value between -1 and 1.
 	 */
-	public double getLeftStickY()
-	{
-		return -getRawAxis(Y_AxisL);
-	}
+	public double getLeftStickY() { return -getRawAxis(Y_AxisL); }
 
 	/**
 	 * Returns the right stick x axis value this value should be between -1 and 1;
 	 * 
 	 * @return the right stick x axis value between -1 and 1.
 	 */
-	public double getRightStickX()
-	{
-		return getRawAxis(X_AxisR);
-	}
+	public double getRightStickX() { return getRawAxis(X_AxisR); }
 
 	/**
 	 * Returns the right stick y axis value this value should be between -1 and 1;
 	 * 
 	 * @return the right stick y axis value between -1 and 1.
 	 */
-	public double getRightStickY()
-	{
+	public double getRightStickY() {
 		// Negative due to left being right and right being left...
 		return -getRawAxis(Y_AxisR);
 	}

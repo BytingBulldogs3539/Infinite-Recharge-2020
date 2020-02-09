@@ -38,8 +38,7 @@ public class SpinnerSubsystem extends SubsystemBase
     BLUE, GREEN, RED, YELLOW, NONE
   }
 
-  public Col getCurrentColor()
-  {
+  public Col getCurrentColor() {
     color = colorSensor.getColor();
 
     if (r > g && r > b)
@@ -66,8 +65,7 @@ public class SpinnerSubsystem extends SubsystemBase
 
   Col col, newCol;
 
-  public Col getOffsetColor()
-  {
+  public Col getOffsetColor() {
     col = this.getCurrentColor();
 
     switch (col)
@@ -92,14 +90,12 @@ public class SpinnerSubsystem extends SubsystemBase
     return newCol;
   }
 
-  public void setPercentOutput(double output)
-  {
+  public void setPercentOutput(double output) {
     spinnerMotor.set(ControlMode.PercentOutput, output);
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
     // This method will be called once per scheduler run
   }
 }

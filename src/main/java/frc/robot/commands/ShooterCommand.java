@@ -31,15 +31,13 @@ public class ShooterCommand extends CommandBase
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     subsystem.setPercentOutput(targetRPM);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
+  public void execute() {
     // System.out.println(subsystem.getDegrees());
     // if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >=
     // targetRPM+100)){
@@ -49,16 +47,12 @@ public class ShooterCommand extends CommandBase
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted) {
     subsystem.setPercentOutput(0);
     // indexerSubsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished()
-  {
-    return false;
-  }
+  public boolean isFinished() { return false; }
 }

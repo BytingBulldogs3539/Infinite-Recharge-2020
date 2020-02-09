@@ -33,16 +33,11 @@ public class PIDCommand extends CommandBase
    * Creates a new PIDCommand, which controls the given output with a
    * PIDController.
    *
-   * @param controller
-   *                            the controller that controls the output.
-   * @param measurementSource
-   *                            the measurement of the process variable
-   * @param setpointSource
-   *                            the controller's setpoint
-   * @param useOutput
-   *                            the controller's output
-   * @param requirements
-   *                            the subsystems required by this command
+   * @param controller the controller that controls the output.
+   * @param measurementSource the measurement of the process variable
+   * @param setpointSource the controller's setpoint
+   * @param useOutput the controller's output
+   * @param requirements the subsystems required by this command
    */
   public PIDCommand(PIDController controller, DoubleSupplier measurementSource, DoubleSupplier setpointSource,
       DoubleConsumer useOutput, Subsystem... requirements)
@@ -63,16 +58,11 @@ public class PIDCommand extends CommandBase
    * Creates a new PIDCommand, which controls the given output with a
    * PIDController.
    *
-   * @param controller
-   *                            the controller that controls the output.
-   * @param measurementSource
-   *                            the measurement of the process variable
-   * @param setpoint
-   *                            the controller's setpoint
-   * @param useOutput
-   *                            the controller's output
-   * @param requirements
-   *                            the subsystems required by this command
+   * @param controller the controller that controls the output.
+   * @param measurementSource the measurement of the process variable
+   * @param setpoint the controller's setpoint
+   * @param useOutput the controller's output
+   * @param requirements the subsystems required by this command
    */
   public PIDCommand(PIDController controller, DoubleSupplier measurementSource, double setpoint,
       DoubleConsumer useOutput, Subsystem... requirements)
@@ -81,20 +71,17 @@ public class PIDCommand extends CommandBase
   }
 
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     m_controller.reset();
   }
 
   @Override
-  public void execute()
-  {
+  public void execute() {
     m_useOutput.accept(m_controller.calculate(m_measurement.getAsDouble(), m_setpoint.getAsDouble()));
   }
 
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted) {
     m_useOutput.accept(0);
   }
 
@@ -103,8 +90,5 @@ public class PIDCommand extends CommandBase
    *
    * @return The PIDController
    */
-  public PIDController getController()
-  {
-    return m_controller;
-  }
+  public PIDController getController() { return m_controller; }
 }

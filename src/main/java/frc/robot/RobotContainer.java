@@ -159,10 +159,9 @@ public class RobotContainer
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * calling passing it to a {@link JoystickButton}.
    */
-  private void configureButtonBindings()
-  {
-    m_driverController = new LogitechF310(robotConstants.getOIConstants().getkDriverControllerPort());
-    m_opController = new LogitechF310(robotConstants.getOIConstants().getkOpControllerPort());
+  private void configureButtonBindings() {
+    m_driverController = new LogitechF310(robotConstants.getOIConstants().getKDriverControllerPort());
+    m_opController = new LogitechF310(robotConstants.getOIConstants().getKOpControllerPort());
 
     // m_driverController.buttonA.whenHeld(visionCommand);
 
@@ -176,7 +175,7 @@ public class RobotContainer
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
 
-    SmartDashboard.putData("Play ", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp" true, 3));
+    SmartDashboard.putData("Play ", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
     SmartDashboard.putData("Climb Up Left", new ClimbCommand(m_ClimbSubsystem, -.2, 0));
     SmartDashboard.putData("Climb Up Right", new ClimbCommand(m_ClimbSubsystem, 0, -.2));
     SmartDashboard.putData("Climb Down Left", new ClimbCommand(m_ClimbSubsystem, .2, 0));
@@ -189,8 +188,7 @@ public class RobotContainer
    *
    * @return the MAC addresses of all network adapters.
    */
-  private static List<byte[]> getMacAddresses() throws IOException
-  {
+  private static List<byte[]> getMacAddresses() throws IOException {
     List<byte[]> macAddresses = new ArrayList<>();
 
     Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -212,8 +210,7 @@ public class RobotContainer
     return macAddresses;
   }
 
-  private static String macToString(byte[] address)
-  {
+  private static String macToString(byte[] address) {
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < address.length; i++)
     {
@@ -231,13 +228,12 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
-  {
+  public Command getAutonomousCommand() {
     // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(robotConstants.getAutoConstants().getkMaxSpeedINPerSecond(),
-        robotConstants.getAutoConstants().getkMaxAccelerationINPerSecondSquared())
+    TrajectoryConfig config = new TrajectoryConfig(robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
+        robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(robotConstants.getDriveConstants().getkDriveKinematics());
+            .setKinematics(robotConstants.getDriveConstants().getKDriveKinematics());
     // config.setReversed(true);
 
     // config.setReversed(true);
@@ -253,15 +249,15 @@ public class RobotContainer
 
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
         m_robotDrive::getPose, // Functional interface to feed supplier
-        robotConstants.getDriveConstants().getkDriveKinematics(),
+        robotConstants.getDriveConstants().getKDriveKinematics(),
 
         // Position controllers
-        new PIDController(robotConstants.getAutoConstants().getkPXController(), 0,
-            robotConstants.getAutoConstants().getkDXController()),
-        new PIDController(robotConstants.getAutoConstants().getkPYController(), 0,
-            robotConstants.getAutoConstants().getkDYController()),
-        new ProfiledPIDController(robotConstants.getAutoConstants().getkPThetaController(), 0, 0,
-            robotConstants.getAutoConstants().getkThetaControllerConstraints()),
+        new PIDController(robotConstants.getAutoConstants().getKPXController(), 0,
+            robotConstants.getAutoConstants().getKDXController()),
+        new PIDController(robotConstants.getAutoConstants().getKPYController(), 0,
+            robotConstants.getAutoConstants().getKDYController()),
+        new ProfiledPIDController(robotConstants.getAutoConstants().getKPThetaController(), 0, 0,
+            robotConstants.getAutoConstants().getKThetaControllerConstraints()),
 
         m_robotDrive::setModuleStates,
 
