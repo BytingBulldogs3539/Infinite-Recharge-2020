@@ -121,16 +121,11 @@ public class SwerveModule
     // Calculate the drive output from the drive PID controller.
     state = optimizeModuleAngle(state, getAngle());
 
-    final var driveOutput = m_drivePIDController.calculate(
-        getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps(),
-        state.speedMetersPerSecond);
-
     // Calculate the turning motor output from the turning PID controller.
     final var turnOutput = m_turningPIDController.calculate(getAngle(), state.angle.getRadians());
 
     // Calculate the turning motor output from the turning PID controller.
-    m_driveMotor.set(driveOutput
-        + RobotContainer.robotConstants.getModuleConstants().getKFModuleDriveController() * state.speedMetersPerSecond);
+    m_driveMotor.set(state.speedMetersPerSecond);
     m_turningMotor.set(turnOutput);
   }
 

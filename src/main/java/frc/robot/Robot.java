@@ -123,7 +123,7 @@ public class Robot extends TimedRobot
 
     // command motors to do things
     if (rotateEntry.getBoolean(false))
-      m_robotContainer.m_robotDrive.drive(0, 0, -autospeed, false);
+      m_robotContainer.m_robotDrive.drive(0, 0, autospeed, false);
     else
       m_robotContainer.m_robotDrive.drive(autospeed, 0, 0, false);
 

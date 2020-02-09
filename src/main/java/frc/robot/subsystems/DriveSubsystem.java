@@ -125,20 +125,6 @@ public class DriveSubsystem extends SubsystemBase
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    if (xSpeed >= .02 || xSpeed <= -.02)
-      xSpeed = xSpeed * .5;
-    else
-      xSpeed = 0;
-
-    if (ySpeed >= .02 || ySpeed <= -.02)
-      ySpeed = ySpeed * .5;
-    else
-      ySpeed = 0;
-
-    if (rot >= .02 || rot <= -.02)
-      rot = rot * .5;
-    else
-      rot = 0;
 
     if (xSpeed == 0 & ySpeed == 0 && rot == 0)
     {
