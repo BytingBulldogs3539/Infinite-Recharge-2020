@@ -7,9 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -19,8 +16,8 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.DriveCommand;
 
 @SuppressWarnings("PMD.ExcessiveImports")
 public class DriveSubsystem extends SubsystemBase
@@ -77,6 +74,8 @@ public class DriveSubsystem extends SubsystemBase
    */
   public DriveSubsystem()
   {
+    setDefaultCommand(new DriveCommand(this));
+
     RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
         getAngle());
@@ -193,7 +192,7 @@ public class DriveSubsystem extends SubsystemBase
    * Zeroes the heading of the robot.
    */
   public void zeroHeading() {
-    Robot.m_robotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
   }
 
   public double getPigeonAngle() {

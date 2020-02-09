@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.IntakeCommand;
 import frc.robot.utilities.ByteDoubleSolenoid;
 
 public class IntakeSubsystem extends SubsystemBase

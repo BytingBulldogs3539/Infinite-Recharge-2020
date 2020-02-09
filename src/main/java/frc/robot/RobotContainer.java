@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -32,10 +30,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.io.IOException;
 import java.net.NetworkInterface;
 
-import frc.robot.commands.BallIndexerCommand;
 import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.ClimbCommand;
-import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterChirpCommand;
@@ -145,9 +141,6 @@ public class RobotContainer
     m_BuddyClimbSubsystem = new BuddyClimbSubsystem();
     m_SpinnerSubsystem = new SpinnerSubsystem();
     m_robotDrive = new DriveSubsystem();
-
-    // Configure default commands
-    m_robotDrive.setDefaultCommand(new DriveCommand(m_robotDrive));
     // Configure the button bindings
     configureButtonBindings();
 
@@ -175,7 +168,7 @@ public class RobotContainer
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
 
-    SmartDashboard.putData("Play ", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
+    SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
     SmartDashboard.putData("Climb Up Left", new ClimbCommand(m_ClimbSubsystem, -.2, 0));
     SmartDashboard.putData("Climb Up Right", new ClimbCommand(m_ClimbSubsystem, 0, -.2));
     SmartDashboard.putData("Climb Down Left", new ClimbCommand(m_ClimbSubsystem, .2, 0));
@@ -234,16 +227,14 @@ public class RobotContainer
         robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(robotConstants.getDriveConstants().getKDriveKinematics());
-    // config.setReversed(true);
 
     // config.setReversed(true);
-    // An example trajectory to follow. All units in meters.
+    // An example trajectory to follow. All units in inches.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(),
-        // End 3 meters straight ahead of where we started, facing forward
         // new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
         new Pose2d(0, -75, Rotation2d.fromDegrees(0)), config);
 

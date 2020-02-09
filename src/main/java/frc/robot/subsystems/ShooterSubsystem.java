@@ -119,6 +119,8 @@ public class ShooterSubsystem extends SubsystemBase
     }
   }
 
+  public boolean isPlaying() { return _orchestra.isPlaying(); }
+
   public void StopChirp() {
     _orchestra.stop();
   }
