@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -18,11 +22,19 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends TimedRobot
 {
   private Command m_autonomousCommand;
 
   public static RobotContainer m_robotContainer;
+
+  NetworkTableEntry autoSpeedEntry = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
+  NetworkTableEntry telemetryEntry = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
+  NetworkTableEntry rotateEntry = NetworkTableInstance.getDefault().getEntry("/robot/rotate");
+
+  double priorAutospeed = 0;
+  Number[] numberArray = new Number[10];
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -34,6 +46,8 @@ public class Robot extends TimedRobot
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    NetworkTableInstance.getDefault().setUpdateRate(0.010);
+
   }
 
   /**
@@ -76,20 +90,7 @@ public class Robot extends TimedRobot
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-     * switch(autoSelected) { case "My Auto": autonomousCommand = new
-     * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-     * ExampleCommand(); break; }
-     */
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null)
-    {
-      m_autonomousCommand.schedule();
-    }
+    System.out.println("Robot in autonomous mode");
   }
 
   /**
@@ -97,6 +98,48 @@ public class Robot extends TimedRobot
    */
   @Override
   public void autonomousPeriodic() {
+
+    // Retrieve values to send back before telling the motors to do something
+    double now = Timer.getFPGATimestamp();
+
+    double leftPosition = m_robotContainer.m_robotDrive.m_frontLeft.getDrivePos();
+    double leftRate = m_robotContainer.m_robotDrive.m_frontLeft.getDriveVel()
+        * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps();
+
+    double rightPosition = m_robotContainer.m_robotDrive.m_frontRight.getDrivePos();
+    double rightRate = m_robotContainer.m_robotDrive.m_frontRight.getDriveVel()
+        * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps();
+
+    double battery = RobotController.getBatteryVoltage();
+
+    double leftMotorVolts = m_robotContainer.m_robotDrive.m_frontLeft.m_driveMotor.getBusVoltage()
+        * m_robotContainer.m_robotDrive.m_frontLeft.m_driveMotor.getAppliedOutput();
+    double rightMotorVolts = m_robotContainer.m_robotDrive.m_frontRight.m_driveMotor.getBusVoltage()
+        * m_robotContainer.m_robotDrive.m_frontLeft.m_driveMotor.getAppliedOutput();
+
+    // Retrieve the commanded speed from NetworkTables
+    double autospeed = autoSpeedEntry.getDouble(0);
+    priorAutospeed = autospeed;
+
+    // command motors to do things
+    if (rotateEntry.getBoolean(false))
+      m_robotContainer.m_robotDrive.drive(0, 0, -autospeed, false);
+    else
+      m_robotContainer.m_robotDrive.drive(autospeed, 0, 0, false);
+
+    // send telemetry data array back to NT
+    numberArray[0] = now;
+    numberArray[1] = battery;
+    numberArray[2] = autospeed;
+    numberArray[3] = leftMotorVolts;
+    numberArray[4] = rightMotorVolts;
+    numberArray[5] = leftPosition;
+    numberArray[6] = rightPosition;
+    numberArray[7] = leftRate;
+    numberArray[8] = rightRate;
+    numberArray[9] = Math.toRadians(m_robotContainer.m_robotDrive.getPigeonAngle());
+
+    telemetryEntry.setNumberArray(numberArray);
   }
 
   @Override
