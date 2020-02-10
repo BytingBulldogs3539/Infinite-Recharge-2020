@@ -34,64 +34,57 @@ public class SpinnerSubsystem extends SubsystemBase
   Color color;
   double r, g, b;
   int proximity = colorSensor.getProximity();
-  enum Col {
-    BLUE,
-    GREEN,
-    RED,
-    YELLOW,
-    NONE
-  }
 
-  public Col getCurrentColor() {
+  public char getCurrentColor() {
     color = colorSensor.getColor();
     if(proximity >= 50){
     if (r > g && r > b) {
-      return Col.RED;
+      return 'R'; // red
     }
     else if (Math.abs(b - g) < 0.1)
     {
-      return Col.BLUE;
+      return 'B'; // blue
     }
     else if (Math.abs(g - r) < 0.3 && b < 0.16)
     {
-      return Col.YELLOW;
+      return 'Y'; // yellow
     }
     else if (g > r && g > b)
     {
-      return Col.GREEN;
+      return 'G'; // green
     }
     else
     {
-      return Col.NONE;
+      return ' '; // NONE (no color)
     }
     }else{
       //Out of range shows the same as seeing no color
-      return Col.NONE;
+      return ' ';
     }
   }
 
 
-  Col col, newCol;
+  char col, newCol;
 
-  public Col getOffsetColor() {
+  public char getOffsetColor() {
     col = this.getCurrentColor();
 
     switch (col)
     {
-    case RED:
-      newCol = Col.BLUE;
+    case 'R': // red
+      newCol = 'B'; // change to blue
       break;
-    case GREEN:
-      newCol = Col.YELLOW;
+    case 'G': // green
+      newCol = 'Y'; // change to yellow
       break;
-    case BLUE:
-      newCol = Col.RED;
+    case 'B': // blue
+      newCol = 'R'; // change to red
       break;
-    case YELLOW:
-      newCol = Col.GREEN;
+    case 'Y': // yellow
+      newCol = 'G'; // change to green
       break;
-    case NONE:
-      newCol = Col.NONE;
+    default:
+      newCol =' ';
       break;
     }
 
@@ -104,15 +97,15 @@ public class SpinnerSubsystem extends SubsystemBase
 
   @Override
   public void periodic() {
-   if(getCurrentColor() == Col.BLUE){
+   if(getCurrentColor() == 'B'){ // blue
     SmartDashboard.putString("Color", "Blue");
-   }else if(getCurrentColor() == Col.RED){
+   }else if(getCurrentColor() == 'R'){ // red
     SmartDashboard.putString("Color", "Red");
-   }else if(getCurrentColor() == Col.YELLOW){
+   }else if(getCurrentColor() == 'Y'){ // yellow
     SmartDashboard.putString("Color", "Yellow");
-   }else if(getCurrentColor() == Col.GREEN){
+   }else if(getCurrentColor() == 'G'){ // green
     SmartDashboard.putString("Color", "Green");
-   }else if(getCurrentColor() == Col.NONE){
+   }else if(getCurrentColor() == ' '){ // NONE (no color)
     SmartDashboard.putString("Color", "None");
    }else{
      //expected values are the 4 colors + 1 none condition. Anything else won't trip the if statments above.
