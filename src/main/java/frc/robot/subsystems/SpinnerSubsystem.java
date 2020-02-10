@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -32,17 +33,19 @@ public class SpinnerSubsystem extends SubsystemBase
 
   Color color;
   double r, g, b;
-
-  enum Col
-  {
-    BLUE, GREEN, RED, YELLOW, NONE
+  int proximity = colorSensor.getProximity();
+  enum Col {
+    BLUE,
+    GREEN,
+    RED,
+    YELLOW,
+    NONE
   }
 
   public Col getCurrentColor() {
     color = colorSensor.getColor();
-
-    if (r > g && r > b)
-    {
+    if(proximity >= 50){
+    if (r > g && r > b) {
       return Col.RED;
     }
     else if (Math.abs(b - g) < 0.1)
@@ -61,7 +64,12 @@ public class SpinnerSubsystem extends SubsystemBase
     {
       return Col.NONE;
     }
+    }else{
+      //Out of range shows the same as seeing no color
+      return Col.NONE;
+    }
   }
+
 
   Col col, newCol;
 
@@ -96,6 +104,19 @@ public class SpinnerSubsystem extends SubsystemBase
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+   if(getCurrentColor() == Col.BLUE){
+    SmartDashboard.putString("Color", "Blue");
+   }else if(getCurrentColor() == Col.RED){
+    SmartDashboard.putString("Color", "Red");
+   }else if(getCurrentColor() == Col.YELLOW){
+    SmartDashboard.putString("Color", "Yellow");
+   }else if(getCurrentColor() == Col.GREEN){
+    SmartDashboard.putString("Color", "Green");
+   }else if(getCurrentColor() == Col.NONE){
+    SmartDashboard.putString("Color", "None");
+   }else{
+     //expected values are the 4 colors + 1 none condition. Anything else won't trip the if statments above.
+    SmartDashboard.putString("Color", "recived unexpected value");
+   }
   }
 }
