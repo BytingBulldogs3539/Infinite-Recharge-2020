@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.NetworkInterface;
 
 import frc.robot.commands.BallIndexerManualCommand;
+import frc.robot.commands.ClimbAdjustCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
@@ -161,6 +162,8 @@ public class RobotContainer
     m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
     m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, 1));
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, -1));
+    m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
+    m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));

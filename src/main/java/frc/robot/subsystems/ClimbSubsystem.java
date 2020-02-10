@@ -56,6 +56,10 @@ public class ClimbSubsystem extends SubsystemBase
     climbMotorR.set(ControlMode.PercentOutput, power);
 
   }
+  public void setAdjusterPercentOutput(double power)
+  {
+    climbAdjuster.set(ControlMode.PercentOutput, power);
+  }
 
   @Override
   public void periodic() {
