@@ -42,7 +42,9 @@ public class SpinnerSubsystem extends SubsystemBase
     b = color.blue;
     proximity = colorSensor.getProximity();
 
-    if (proximity >= 50) {
+    SmartDashboard.putNumber("colorSensor.getProximity()", colorSensor.getProximity());
+
+    if (proximity >= 120) {
       if (r > g && r > b) {
         return 'R'; // red
       }
@@ -60,11 +62,11 @@ public class SpinnerSubsystem extends SubsystemBase
       }
       else
       {
-        return ' '; // NONE (no color)
+        return 'N'; // NONE (no color)
       }
     }else{
       //Out of range shows the same as seeing no color
-      return ' ';
+      return 'N';
     }
   }
 
@@ -89,7 +91,7 @@ public class SpinnerSubsystem extends SubsystemBase
       newCol = 'G'; // change to green
       break;
     default:
-      newCol =' ';
+      newCol ='N';
       break;
     }
 
@@ -110,7 +112,7 @@ public class SpinnerSubsystem extends SubsystemBase
     SmartDashboard.putString("Color", "Yellow");
    }else if(getCurrentColor() == 'G'){ // green
     SmartDashboard.putString("Color", "Green");
-   }else if(getCurrentColor() == ' '){ // NONE (no color)
+   }else if(getCurrentColor() == 'N'){ // NONE (no color)
     SmartDashboard.putString("Color", "None");
    }else{
      //expected values are the 4 colors + 1 none condition. Anything else won't trip the if statments above.
