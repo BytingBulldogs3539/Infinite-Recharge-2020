@@ -36,6 +36,7 @@ import frc.robot.commands.ClimbAdjustCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.SpinnerCommand;
 import frc.robot.commands.ShooterChirpCommand;
 
 import frc.robot.subsystems.BallIndexerSubsystem;
@@ -165,6 +166,7 @@ public class RobotContainer
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, -1));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
+    m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));

@@ -33,30 +33,35 @@ public class SpinnerSubsystem extends SubsystemBase
 
   Color color;
   double r, g, b;
-  int proximity = colorSensor.getProximity();
+  int proximity;
 
   public char getCurrentColor() {
     color = colorSensor.getColor();
-    if(proximity >= 50){
-    if (r > g && r > b) {
-      return 'R'; // red
-    }
-    else if (Math.abs(b - g) < 0.1)
-    {
-      return 'B'; // blue
-    }
-    else if (Math.abs(g - r) < 0.3 && b < 0.16)
-    {
-      return 'Y'; // yellow
-    }
-    else if (g > r && g > b)
-    {
-      return 'G'; // green
-    }
-    else
-    {
-      return ' '; // NONE (no color)
-    }
+    r = color.red;
+    g = color.green;
+    b = color.blue;
+    proximity = colorSensor.getProximity();
+
+    if (proximity >= 50) {
+      if (r > g && r > b) {
+        return 'R'; // red
+      }
+      else if (Math.abs(b - g) < 0.1)
+      {
+        return 'B'; // blue
+      }
+      else if (Math.abs(g - r) < 0.3 && b < 0.16)
+      {
+        return 'Y'; // yellow
+      }
+      else if (g > r && g > b)
+      {
+        return 'G'; // green
+      }
+      else
+      {
+        return ' '; // NONE (no color)
+      }
     }else{
       //Out of range shows the same as seeing no color
       return ' ';

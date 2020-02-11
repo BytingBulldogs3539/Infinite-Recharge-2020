@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SpinnerSubsystem;
 
@@ -16,14 +17,12 @@ public class SpinnerCommand extends CommandBase
    * Creates a new SpinnerCommand.
    */
   SpinnerSubsystem subsystem;
-  String gameData;
 
-  public SpinnerCommand(SpinnerSubsystem subsystem, String gameData)
+  public SpinnerCommand(SpinnerSubsystem subsystem)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
-    this.gameData = gameData;
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +33,7 @@ public class SpinnerCommand extends CommandBase
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (gameData.length() > 0 && subsystem.getOffsetColor() != gameData.charAt(0)) {
+    if (DriverStation.getInstance().getGameSpecificMessage().length() > 0 && subsystem.getOffsetColor() != DriverStation.getInstance().getGameSpecificMessage().charAt(0)) {
       System.out.println("turning");
       subsystem.setPercentOutput(1.0);
     } else {
