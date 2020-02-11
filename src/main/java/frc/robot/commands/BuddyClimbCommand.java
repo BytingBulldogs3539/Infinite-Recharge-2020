@@ -16,17 +16,20 @@ public class BuddyClimbCommand extends CommandBase
    * Creates a new BuddyClimbCommand.
    */
   BuddyClimbSubsystem subsystem;
+  double power;
 
-  public BuddyClimbCommand(BuddyClimbSubsystem subsystem)
+  public BuddyClimbCommand(BuddyClimbSubsystem subsystem, double power)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
+    this.power = power;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.setPercentOutput(power);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +40,7 @@ public class BuddyClimbCommand extends CommandBase
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    subsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.
