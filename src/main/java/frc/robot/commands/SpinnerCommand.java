@@ -16,12 +16,14 @@ public class SpinnerCommand extends CommandBase
    * Creates a new SpinnerCommand.
    */
   SpinnerSubsystem subsystem;
+  String gameData;
 
-  public SpinnerCommand(SpinnerSubsystem subsystem)
+  public SpinnerCommand(SpinnerSubsystem subsystem, String gameData)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
+    this.gameData = gameData;
   }
 
   // Called when the command is initially scheduled.
@@ -32,11 +34,18 @@ public class SpinnerCommand extends CommandBase
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (gameData.length() > 0 && subsystem.getOffsetColor() != gameData.charAt(0)) {
+      System.out.println("turning");
+      subsystem.setPercentOutput(1.0);
+    } else {
+      subsystem.setPercentOutput(0.0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    subsystem.setPercentOutput(0.0);
   }
 
   // Returns true when the command should end.
