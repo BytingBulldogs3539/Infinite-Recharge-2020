@@ -125,6 +125,18 @@ public class DriveSubsystem extends SubsystemBase
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+
+    if (xSpeed >= .02 || xSpeed <= -.02)
+    xSpeed = xSpeed * .5;
+    if (ySpeed >= .02 || ySpeed <= -.02)
+    ySpeed = ySpeed * .5;
+      if (rot >= .02 || rot <= -.02)
+      rot = rot * .5;
+
+    xSpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
+    ySpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
+    rot*=RobotContainer.robotConstants.getAutoConstants().getKMaxAngularSpeedRadiansPerSecond();
+
       var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics()
           .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
               : new ChassisSpeeds(xSpeed, ySpeed, rot));

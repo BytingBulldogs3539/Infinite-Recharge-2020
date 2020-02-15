@@ -37,7 +37,7 @@ import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SpinnerCommand;
-import frc.robot.commands.ShooterChirpCommand;
+//import frc.robot.commands.ShooterChirpCommand;
 
 import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.BuddyClimbSubsystem;
@@ -77,9 +77,9 @@ public class RobotContainer
   // using.
   // TODO: Add Read MAC Addresses
   private static final byte[] COMPETITION_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe4,
+      (byte) 0x44 };
+  private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe4,
       (byte) 0x4e };
-  private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe5,
-      0x18 };
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -136,6 +136,10 @@ public class RobotContainer
     {
       robotConstants = new CompConstants();
     }
+    if (practiceBot)
+    {
+      robotConstants = new PracConstants();
+    }
 
     m_ShooterSubsystem = new ShooterSubsystem();
     m_IntakeSubsystem = new IntakeSubsystem();
@@ -161,12 +165,14 @@ public class RobotContainer
 
     // m_driverController.buttonA.whenHeld(visionCommand);
 
-    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 1, m_BallIndexerSubsystem));
-    m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, 1));
-    m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, -1));
+    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 3000, m_BallIndexerSubsystem, 0.0));
+    m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, 1.0));
+    m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-1.0));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
     m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
+    m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
+    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, -0.7));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));
@@ -175,7 +181,7 @@ public class RobotContainer
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
     m_opController.buttonPadLeft.whenHeld(new BuddyClimbCommand(m_BuddyClimbSubsystem, 1));
 
-    SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
+    //SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
     SmartDashboard.putData("Climb Up Left", new ClimbCommand(m_ClimbSubsystem, -.2, 0));
     SmartDashboard.putData("Climb Up Right", new ClimbCommand(m_ClimbSubsystem, 0, -.2));
     SmartDashboard.putData("Climb Down Left", new ClimbCommand(m_ClimbSubsystem, .2, 0));

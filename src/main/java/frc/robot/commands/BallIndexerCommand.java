@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallIndexerSubsystem;
 
@@ -16,6 +17,7 @@ public class BallIndexerCommand extends CommandBase
    * Creates a new BallIndexerCommand.
    */
   BallIndexerSubsystem subsystem;
+  int counter;
 
   public BallIndexerCommand(BallIndexerSubsystem subsystem)
   {
@@ -31,11 +33,21 @@ public class BallIndexerCommand extends CommandBase
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (subsystem.getBallSensorState())
-      subsystem.setPercentOutput(1);
-    else
+    /*if (subsystem.getBallSensorState()){
+      counter=5;
+    }else{
       subsystem.setPercentOutput(0);
+    }
 
+    if(counter > 0){
+      subsystem.setPercentOutput(1.0);
+      counter--;
+    }*/
+    if(subsystem.getBallSensorState()){
+      subsystem.setPercentOutput(1.0);
+    }else{
+      subsystem.setPercentOutput(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

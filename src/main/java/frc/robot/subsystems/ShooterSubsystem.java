@@ -10,8 +10,11 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+//import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -20,10 +23,10 @@ import com.ctre.phoenix.music.Orchestra;
 public class ShooterSubsystem extends SubsystemBase
 {
 
-  AnalogPotentiometer potentiometer = new AnalogPotentiometer(
-      RobotContainer.robotConstants.getRobotIDConstants().getShooterPotentiometerID(), 67.5,
-      RobotContainer.robotConstants.getShooterConstants().getPotOffset());
-  Servo servo = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoID());
+  AnalogInput pot = new AnalogInput(0);
+  Servo servoL = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoLID());
+  Servo servoR = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoRID());
+  PIDController pidController = new PIDController(0.001,0,0);
 
   // Shooter motor
   TalonFX shooterMotor = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getShooterMotorID());
@@ -49,6 +52,7 @@ public class ShooterSubsystem extends SubsystemBase
     _orchestra = new Orchestra(_instruments);
     _orchestra.addInstrument(shooterMotor);
 
+    SmartDashboard.putNumber("Servo Target", 30);
   }
 
   /**
@@ -81,7 +85,7 @@ public class ShooterSubsystem extends SubsystemBase
    * 
    * @return returns the current Hood Angle in Degrees.
    */
-  public double getHoodAngle() { return potentiometer.get(); }
+  public double getHoodAngle() { return pot.getValue(); }
 
   /**
    * 
@@ -89,10 +93,16 @@ public class ShooterSubsystem extends SubsystemBase
    *          high and 60 will shoot it low almost into the floor.) a value of
    *          less than 0 or greater than 60 will disable pid.
    */
-  public void setHoodAngle(double angle) { this.hoodAngle = angle; }
+  public void setHoodAngle(double angle) { 
+    this.hoodAngle = angle;
+    pidController.setSetpoint(angle);
+   }
 
   public void setServoSpeed(double speed) {
-    servo.set(speed);
+    double speedMk2 = (speed/2.0)+0.5;
+    speed = (-speed/2.0)+0.5;
+    servoL.set(speed);
+    servoR.set(speedMk2);
   }
 
   public void loadMusic(String path) {
@@ -127,6 +137,17 @@ public class ShooterSubsystem extends SubsystemBase
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Curr Shooter Velocity", getVelocity());
+    //setServoSpeed()
+    //SmartDashboard.putNumber("Curr Shooter Velocity", getVelocity());
+    setServoSpeed(pidController.calculate(getAngle()));
+    SmartDashboard.putNumber("Curr Angle", getAngle());
+  }
+
+  public double getAngle(){
+    if(RobotContainer.robotConstants.getShooterConstants().invertHoodAngle()){
+      return (-(pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
+    }else{
+      return ((pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
+    }
   }
 }

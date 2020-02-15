@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase
@@ -16,6 +18,8 @@ public class IntakeCommand extends CommandBase
    * Creates a new IntakeCommand.
    */
   IntakeSubsystem subsystem;
+  /**Used to count loops in the intake command*/
+  int counter = 0;
 
   public IntakeCommand(IntakeSubsystem subsystem)
   {
@@ -27,15 +31,19 @@ public class IntakeCommand extends CommandBase
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    counter = 0;
+    subsystem.setPercentOutput(-1);
     subsystem.setIntakeSolinoid(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subsystem.setPercentOutput(1);
-
-    // the Right Trigger minus the negative Left Trigger, giving ranges from -1 to 1
+    if(counter<RobotContainer.robotConstants.getIntakeConstants().intakeReverseDelay()){
+      counter++;
+    }else{
+      subsystem.setPercentOutput(1);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -43,7 +51,7 @@ public class IntakeCommand extends CommandBase
   public void end(boolean interrupted) {
     subsystem.setIntakeSolinoid(false);
     subsystem.setPercentOutput(0);
-
+    counter = 0;
   }
 
   // Returns true when the command should end.

@@ -104,7 +104,7 @@ public class SpinnerSubsystem extends SubsystemBase
 
   @Override
   public void periodic() {
-   if(getCurrentColor() == 'B'){ // blue
+   /*if(getCurrentColor() == 'B'){ // blue
     SmartDashboard.putString("Color", "Blue");
    }else if(getCurrentColor() == 'R'){ // red
     SmartDashboard.putString("Color", "Red");
@@ -117,6 +117,6 @@ public class SpinnerSubsystem extends SubsystemBase
    }else{
      //expected values are the 4 colors + 1 none condition. Anything else won't trip the if statments above.
     SmartDashboard.putString("Color", "recived unexpected value");
-   }
+   }*/
   }
 }
