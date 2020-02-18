@@ -24,6 +24,10 @@ public class SpinnerSubsystem extends SubsystemBase
   ColorSensorV3 colorSensor = new ColorSensorV3(
       RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
 
+  double rotations = 0;
+  char startingColor = ' ';
+  char lastColor = ' ';
+
   /**
    * Creates a new SpinnerSubsystem.
    */
@@ -34,6 +38,35 @@ public class SpinnerSubsystem extends SubsystemBase
   Color color;
   double r, g, b;
   int proximity;
+
+  public void resetRotations() {
+    rotations = 0;
+    startingColor = getCurrentColor();
+    lastColor = startingColor;
+  }
+
+  public double getRotations() {
+    return rotations;
+  }
+
+  public void updateRoations() {
+    // Get the current color
+    char currentColor = getCurrentColor();
+    // if (currentColor != lastColor && currentColor == startingColor) {
+    //   rotations += 0.5;
+    // }
+    // TODO: figure out which way the control panel is spun to prevent issues (so "rotations" will only increment one way)
+    // Y -> B -> G -> R (counter-clockwise)
+    if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G')) {
+      rotations += 0.125;
+    }
+    // R -> G -> B -> Y (clockwise)
+    if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B')) {
+      rotations += 0.125;
+    }
+    // Update "lastColor" for the next iteration
+    lastColor = currentColor;
+  }
 
   public char getCurrentColor() {
     color = colorSensor.getColor();

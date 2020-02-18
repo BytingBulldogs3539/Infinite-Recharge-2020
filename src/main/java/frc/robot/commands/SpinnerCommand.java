@@ -28,14 +28,21 @@ public class SpinnerCommand extends CommandBase
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.resetRotations();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // If FMS has sent a color, spin to that color:
     if (DriverStation.getInstance().getGameSpecificMessage().length() > 0 && subsystem.getOffsetColor() != DriverStation.getInstance().getGameSpecificMessage().charAt(0)) {
-      System.out.println("turning");
       subsystem.setPercentOutput(1.0);
+    // If 3-5 rotations are required, rotate at least 4 times:
+    } else if (DriverStation.getInstance().getGameSpecificMessage().length() == 0 && subsystem.getRotations() < 4) {
+      subsystem.setPercentOutput(1.0);
+      subsystem.updateRoations();
+      System.out.println(subsystem.getRotations());
+    // Otherwise, stop rotating:
     } else {
       subsystem.setPercentOutput(0.0);
     }
@@ -44,6 +51,7 @@ public class SpinnerCommand extends CommandBase
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // Stop rotating just in case:
     subsystem.setPercentOutput(0.0);
   }
 
