@@ -62,8 +62,11 @@ public final class PracConstants extends Constants
         public int getSpinnerMotorID() { return 14; }
 
         @Override
-        public int getShooterServoID() {
-            // TODO: Enter Real ID
+        public int getShooterServoLID() {
+            return 1;
+        }
+        @Override
+        public int getShooterServoRID() {
             return 0;
         }
 
@@ -92,6 +95,7 @@ public final class PracConstants extends Constants
 
     public class DriveConstants extends Constants.DriveConstants
     {
+        @Override
         public int getKFrontLeftDriveMotorPort() { return 7; }
 
         public int getKRearLeftDriveMotorPort() { return 2; }
@@ -163,20 +167,7 @@ public final class PracConstants extends Constants
                     new Translation2d(-getKWheelBase() / 2, -getKTrackWidth() / 2));
         }
 
-        public boolean getKGyroReversed() { return false; }
-
-        // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        // These characterization values MUST be determined either experimentally or
-        // theoretically
-        // for *your* robot's drive.
-        // The RobotPy Characterization Toolsuite provides a convenient tool for
-        // obtaining these
-        // values for your robot.
-        public double getKsVolts() { return 1; }
-
-        public double getKvVoltSecondsPerMeter() { return 0.8; }
-
-        public double getKaVoltSecondsSquaredPerMeter() { return 0.15; }
+        public boolean getKGyroReversed() { return true; }
 
         public double getKMaxSpeedINPerSecond() { return 176.52; }
 
@@ -204,7 +195,7 @@ public final class PracConstants extends Constants
 
         public double getKMaxModuleAngularAccelerationRadiansPerSecondSquared() { return (50 * Math.PI); }
 
-        public int getKDriveEncoderCPR() { return 229; }
+        public int getKDriveEncoderCPR() { return 240; }
 
         public double getKWheelDiameterIN() { return 4.0; }
 
@@ -212,7 +203,7 @@ public final class PracConstants extends Constants
             return ((getKWheelDiameterIN() * Math.PI) / (double) getKDriveEncoderCPR());
         }
 
-        public double getKDriveEncoderRpmToInps() { return (157.44 / 5676.0); }
+        public double getKDriveEncoderRpmToInps() { return (217.92 / 5676.0); }
 
         public double getKPModuleTurningController() { return .4; }
 
@@ -233,7 +224,7 @@ public final class PracConstants extends Constants
 
     public class AutoConstants extends Constants.AutoConstants
     {
-        public double getKMaxSpeedINPerSecond() { return 160.44; }
+        public double getKMaxSpeedINPerSecond() { return 217.92; }
 
         public double getKMaxAccelerationINPerSecondSquared() { return 20; }
 
@@ -265,10 +256,13 @@ public final class PracConstants extends Constants
         public MotorType getIntakeMotorType() { return MotorType.kBrushless; }
 
         @Override
-        public boolean getIntakeMotorInverted() { return true; }
+        public boolean getIntakeMotorInverted() { return false; }
 
         @Override
         public boolean getDefaultIntakeDirection() { return false; }
+
+        @Override
+        public int intakeReverseDelay() { return 5; }
 
     }
 
@@ -305,32 +299,36 @@ public final class PracConstants extends Constants
 
         @Override
         public double getKP() {
-            // TODO tune values
-            return 0;
+            return 0.1;
         }
 
         @Override
         public double getKI() {
-            // TODO tune values
             return 0;
         }
 
         @Override
         public double getKD() {
-            // TODO tune values
             return 0;
         }
 
         @Override
         public double getKF() {
-            // TODO tune values
-            return 0;
+            return 0.054;
         }
 
         @Override
         public double getPotOffset() {
             // TODO Auto-generated method stub
             return 0;
+        }
+
+        @Override
+        public boolean invertHoodAngle() { return true; }
+
+        @Override
+        public double getHoodOffset(){
+            return 74.3;
         }
 
         @Override

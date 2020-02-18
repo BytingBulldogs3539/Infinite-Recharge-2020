@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -19,20 +20,23 @@ public class ShooterCommand extends CommandBase
   ShooterSubsystem subsystem;
   double targetRPM;
   BallIndexerSubsystem indexerSubsystem;
+  double targetServoSpeed;
 
-  public ShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem)
+  public ShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem, double targetServoSpeed)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);// , indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
+    this.targetServoSpeed = targetServoSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystem.setPercentOutput(targetRPM);
+    subsystem.setVelocity(targetRPM);
+    subsystem.setServoSpeed(targetServoSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,12 +47,14 @@ public class ShooterCommand extends CommandBase
     // targetRPM+100)){
     // indexerSubsystem.setPercentOutput(1);
     // };
+    subsystem.setHoodAngle(SmartDashboard.getNumber("Servo Target", 30));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     subsystem.setPercentOutput(0);
+    subsystem.setServoSpeed(0);
     // indexerSubsystem.setPercentOutput(0);
   }
 

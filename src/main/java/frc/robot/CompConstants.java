@@ -62,8 +62,11 @@ public final class CompConstants extends Constants
         public int getSpinnerMotorID() { return 14; }
 
         @Override
-        public int getShooterServoID() {
-            // TODO: Enter Real ID
+        public int getShooterServoLID() {
+            return 1;
+        }
+        @Override
+        public int getShooterServoRID() {
             return 0;
         }
 
@@ -253,10 +256,13 @@ public final class CompConstants extends Constants
         public MotorType getIntakeMotorType() { return MotorType.kBrushless; }
 
         @Override
-        public boolean getIntakeMotorInverted() { return true; }
+        public boolean getIntakeMotorInverted() { return false; }
 
         @Override
         public boolean getDefaultIntakeDirection() { return false; }
+
+        @Override
+        public int intakeReverseDelay() { return 5; }
 
     }
 
@@ -293,26 +299,22 @@ public final class CompConstants extends Constants
 
         @Override
         public double getKP() {
-            // TODO tune values
-            return 0;
+            return 0.1;
         }
 
         @Override
         public double getKI() {
-            // TODO tune values
             return 0;
         }
 
         @Override
         public double getKD() {
-            // TODO tune values
             return 0;
         }
 
         @Override
         public double getKF() {
-            // TODO tune values
-            return 0;
+            return 0.054;
         }
 
         @Override
@@ -320,6 +322,14 @@ public final class CompConstants extends Constants
             // TODO Auto-generated method stub
             return 0;
         }
+
+        @Override
+        public double getHoodOffset(){
+            return 74.3;
+        }
+
+        @Override
+        public boolean invertHoodAngle() { return true; }
 
         @Override
         public boolean getShooterMotorInverted() { return false; }

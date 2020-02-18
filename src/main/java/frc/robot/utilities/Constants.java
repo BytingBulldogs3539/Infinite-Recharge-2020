@@ -59,7 +59,8 @@ public abstract class Constants
 
         public abstract int getShooterPotentiometerID();
 
-        public abstract int getShooterServoID();
+        public abstract int getShooterServoLID();
+        public abstract int getShooterServoRID();
 
         public abstract int getBallSensorPort();
 
@@ -212,6 +213,9 @@ public abstract class Constants
         public abstract boolean getIntakeMotorInverted();
 
         public abstract boolean getDefaultIntakeDirection();
+
+        /** The number of loops for the intake to run backwards */
+        public abstract int intakeReverseDelay();
     }
 
     public abstract class BallIndexerConstants
@@ -246,5 +250,9 @@ public abstract class Constants
         public abstract double getPotOffset();
 
         public abstract boolean getShooterMotorInverted();
+
+        public abstract double getHoodOffset();
+
+        public abstract boolean invertHoodAngle();
     }
 }
