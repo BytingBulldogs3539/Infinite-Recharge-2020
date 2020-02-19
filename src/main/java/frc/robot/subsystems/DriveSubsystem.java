@@ -74,7 +74,7 @@ public class DriveSubsystem extends SubsystemBase
    */
   public DriveSubsystem()
   {
-    setDefaultCommand(new DriveCommand(this));
+    // setDefaultCommand(new DriveCommand(this));
 
     RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
@@ -135,6 +135,7 @@ public class DriveSubsystem extends SubsystemBase
       xSpeed *= RobotContainer.robotConstants.getDriveConstants().getKMaxSpeedINPerSecond();
       ySpeed *= RobotContainer.robotConstants.getDriveConstants().getKMaxSpeedINPerSecond();
       rot *= RobotContainer.robotConstants.getDriveConstants().getKMaxTurnSpeedRadPerSecond();
+
       var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics()
           .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
               : new ChassisSpeeds(xSpeed, ySpeed, rot));

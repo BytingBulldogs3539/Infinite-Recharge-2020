@@ -92,6 +92,7 @@ public final class PracConstants extends Constants
 
     public class DriveConstants extends Constants.DriveConstants
     {
+        @Override
         public int getKFrontLeftDriveMotorPort() { return 7; }
 
         public int getKRearLeftDriveMotorPort() { return 2; }
@@ -163,22 +164,9 @@ public final class PracConstants extends Constants
                     new Translation2d(-getKWheelBase() / 2, -getKTrackWidth() / 2));
         }
 
-        public boolean getKGyroReversed() { return false; }
+        public boolean getKGyroReversed() { return true; }
 
-        // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-        // These characterization values MUST be determined either experimentally or
-        // theoretically
-        // for *your* robot's drive.
-        // The RobotPy Characterization Toolsuite provides a convenient tool for
-        // obtaining these
-        // values for your robot.
-        public double getKsVolts() { return 1; }
-
-        public double getKvVoltSecondsPerMeter() { return 0.8; }
-
-        public double getKaVoltSecondsSquaredPerMeter() { return 0.15; }
-
-        public double getKMaxSpeedINPerSecond() { return 176.52; }
+        public double getKMaxSpeedINPerSecond() { return 1; }
 
         public double getKMaxTurnSpeedRadPerSecond() {
             return 10.6;
@@ -204,7 +192,7 @@ public final class PracConstants extends Constants
 
         public double getKMaxModuleAngularAccelerationRadiansPerSecondSquared() { return (50 * Math.PI); }
 
-        public int getKDriveEncoderCPR() { return 229; }
+        public int getKDriveEncoderCPR() { return 240; }
 
         public double getKWheelDiameterIN() { return 4.0; }
 
@@ -212,7 +200,7 @@ public final class PracConstants extends Constants
             return ((getKWheelDiameterIN() * Math.PI) / (double) getKDriveEncoderCPR());
         }
 
-        public double getKDriveEncoderRpmToInps() { return (157.44 / 5676.0); }
+        public double getKDriveEncoderRpmToInps() { return (217.92 / 5676.0); }
 
         public double getKPModuleTurningController() { return .4; }
 
@@ -233,7 +221,7 @@ public final class PracConstants extends Constants
 
     public class AutoConstants extends Constants.AutoConstants
     {
-        public double getKMaxSpeedINPerSecond() { return 160.44; }
+        public double getKMaxSpeedINPerSecond() { return 1; }
 
         public double getKMaxAccelerationINPerSecondSquared() { return 20; }
 

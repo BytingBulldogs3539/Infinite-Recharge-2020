@@ -166,7 +166,7 @@ public final class CompConstants extends Constants
 
         public boolean getKGyroReversed() { return true; }
 
-        public double getKMaxSpeedINPerSecond() { return 176.52; }
+        public double getKMaxSpeedINPerSecond() { return 1; }
 
         public double getKMaxTurnSpeedRadPerSecond() {
             return 10.6;
@@ -221,7 +221,7 @@ public final class CompConstants extends Constants
 
     public class AutoConstants extends Constants.AutoConstants
     {
-        public double getKMaxSpeedINPerSecond() { return 217.92; }
+        public double getKMaxSpeedINPerSecond() { return 1; }
 
         public double getKMaxAccelerationINPerSecondSquared() { return 20; }
 
