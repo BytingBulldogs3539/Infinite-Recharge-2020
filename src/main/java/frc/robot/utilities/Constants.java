@@ -89,8 +89,6 @@ public abstract class Constants
 
         public abstract int getKRearRightTurningMotorPort();
 
-        public abstract int getKPigeonID();
-
         public abstract int getKFrontLeftTurningEncoderPorts();
 
         public abstract int getKRearLeftTurningEncoderPorts();

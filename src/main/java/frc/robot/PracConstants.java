@@ -112,8 +112,6 @@ public final class PracConstants extends Constants
 
         public int getKRearRightTurningMotorPort() { return 4; }
 
-        public int getKPigeonID() { return 25; }
-
         public int getKFrontLeftTurningEncoderPorts() { return 30; }
 
         public int getKRearLeftTurningEncoderPorts() { return 32; }
@@ -226,19 +224,19 @@ public final class PracConstants extends Constants
     {
         public double getKMaxSpeedINPerSecond() { return 217.92; }
 
-        public double getKMaxAccelerationINPerSecondSquared() { return 20; }
+        public double getKMaxAccelerationINPerSecondSquared() { return 80; }
 
         public double getKMaxAngularSpeedRadiansPerSecond() { return 10.6; }
 
         public double getKMaxAngularSpeedRadiansPerSecondSquared() { return 10.6; }
 
-        public double getKPXController() { return .076; }
+        public double getKPXController() { return .85; }
 
-        public double getKPYController() { return .076; }
+        public double getKPYController() { return .6; }
 
-        public double getKDXController() { return .033; }
+        public double getKDXController() { return .0546; }
 
-        public double getKDYController() { return .033; }
+        public double getKDYController() { return .0546; }
 
         public double getKPThetaController() { return 1.6; }
 
@@ -270,7 +268,7 @@ public final class PracConstants extends Constants
     {
 
         @Override
-        public boolean getIndexMotorInverted() { return true; }
+        public boolean getIndexMotorInverted() { return false; }
 
         @Override
         public boolean getIndexMotorBrake() { return true; }
@@ -328,7 +326,7 @@ public final class PracConstants extends Constants
 
         @Override
         public double getHoodOffset(){
-            return 74.3;
+            return -8.9+17.6+.15;
         }
 
         @Override

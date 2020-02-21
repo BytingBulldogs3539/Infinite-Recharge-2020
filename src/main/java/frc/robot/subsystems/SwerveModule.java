@@ -15,6 +15,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 
 import frc.robot.utilities.PIDController;
 import frc.robot.utilities.ProfiledPIDController;
@@ -64,17 +65,27 @@ public class SwerveModule
     m_driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
     m_turningMotor = new CANSparkMax(turningMotorChannel, MotorType.kBrushless);
 
+        // Get and store away the built in encoder on the drive motor.
+        this.m_driveEncoder = m_driveMotor.getEncoder();
+
+
     // Invert the motors if needed.
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 10);
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 20);
     m_driveMotor.setInverted(reverseDrive);
+
     m_turningMotor.setInverted(reverseTurn);
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 10);
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
+    m_driveMotor.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 20);
+    
 
     m_driveMotor.setIdleMode(IdleMode.kBrake);
     m_turningMotor.setIdleMode(IdleMode.kCoast);
 
-    // Get and store away the built in encoder on the drive motor.
-    this.m_driveEncoder = m_driveMotor.getEncoder();
 
-    // Create and store away the turning motor.
+    // Create and store away the turning encoder.
     this.m_turningEncoder = new CANCoder(turningEncoderPort);
 
     m_turningEncoder.setPosition(m_turningEncoder.getAbsolutePosition());
@@ -146,7 +157,7 @@ public class SwerveModule
 
   public void resetEncoders() {
     m_driveEncoder.setPosition(0);
-    m_turningEncoder.setPosition(0);
+    //m_turningEncoder.setPosition(0);
   }
 
   public double getDrivePos() { return m_driveMotor.getEncoder().getPosition() * ((driveEncoderReversed) ? -1 : 1); }
@@ -156,6 +167,11 @@ public class SwerveModule
   public double getAngle() {
     double enc = Math.toRadians(m_turningEncoder.getPosition());
     return enc;
+  }
+
+  public void resetWheels()
+  {
+    m_turningEncoder.setPosition(m_turningEncoder.getAbsolutePosition());
   }
 
   /**

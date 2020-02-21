@@ -23,13 +23,14 @@ public class SpinnerSubsystem extends SubsystemBase
   VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
   ColorSensorV3 colorSensor = new ColorSensorV3(
       RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
-
+  
   /**
    * Creates a new SpinnerSubsystem.
    */
   public SpinnerSubsystem()
   {
-  }
+    
+    }
 
   Color color;
   double r, g, b;

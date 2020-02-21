@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,7 +13,7 @@ import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCommand extends CommandBase
+public class AutoShooterCommand extends CommandBase
 {
   /**
    * Creates a new ShooterCommand.
@@ -24,10 +24,11 @@ public class ShooterCommand extends CommandBase
   DriveSubsystem driveSub;
   double targetServoSpeed;
 
-  public ShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem, DriveSubsystem driveSub,double targetServoSpeed)
+  public AutoShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem, DriveSubsystem driveSub, double timeout)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);// , indexerSubsystem);
+    this.withTimeout(timeout);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;

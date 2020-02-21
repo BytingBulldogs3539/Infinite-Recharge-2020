@@ -28,6 +28,9 @@ public class BallIndexerSubsystem extends SubsystemBase
    */
   public BallIndexerSubsystem()
   {
+    ballIndexerSrx.configContinuousCurrentLimit(25);
+    ballIndexerSrx.enableCurrentLimit(true);
+    
     pigeon = new PigeonIMU(ballIndexerSrx);
     ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorInverted());
     if (RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorBrake())

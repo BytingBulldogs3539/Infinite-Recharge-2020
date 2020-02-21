@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.RobotController;
 //import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -26,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase
   AnalogInput pot = new AnalogInput(0);
   Servo servoL = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoLID());
   Servo servoR = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoRID());
-  PIDController pidController = new PIDController(0.001,0,0);
+  PIDController pidController = new PIDController(0.1,0,0);
 
   // Shooter motor
   TalonFX shooterMotor = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getShooterMotorID());
@@ -37,7 +38,7 @@ public class ShooterSubsystem extends SubsystemBase
 
   String currentSong = "";
 
-  double hoodAngle = -1;
+  double hoodAngle = 0;
 
   /**
    * Creates a new ShooterSubsystem.
@@ -81,11 +82,7 @@ public class ShooterSubsystem extends SubsystemBase
    */
   public double getVelocity() { return shooterMotor.getSelectedSensorVelocity() / 2048.0 * 600.0; }
 
-  /**
-   * 
-   * @return returns the current Hood Angle in Degrees.
-   */
-  public double getHoodAngle() { return pot.getValue(); }
+
 
   /**
    * 
@@ -140,12 +137,17 @@ public class ShooterSubsystem extends SubsystemBase
     //setServoSpeed()
     //SmartDashboard.putNumber("Curr Shooter Velocity", getVelocity());
     setServoSpeed(pidController.calculate(getAngle()));
+    //System.out.println(pidController.calculate(getAngle())+" "+getAngle()+" "+pidController.getSetpoint());
     SmartDashboard.putNumber("Curr Angle", getAngle());
   }
 
+  /**
+   * 
+   * @return returns the current Hood Angle in Degrees.
+   */
   public double getAngle(){
     if(RobotContainer.robotConstants.getShooterConstants().invertHoodAngle()){
-      return (-(pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
+      return (((3993-pot.getValue())/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }else{
       return ((pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }

@@ -44,7 +44,7 @@ public final class CompConstants extends Constants
         public int getClimbMotorLID() { return 10; }
 
         @Override
-        public int getClimbMotorRID() { return 15; }
+        public int getClimbMotorRID() { return 14; }
 
         @Override
         public int getAdjusterID() {
@@ -112,8 +112,6 @@ public final class CompConstants extends Constants
 
         public int getKRearRightTurningMotorPort() { return 4; }
 
-        public int getKPigeonID() { return 25; }
-
         public int getKFrontLeftTurningEncoderPorts() { return 30; }
 
         public int getKRearLeftTurningEncoderPorts() { return 32; }
@@ -177,16 +175,16 @@ public final class CompConstants extends Constants
         }
 
         @Override
-        public double getKFrontLeftTurningEncoderOffset() { return 14.502; }
+        public double getKFrontLeftTurningEncoderOffset() { return -123.750; }
 
         @Override
-        public double getKRearLeftTurningEncoderOffset() { return -9.404297; }
+        public double getKRearLeftTurningEncoderOffset() { return -10.811; }
 
         @Override
-        public double getKFrontRightTurningEncoderOffset() { return -53.174; }
+        public double getKFrontRightTurningEncoderOffset() { return 138.867; }
 
         @Override
-        public double getKRearRightTurningEncoderOffset() { return -124.365; }
+        public double getKRearRightTurningEncoderOffset() { return -68.818; }
     }
 
     public class ModuleConstants extends Constants.ModuleConstants
@@ -232,13 +230,13 @@ public final class CompConstants extends Constants
 
         public double getKMaxAngularSpeedRadiansPerSecondSquared() { return 10.6; }
 
-        public double getKPXController() { return .076; }
+        public double getKPXController() { return .114; }
 
-        public double getKPYController() { return .076; }
+        public double getKPYController() { return .114; }
 
-        public double getKDXController() { return .033; }
+        public double getKDXController() { return .0546; }
 
-        public double getKDYController() { return .033; }
+        public double getKDYController() { return .0546; }
 
         public double getKPThetaController() { return 1.6; }
 
@@ -270,7 +268,7 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public boolean getIndexMotorInverted() { return true; }
+        public boolean getIndexMotorInverted() { return false; }
 
         @Override
         public boolean getIndexMotorBrake() { return true; }
