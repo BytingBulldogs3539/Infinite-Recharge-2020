@@ -36,7 +36,7 @@ public class Shoot extends SequentialCommandGroup
         // Rotation2d.fromDegrees(0)), null,
         // new Pose2d(-60, 0, Rotation2d.fromDegrees(0)),
         // true));
-        new AutoShooterCommand(RobotContainer.m_ShooterSubsystem, 5700, RobotContainer.m_BallIndexerSubsystem,
+        new AutoShooterCommand(RobotContainer.m_ShooterSubsystem, 5200, RobotContainer.m_BallIndexerSubsystem,
             RobotContainer.m_robotDrive, 10).withTimeout(5));
 
   }

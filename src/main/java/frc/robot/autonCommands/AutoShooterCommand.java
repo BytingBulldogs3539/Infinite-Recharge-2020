@@ -28,7 +28,7 @@ public class AutoShooterCommand extends CommandBase
       DriveSubsystem driveSub, double timeout)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);// , indexerSubsystem);
+    addRequirements(subsystem, indexerSubsystem);// , indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
@@ -39,6 +39,7 @@ public class AutoShooterCommand extends CommandBase
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Hello");
     if (targetRPM != 0)
     {
       subsystem.setVelocity(targetRPM);
@@ -57,12 +58,11 @@ public class AutoShooterCommand extends CommandBase
   public void execute() {
     // System.out.println(subsystem.getDegrees());
     // System.out.println(subsystem.getVelocity());
-    // if((subsystem.getVelocity() >= targetRPM-200) && (subsystem.getVelocity() <=
-    // targetRPM+200) && targetRPM!=0){
-    // indexerSubsystem.setPercentOutput(1);
-    // };
+     if((subsystem.getVelocity() >= targetRPM-200) && (subsystem.getVelocity() <=
+     targetRPM+200) && targetRPM!=0){
+     indexerSubsystem.setPercentOutput(1);
+     };
 
-    // subsystem.setHoodAngle(SmartDashboard.getNumber("Servo Target", 30));
   }
 
   // Called once the command ends or is interrupted.

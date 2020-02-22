@@ -38,8 +38,8 @@ public class AutoAlignCommand extends PIDCommand {
         {
           // Use the output here
           //System.out.println(output);
-          subsystem.drive(.5 * RobotContainer.m_driverController.getLeftStickY(),
-              -.5 * RobotContainer.m_driverController.getLeftStickX(),output, true);
+          subsystem.drive(0,
+              0,output, true);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

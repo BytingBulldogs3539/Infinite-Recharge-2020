@@ -46,7 +46,7 @@ public class ShooterCommand extends CommandBase
     {
       subsystem.setPercentOutput(0);
     }
-    subsystem.setHoodAngle(-.013*Math.pow((driveSub.getTargetHeight()-72),2)+20);
+    subsystem.setHoodAngle(-.0055*Math.pow((driveSub.getTargetHeight()-70),2)+12);
     //subsystem.setServoSpeed(targetServoSpeed);
     //subsystem.setHoodAngle(20);
   }

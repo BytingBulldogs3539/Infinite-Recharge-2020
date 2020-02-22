@@ -96,8 +96,8 @@ public class ShooterSubsystem extends SubsystemBase
    }
 
   public void setServoSpeed(double speed) {
-    double speedMk2 = (speed/2.0)+0.5;
-    speed = (-speed/2.0)+0.5;
+    double speedMk2 = (-speed/2.0)+0.5;
+    speed = (speed/2.0)+0.5;
     servoL.set(speed);
     servoR.set(speedMk2);
   }
