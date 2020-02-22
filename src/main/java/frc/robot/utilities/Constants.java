@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 
 /**
@@ -60,6 +61,7 @@ public abstract class Constants
         public abstract int getShooterPotentiometerID();
 
         public abstract int getShooterServoLID();
+
         public abstract int getShooterServoRID();
 
         public abstract int getBallSensorPort();
@@ -149,6 +151,8 @@ public abstract class Constants
 
         public abstract double getKMaxTurnSpeedRadPerSecond();
 
+        public abstract TrajectoryConfig getTrajectoryConfig();
+
     }
 
     public abstract class ModuleConstants
@@ -232,6 +236,8 @@ public abstract class Constants
         public abstract boolean getClimbAdjusterMotorInverted();
 
         public abstract boolean getClimbAdjusterMotorBrake();
+
+        public abstract boolean getBuddyClimbMotorInverted();
 
     }
 

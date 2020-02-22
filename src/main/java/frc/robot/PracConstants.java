@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.utilities.Constants;
 
@@ -62,13 +63,10 @@ public final class PracConstants extends Constants
         public int getSpinnerMotorID() { return 14; }
 
         @Override
-        public int getShooterServoLID() {
-            return 1;
-        }
+        public int getShooterServoLID() { return 1; }
+
         @Override
-        public int getShooterServoRID() {
-            return 0;
-        }
+        public int getShooterServoRID() { return 0; }
 
         @Override
         public int getShooterPotentiometerID() {
@@ -185,6 +183,13 @@ public final class PracConstants extends Constants
 
         @Override
         public double getKRearRightTurningEncoderOffset() { return -124.365; }
+
+        public TrajectoryConfig getTrajectoryConfig() {
+            return new TrajectoryConfig(RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
+                    RobotContainer.robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
+                            // Add kinematics to ensure max speed is actually obeyed
+                            .setKinematics(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics());
+        }
     }
 
     public class ModuleConstants extends Constants.ModuleConstants
@@ -260,7 +265,9 @@ public final class PracConstants extends Constants
         public boolean getDefaultIntakeDirection() { return false; }
 
         @Override
-        public int intakeReverseDelay() { return 5; }
+        public int intakeReverseDelay() {
+            return 5;
+        }
 
     }
 
@@ -290,30 +297,25 @@ public final class PracConstants extends Constants
         @Override
         public boolean getClimbAdjusterMotorBrake() { return true; }
 
+        @Override
+        public boolean getBuddyClimbMotorInverted() { return true; }
+
     }
 
     public class ShooterConstants extends Constants.ShooterConstants
     {
 
         @Override
-        public double getKP() {
-            return 0.1;
-        }
+        public double getKP() { return 0.1; }
 
         @Override
-        public double getKI() {
-            return 0;
-        }
+        public double getKI() { return 0; }
 
         @Override
-        public double getKD() {
-            return 0;
-        }
+        public double getKD() { return 0; }
 
         @Override
-        public double getKF() {
-            return 0.054;
-        }
+        public double getKF() { return 0.054; }
 
         @Override
         public double getPotOffset() {
@@ -322,12 +324,12 @@ public final class PracConstants extends Constants
         }
 
         @Override
-        public boolean invertHoodAngle() { return true; }
+        public boolean invertHoodAngle() {
+            return true;
+        }
 
         @Override
-        public double getHoodOffset(){
-            return -8.9+17.6+.15;
-        }
+        public double getHoodOffset() { return -8.9 + 17.6 + .15; }
 
         @Override
         public boolean getShooterMotorInverted() { return false; }

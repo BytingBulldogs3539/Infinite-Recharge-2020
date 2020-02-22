@@ -23,22 +23,18 @@ public class SpinnerSubsystem extends SubsystemBase
   VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
   ColorSensorV3 colorSensor = new ColorSensorV3(
       RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
-<<<<<<< HEAD
-  
-=======
 
   double rotations = 0;
   char startingColor = ' ';
   char lastColor = ' ';
 
->>>>>>> ab9a555c71235801901c3a41338f4d70cabf8c7f
   /**
    * Creates a new SpinnerSubsystem.
    */
   public SpinnerSubsystem()
   {
-    
-    }
+
+  }
 
   Color color;
   double r, g, b;
@@ -50,23 +46,26 @@ public class SpinnerSubsystem extends SubsystemBase
     lastColor = startingColor;
   }
 
-  public double getRotations() {
-    return rotations;
-  }
+  public double getRotations() { return rotations; }
 
   public void updateRoations() {
     // Get the current color
     char currentColor = getCurrentColor();
     // if (currentColor != lastColor && currentColor == startingColor) {
-    //   rotations += 0.5;
+    // rotations += 0.5;
     // }
-    // TODO: figure out which way the control panel is spun to prevent issues (so "rotations" will only increment one way)
+    // TODO: figure out which way the control panel is spun to prevent issues (so
+    // "rotations" will only increment one way)
     // Y -> B -> G -> R (counter-clockwise)
-    if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G')) {
+    if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y')
+        || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G'))
+    {
       rotations += 0.125;
     }
     // R -> G -> B -> Y (clockwise)
-    if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B')) {
+    if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R')
+        || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B'))
+    {
       rotations += 0.125;
     }
     // Update "lastColor" for the next iteration
@@ -82,8 +81,10 @@ public class SpinnerSubsystem extends SubsystemBase
 
     SmartDashboard.putNumber("colorSensor.getProximity()", colorSensor.getProximity());
 
-    if (proximity >= 120) {
-      if (r > g && r > b) {
+    if (proximity >= 120)
+    {
+      if (r > g && r > b)
+      {
         return 'R'; // red
       }
       else if (Math.abs(b - g) < 0.1)
@@ -102,12 +103,13 @@ public class SpinnerSubsystem extends SubsystemBase
       {
         return 'N'; // NONE (no color)
       }
-    }else{
-      //Out of range shows the same as seeing no color
+    }
+    else
+    {
+      // Out of range shows the same as seeing no color
       return 'N';
     }
   }
-
 
   char col, newCol;
 
@@ -129,7 +131,7 @@ public class SpinnerSubsystem extends SubsystemBase
       newCol = 'G'; // change to green
       break;
     default:
-      newCol ='N';
+      newCol = 'N';
       break;
     }
 
@@ -142,19 +144,16 @@ public class SpinnerSubsystem extends SubsystemBase
 
   @Override
   public void periodic() {
-   /*if(getCurrentColor() == 'B'){ // blue
-    SmartDashboard.putString("Color", "Blue");
-   }else if(getCurrentColor() == 'R'){ // red
-    SmartDashboard.putString("Color", "Red");
-   }else if(getCurrentColor() == 'Y'){ // yellow
-    SmartDashboard.putString("Color", "Yellow");
-   }else if(getCurrentColor() == 'G'){ // green
-    SmartDashboard.putString("Color", "Green");
-   }else if(getCurrentColor() == 'N'){ // NONE (no color)
-    SmartDashboard.putString("Color", "None");
-   }else{
-     //expected values are the 4 colors + 1 none condition. Anything else won't trip the if statments above.
-    SmartDashboard.putString("Color", "recived unexpected value");
-   }*/
+    /*
+     * if(getCurrentColor() == 'B'){ // blue SmartDashboard.putString("Color",
+     * "Blue"); }else if(getCurrentColor() == 'R'){ // red
+     * SmartDashboard.putString("Color", "Red"); }else if(getCurrentColor() == 'Y'){
+     * // yellow SmartDashboard.putString("Color", "Yellow"); }else
+     * if(getCurrentColor() == 'G'){ // green SmartDashboard.putString("Color",
+     * "Green"); }else if(getCurrentColor() == 'N'){ // NONE (no color)
+     * SmartDashboard.putString("Color", "None"); }else{ //expected values are the 4
+     * colors + 1 none condition. Anything else won't trip the if statments above.
+     * SmartDashboard.putString("Color", "recived unexpected value"); }
+     */
   }
 }

@@ -24,11 +24,11 @@ public class AutoShooterCommand extends CommandBase
   DriveSubsystem driveSub;
   double targetServoSpeed;
 
-  public AutoShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem, DriveSubsystem driveSub, double timeout)
+  public AutoShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem,
+      DriveSubsystem driveSub, double timeout)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);// , indexerSubsystem);
-    this.withTimeout(timeout);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
@@ -39,7 +39,7 @@ public class AutoShooterCommand extends CommandBase
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(targetRPM != 0)
+    if (targetRPM != 0)
     {
       subsystem.setVelocity(targetRPM);
     }
@@ -47,22 +47,22 @@ public class AutoShooterCommand extends CommandBase
     {
       subsystem.setPercentOutput(0);
     }
-    subsystem.setHoodAngle(-.013*Math.pow((driveSub.getTargetHeight()-72),2)+20);
-    //subsystem.setServoSpeed(targetServoSpeed);
-    //subsystem.setHoodAngle(20);
+    subsystem.setHoodAngle(-.013 * Math.pow((driveSub.getTargetHeight() - 72), 2) + 20);
+    // subsystem.setServoSpeed(targetServoSpeed);
+    // subsystem.setHoodAngle(20);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     //System.out.println(subsystem.getDegrees());
-     //System.out.println(subsystem.getVelocity());
-    //  if((subsystem.getVelocity() >= targetRPM-200) && (subsystem.getVelocity() <=
-    //  targetRPM+200) && targetRPM!=0){
-    //  indexerSubsystem.setPercentOutput(1);
-    //  };
-    
-    //subsystem.setHoodAngle(SmartDashboard.getNumber("Servo Target", 30));
+    // System.out.println(subsystem.getDegrees());
+    // System.out.println(subsystem.getVelocity());
+    // if((subsystem.getVelocity() >= targetRPM-200) && (subsystem.getVelocity() <=
+    // targetRPM+200) && targetRPM!=0){
+    // indexerSubsystem.setPercentOutput(1);
+    // };
+
+    // subsystem.setHoodAngle(SmartDashboard.getNumber("Servo Target", 30));
   }
 
   // Called once the command ends or is interrupted.
