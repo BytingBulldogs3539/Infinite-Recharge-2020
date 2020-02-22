@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
@@ -16,11 +17,10 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class SpinnerSubsystem extends SubsystemBase
-{
+public class SpinnerSubsystem extends SubsystemBase {
 
   // Spinner motor
-  VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
+  TalonSRX spinnerMotor;
   ColorSensorV3 colorSensor = new ColorSensorV3(
       RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
 
@@ -31,9 +31,8 @@ public class SpinnerSubsystem extends SubsystemBase
   /**
    * Creates a new SpinnerSubsystem.
    */
-  public SpinnerSubsystem()
-  {
-
+  public SpinnerSubsystem() {
+    spinnerMotor = RobotContainer.m_ClimbSubsystem.climbAdjuster;
   }
 
   Color color;
@@ -46,7 +45,9 @@ public class SpinnerSubsystem extends SubsystemBase
     lastColor = startingColor;
   }
 
-  public double getRotations() { return rotations; }
+  public double getRotations() {
+    return rotations;
+  }
 
   public void updateRoations() {
     // Get the current color
@@ -58,14 +59,12 @@ public class SpinnerSubsystem extends SubsystemBase
     // "rotations" will only increment one way)
     // Y -> B -> G -> R (counter-clockwise)
     if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y')
-        || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G'))
-    {
+        || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G')) {
       rotations += 0.125;
     }
     // R -> G -> B -> Y (clockwise)
     if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R')
-        || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B'))
-    {
+        || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B')) {
       rotations += 0.125;
     }
     // Update "lastColor" for the next iteration
@@ -81,31 +80,19 @@ public class SpinnerSubsystem extends SubsystemBase
 
     SmartDashboard.putNumber("colorSensor.getProximity()", colorSensor.getProximity());
 
-    if (proximity >= 120)
-    {
-      if (r > g && r > b)
-      {
+    if (proximity >= 120) {
+      if (r > g && r > b) {
         return 'R'; // red
-      }
-      else if (Math.abs(b - g) < 0.1)
-      {
+      } else if (Math.abs(b - g) < 0.1) {
         return 'B'; // blue
-      }
-      else if (Math.abs(g - r) < 0.3 && b < 0.16)
-      {
+      } else if (Math.abs(g - r) < 0.3 && b < 0.16) {
         return 'Y'; // yellow
-      }
-      else if (g > r && g > b)
-      {
+      } else if (g > r && g > b) {
         return 'G'; // green
-      }
-      else
-      {
+      } else {
         return 'N'; // NONE (no color)
       }
-    }
-    else
-    {
+    } else {
       // Out of range shows the same as seeing no color
       return 'N';
     }
@@ -116,8 +103,7 @@ public class SpinnerSubsystem extends SubsystemBase
   public char getOffsetColor() {
     col = this.getCurrentColor();
 
-    switch (col)
-    {
+    switch (col) {
     case 'R': // red
       newCol = 'B'; // change to blue
       break;

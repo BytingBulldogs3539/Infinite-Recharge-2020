@@ -35,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase
   {
     intakeMotor.setInverted(RobotContainer.robotConstants.getIntakeConstants().getIntakeMotorInverted());
     // setDefaultCommand(new IntakeCommand(this));
-    setCompressor(false);
+    setCompressor(true);
   }
 
   /**
