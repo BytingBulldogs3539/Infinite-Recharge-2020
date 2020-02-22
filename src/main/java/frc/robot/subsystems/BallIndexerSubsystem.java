@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
@@ -19,19 +20,15 @@ import frc.robot.commands.BallIndexerCommand;
 
 public class BallIndexerSubsystem extends SubsystemBase
 {
-  TalonSRX ballIndexerSrx = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
+  TalonFX ballIndexerSrx = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
   DigitalInput ballSensor = new DigitalInput(RobotContainer.robotConstants.getRobotIDConstants().getBallSensorPort());
-  public PigeonIMU pigeon;
 
   /**
    * Creates a new BallIndexerSubsystem.
    */
   public BallIndexerSubsystem()
   {
-    ballIndexerSrx.configContinuousCurrentLimit(25);
-    ballIndexerSrx.enableCurrentLimit(true);
     
-    pigeon = new PigeonIMU(ballIndexerSrx);
     ballIndexerSrx.setInverted(RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorInverted());
     if (RobotContainer.robotConstants.getBallIndexerConstants().getIndexMotorBrake())
       ballIndexerSrx.setNeutralMode(NeutralMode.Brake);

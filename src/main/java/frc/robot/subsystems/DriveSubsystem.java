@@ -78,7 +78,7 @@ public class DriveSubsystem extends SubsystemBase
   {
     setDefaultCommand(new DriveCommand(this));
 
-    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    RobotContainer.m_ClimbSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
         getAngle());
   }
@@ -182,13 +182,13 @@ public class DriveSubsystem extends SubsystemBase
    * Zeroes the heading of the robot.
    */
   public void zeroHeading() {
-    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    RobotContainer.m_ClimbSubsystem.pigeon.setYaw(0);
   }
 
   public double getPigeonAngle() {
 
     double[] ypr = new double[3];
-    RobotContainer.m_BallIndexerSubsystem.pigeon.getYawPitchRoll(ypr);
+    RobotContainer.m_ClimbSubsystem.pigeon.getYawPitchRoll(ypr);
     return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getKGyroReversed() ? -1.0 : 1.0);
   }
 

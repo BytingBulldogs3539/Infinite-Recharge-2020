@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorSensorV3;
 
@@ -20,25 +21,21 @@ public class SpinnerSubsystem extends SubsystemBase
 {
 
   // Spinner motor
-  VictorSPX spinnerMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
+  TalonSRX spinnerMotor;
   ColorSensorV3 colorSensor = new ColorSensorV3(
       RobotContainer.robotConstants.getRobotIDConstants().getColorSensorPort());
-<<<<<<< HEAD
-  
-=======
 
   double rotations = 0;
   char startingColor = ' ';
   char lastColor = ' ';
 
->>>>>>> ab9a555c71235801901c3a41338f4d70cabf8c7f
   /**
    * Creates a new SpinnerSubsystem.
    */
   public SpinnerSubsystem()
   {
-    
-    }
+    spinnerMotor = RobotContainer.m_ClimbSubsystem.climbAdjuster;
+  }
 
   Color color;
   double r, g, b;

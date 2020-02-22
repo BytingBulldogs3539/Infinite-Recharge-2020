@@ -268,7 +268,7 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public boolean getIndexMotorInverted() { return false; }
+        public boolean getIndexMotorInverted() { return true; }
 
         @Override
         public boolean getIndexMotorBrake() { return true; }
@@ -323,7 +323,7 @@ public final class CompConstants extends Constants
 
         @Override
         public double getHoodOffset(){
-            return 74.3;
+            return 0;
         }
 
         @Override
