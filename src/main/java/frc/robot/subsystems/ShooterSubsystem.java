@@ -91,6 +91,8 @@ public class ShooterSubsystem extends SubsystemBase
    *          less than 0 or greater than 60 will disable pid.
    */
   public void setHoodAngle(double angle) { 
+    if(angle>45)
+      angle = 45;
     this.hoodAngle = angle;
     pidController.setSetpoint(angle);
    }

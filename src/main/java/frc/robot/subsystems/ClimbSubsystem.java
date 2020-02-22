@@ -42,7 +42,7 @@ public class ClimbSubsystem extends SubsystemBase
     }
 
     climbMotorL.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
-    climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+    climbMotorR.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
   }
 
   public void setPercentOutput(double power) {

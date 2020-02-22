@@ -164,8 +164,8 @@ public class RobotContainer
   public void putAuton()
   {
         //SmartDashboard.
-        chooser.addOption("Aim and Shoot", new Shoot());
-        SmartDashboard.putData("Auto Chooser", chooser);
+        //chooser.addOption("Aim and Shoot", new Shoot());
+        //SmartDashboard.putData("Auto Chooser", chooser);
   }
 
   /**

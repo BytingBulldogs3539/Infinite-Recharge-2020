@@ -47,7 +47,21 @@ public class AutoAlignCommand extends PIDCommand {
     this.subsystem = subsystem;
     getController().setIntegratorRange(-1, 1);
     getController().setIntegratorZone(2);
-    getController().setTolerance(.01);
+    getController().setTolerance(.02);
+  }
+ @Override
+  public void initialize() {
+    // TODO Auto-generated method stub
+    super.initialize();
+    subsystem.drive(0, 0, 0, false);
+  } 
+  @Override
+  public void end(boolean interrupted) {
+    // TODO Auto-generated method stub
+    super.end(interrupted);
+    subsystem.drive(0, 0, 0, false);
+
+    
   }
 
 

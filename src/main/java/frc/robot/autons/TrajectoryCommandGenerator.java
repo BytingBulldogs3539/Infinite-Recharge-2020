@@ -8,12 +8,15 @@
 package frc.robot.autons;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
@@ -24,9 +27,10 @@ import frc.robot.utilities.SwerveControllerCommand;
  */
 public class TrajectoryCommandGenerator
 {
-        public static Command getMotionCommand(Pose2d startPoint, ArrayList<Translation2d> interiorPoints,
+        public static Command getMotionCommand(Pose2d startPoint, List<Translation2d> interiorPoints,
                         Pose2d endPoint, boolean reverse) {
-                // config.setReversed(true);
+                TrajectoryConfig config = RobotContainer.robotConstants.getDriveConstants().getTrajectoryConfig();
+                 config.setReversed(reverse);
                 // An example trajectory to follow. All units in inches.
                 Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                                 // Start at the origin facing the +X direction
@@ -34,7 +38,7 @@ public class TrajectoryCommandGenerator
                                 // Pass through these two interior waypoints, making an 's' curve path
                                 interiorPoints,
                                 // new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-                                endPoint, RobotContainer.robotConstants.getDriveConstants().getTrajectoryConfig());
+                                endPoint, config);
 
                 SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory,
                                 RobotContainer.m_robotDrive::getPose, // Functional interface to feed supplier
@@ -57,14 +61,15 @@ public class TrajectoryCommandGenerator
 
                                 RobotContainer.m_robotDrive::getVisionAngle,
 
-                                true,
+                                false,
 
                                 RobotContainer.m_robotDrive
 
                 );
 
                 // Run path following command, then stop at the end.
-                return swerveControllerCommand.andThen(() -> RobotContainer.m_robotDrive.drive(0, 0, 0, false));
+                return swerveControllerCommand.andThen(() -> {RobotContainer.m_robotDrive.drive(0, 0, 0, false);
+                RobotContainer.m_robotDrive.resetOdometry(new Pose2d(0,0,RobotContainer.m_robotDrive.getAngle()));});
         }
 
 }

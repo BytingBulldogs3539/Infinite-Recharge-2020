@@ -28,7 +28,7 @@ public class AutoShooterCommand extends CommandBase
       DriveSubsystem driveSub, double timeout)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem, indexerSubsystem);// , indexerSubsystem);
+    addRequirements(subsystem, indexerSubsystem, driveSub);// , indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;

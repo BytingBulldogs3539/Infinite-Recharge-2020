@@ -90,6 +90,7 @@ public class DriveSubsystem extends SubsystemBase
    */
   public Rotation2d getAngle() {
     // Negating the angle because WPILib gyros are CW positive.
+    System.out.println("Robot Angle " + getPigeonAngle());
     return Rotation2d.fromDegrees(getPigeonAngle());
   }
 

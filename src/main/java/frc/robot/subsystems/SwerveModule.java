@@ -105,6 +105,8 @@ public class SwerveModule
     // to be continuous.
     m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
+    m_turningPIDController.setName(this.name);
+
     // Set the name of anything that might be added to the smartdashboard.
     // PID Controllers.
     SendableRegistry.setName(m_turningPIDController, String.format("%s %s", name, "Turning PID Controller"));
@@ -143,6 +145,7 @@ public class SwerveModule
     m_driveMotor.set(driveOutput
         + RobotContainer.robotConstants.getModuleConstants().getKFModuleDriveController() * state.speedMetersPerSecond);
     m_turningMotor.set(turnOutput);
+    System.out.println(this.name + "Wheel Angle Error"+m_turningPIDController.getPositionError()+" Wheel Rotate Output"+ turnOutput);
   }
 
   public void stopDrive() {
@@ -160,7 +163,7 @@ public class SwerveModule
     //m_turningEncoder.setPosition(0);
   }
 
-  public double getDrivePos() { return m_driveMotor.getEncoder().getPosition() * ((driveEncoderReversed) ? -1 : 1); }
+  public double getDrivePos() { return m_driveEncoder.getPosition() * ((driveEncoderReversed) ? -1 : 1); }
 
   public double getDriveVel() { return m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1); }
 
