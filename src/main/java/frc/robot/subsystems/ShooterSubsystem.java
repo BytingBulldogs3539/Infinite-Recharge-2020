@@ -26,7 +26,7 @@ public class ShooterSubsystem extends SubsystemBase
   AnalogInput pot = new AnalogInput(0);
   Servo servoL = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoLID());
   Servo servoR = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoRID());
-  PIDController pidController = new PIDController(0.001,0,0);
+  PIDController pidController = new PIDController(0.1,0,0);
 
   // Shooter motor
   TalonFX shooterMotor = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getShooterMotorID());
@@ -37,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase
 
   String currentSong = "";
 
-  double hoodAngle = -1;
+  double hoodAngle = 0;
 
   /**
    * Creates a new ShooterSubsystem.
@@ -99,8 +99,8 @@ public class ShooterSubsystem extends SubsystemBase
    }
 
   public void setServoSpeed(double speed) {
-    double speedMk2 = (speed/2.0)+0.5;
-    speed = (-speed/2.0)+0.5;
+    double speedMk2 = (-speed/2.0)+0.5;
+    speed = (speed/2.0)+0.5;
     servoL.set(speed);
     servoR.set(speedMk2);
   }
@@ -145,7 +145,7 @@ public class ShooterSubsystem extends SubsystemBase
 
   public double getAngle(){
     if(RobotContainer.robotConstants.getShooterConstants().invertHoodAngle()){
-      return (-(pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
+      return ((3993-pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }else{
       return ((pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }

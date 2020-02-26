@@ -28,14 +28,41 @@ public class DriveCommand extends CommandBase
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("DRIVE INIT");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    subsystem.drive(RobotContainer.m_driverController.getLeftStickY(),
-        -RobotContainer.m_driverController.getLeftStickX(), -RobotContainer.m_driverController.getRightStickX(), true);
+    double xSpeed = -RobotContainer.m_driverController.getLeftStickX();
+    double ySpeed = RobotContainer.m_driverController.getLeftStickY();
+    double rot = -RobotContainer.m_driverController.getRightStickX();
+
+    
+    if (xSpeed >= .09 || xSpeed <= -.09)
+    xSpeed = xSpeed * .5;
+    else
+    xSpeed=0;
+    if (ySpeed >= .09 || ySpeed <= -.09)
+    ySpeed = ySpeed * .5;
+    else
+    ySpeed = 0;
+      if (rot >= .09 || rot <= -.09)
+      rot = rot * .5;
+      else
+      rot=0;
+      if(RobotContainer.m_driverController.buttonBR.get())
+      {
+        subsystem.drive(ySpeed,
+        xSpeed, rot, false);
+      }
+      else
+      {
+        subsystem.drive(ySpeed,
+        xSpeed, rot, true);
+      }
+    
     // System.out.println("Y1:"+RobotContainer.m_driverController.getLeftStickY()+"X:1"+-RobotContainer.m_driverController.getLeftStickX()+"X2:
     // "+-RobotContainer.m_driverController.getRightStickX());
     // System.out.println(subsystem.getPose());

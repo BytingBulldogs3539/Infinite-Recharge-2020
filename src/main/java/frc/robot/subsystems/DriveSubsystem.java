@@ -67,7 +67,7 @@ public class DriveSubsystem extends SubsystemBase
   SwerveDriveOdometry m_odometry;
 
   public static final NetworkTableInstance table = NetworkTableInstance.getDefault();
-  public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("Microsoft LifeCam HD-3000");
+  public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("mmal service 16.1");
 
   /**
    * Creates a new DriveSubsystem.
@@ -76,7 +76,7 @@ public class DriveSubsystem extends SubsystemBase
   {
     setDefaultCommand(new DriveCommand(this));
 
-    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    ClimbSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
         getAngle());
   }
@@ -114,6 +114,12 @@ public class DriveSubsystem extends SubsystemBase
     m_odometry.resetPosition(pose, getAngle());
   }
 
+  public void resetGyro()
+  {
+    //System.out.println("ZERO GYOR");
+    ClimbSubsystem.pigeon.setYaw(0);
+  }
+
   /**
    * Method to drive the robot using joystick info.
    *
@@ -125,13 +131,6 @@ public class DriveSubsystem extends SubsystemBase
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-
-    if (xSpeed >= .02 || xSpeed <= -.02)
-    xSpeed = xSpeed * .5;
-    if (ySpeed >= .02 || ySpeed <= -.02)
-    ySpeed = ySpeed * .5;
-      if (rot >= .02 || rot <= -.02)
-      rot = rot * .5;
 
     xSpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
     ySpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
@@ -179,13 +178,13 @@ public class DriveSubsystem extends SubsystemBase
    * Zeroes the heading of the robot.
    */
   public void zeroHeading() {
-    RobotContainer.m_BallIndexerSubsystem.pigeon.setYaw(0);
+    ClimbSubsystem.pigeon.setYaw(0);
   }
 
   public double getPigeonAngle() {
 
     double[] ypr = new double[3];
-    RobotContainer.m_BallIndexerSubsystem.pigeon.getYawPitchRoll(ypr);
+    ClimbSubsystem.pigeon.getYawPitchRoll(ypr);
     return ypr[0] * (RobotContainer.robotConstants.getDriveConstants().getKGyroReversed() ? -1.0 : 1.0);
   }
 
@@ -208,6 +207,11 @@ public class DriveSubsystem extends SubsystemBase
   public double getVisionAngle() {
     double value = Math.toRadians(myCam.getEntry("targetYaw").getDouble(0));
     return value;
+  }
+
+  public double getTargetHeight()
+  {
+    return Math.min(myCam.getEntry("targetFittedHeight").getDouble(0), myCam.getEntry("targetFittedWidth").getDouble(0));
   }
 
   // The pigeon does not return a rate and it does'nt seem to need it...

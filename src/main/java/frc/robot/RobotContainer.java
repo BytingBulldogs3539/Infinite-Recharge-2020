@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -30,15 +31,18 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.io.IOException;
 import java.net.NetworkInterface;
 
+import frc.robot.autons.Shoot;
 import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.BuddyClimbCommand;
 import frc.robot.commands.ClimbAdjustCommand;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ResetEncoders;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SpinnerCommand;
 //import frc.robot.commands.ShooterChirpCommand;
-
+import frc.robot.commands.VisionTrack;
 import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.BuddyClimbSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -61,7 +65,7 @@ public class RobotContainer
   public final ShooterSubsystem m_ShooterSubsystem;
   public final ClimbSubsystem m_ClimbSubsystem;
   public final IntakeSubsystem m_IntakeSubsystem;
-  public static BallIndexerSubsystem m_BallIndexerSubsystem;
+  public final BallIndexerSubsystem m_BallIndexerSubsystem;
   public final BuddyClimbSubsystem m_BuddyClimbSubsystem;
   public final SpinnerSubsystem m_SpinnerSubsystem;
   public final DriveSubsystem m_robotDrive;
@@ -76,10 +80,12 @@ public class RobotContainer
   // Define the possible robot MAC addresses so we can identify what robot we are
   // using.
   // TODO: Add Read MAC Addresses
-  private static final byte[] COMPETITION_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe4,
-      (byte) 0x44 };
+  private static final byte[] COMPETITION_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x28, (byte) 0x5B,
+      (byte) 0x7A };
   private static final byte[] PRACTICE_BOT_MAC_ADDRESS = new byte[] { 0x00, (byte) 0x80, 0x2f, 0x17, (byte) 0xe4,
       (byte) 0x4e };
+
+  public SendableChooser<Command> chooser = new SendableChooser<Command>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -150,7 +156,12 @@ public class RobotContainer
     m_robotDrive = new DriveSubsystem();
     // Configure the button bindings
     configureButtonBindings();
-
+    putAuton();
+  }
+  public void putAuton()
+  {
+        chooser.addOption("Aim and Shoot", new Shoot(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        SmartDashboard.putData("Auto Chooser", chooser);
   }
 
   /**
@@ -163,22 +174,26 @@ public class RobotContainer
     m_driverController = new LogitechF310(robotConstants.getOIConstants().getKDriverControllerPort());
     m_opController = new LogitechF310(robotConstants.getOIConstants().getKOpControllerPort());
 
+
+    m_driverController.buttonA.whenHeld(new VisionTrack(m_robotDrive));
+    m_driverController.buttonSTART.whenPressed(new ResetGyro(m_robotDrive));
+    m_driverController.buttonSELECT.whenPressed(new ResetEncoders(m_robotDrive));
     // m_driverController.buttonA.whenHeld(visionCommand);
 
-    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, 3000, m_BallIndexerSubsystem, 0.0));
-    m_opController.buttonA.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, 1.0));
+    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5700, m_BallIndexerSubsystem, 0.0));
+    m_opController.buttonTR.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, 1.0));
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-1.0));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
     m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
-    m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
-    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, -0.7));
+    m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
+    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, -0.7));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));
     // m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
-    m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem));
+    m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem,true));
     m_opController.buttonPadLeft.whenHeld(new BuddyClimbCommand(m_BuddyClimbSubsystem, 1));
 
     //SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
@@ -235,47 +250,57 @@ public class RobotContainer
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
-        robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(robotConstants.getDriveConstants().getKDriveKinematics());
+    // // Create config for trajectory
+    // TrajectoryConfig config = new TrajectoryConfig(robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
+    //     robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
+    //         // Add kinematics to ensure max speed is actually obeyed
+    //         .setKinematics(robotConstants.getDriveConstants().getKDriveKinematics());
 
-    // config.setReversed(true);
-    // An example trajectory to follow. All units in inches.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(),
-        // new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
-        new Pose2d(0, -75, Rotation2d.fromDegrees(0)), config);
+    // // config.setReversed(true);
+    // // An example trajectory to follow. All units in inches.
+    // Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    //     // Start at the origin facing the +X direction
+    //     new Pose2d(0, 0, new Rotation2d(0)),
+    //     // Pass through these two interior waypoints, making an 's' curve path
+    //     List.of(),
+    //     // new Pose2d(36,36, Rotation2d.fromDegrees(90)), config);
+    //     new Pose2d(0, -75, Rotation2d.fromDegrees(0)), config);
 
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        robotConstants.getDriveConstants().getKDriveKinematics(),
+    // SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory,
+    //     m_robotDrive::getPose, // Functional interface to feed supplier
+    //     robotConstants.getDriveConstants().getKDriveKinematics(),
 
-        // Position controllers
-        new PIDController(robotConstants.getAutoConstants().getKPXController(), 0,
-            robotConstants.getAutoConstants().getKDXController()),
-        new PIDController(robotConstants.getAutoConstants().getKPYController(), 0,
-            robotConstants.getAutoConstants().getKDYController()),
-        new ProfiledPIDController(robotConstants.getAutoConstants().getKPThetaController(), 0, 0,
-            robotConstants.getAutoConstants().getKThetaControllerConstraints()),
+    //     // Position controllers
+    //     new PIDController(robotConstants.getAutoConstants().getKPXController(), 0,
+    //         robotConstants.getAutoConstants().getKDXController()),
+    //     new PIDController(robotConstants.getAutoConstants().getKPYController(), 0,
+    //         robotConstants.getAutoConstants().getKDYController()),
+    //     new ProfiledPIDController(robotConstants.getAutoConstants().getKPThetaController(), 0, 0,
+    //         robotConstants.getAutoConstants().getKThetaControllerConstraints()),
 
-        m_robotDrive::setModuleStates,
+    //     m_robotDrive::setModuleStates,
 
-        m_robotDrive::getVisionSeeing,
+    //     m_robotDrive::getVisionSeeing,
 
-        m_robotDrive::getVisionAngle,
+    //     m_robotDrive::getVisionAngle,
 
-        true,
+    //     true,
 
-        m_robotDrive
+    //     m_robotDrive
 
-    );
+    // );
 
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    // // Run path following command, then stop at the end.
+    // return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    Command autonMode = null;
+    // try {
+    //   autonMode = ();
+    //   System.out.println("HELLO");
+    // } catch (InstantiationException e) {
+    //   e.printStackTrace();
+    // } catch (IllegalAccessException e) {
+    //   e.printStackTrace();
+    // }
+    return (Command)chooser.getSelected();
   }
 }

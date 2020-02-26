@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 
 /**
@@ -151,6 +152,8 @@ public abstract class Constants
 
         public abstract double getKMaxTurnSpeedRadPerSecond();
 
+        public abstract TrajectoryConfig getTrajectoryConfig();
+
     }
 
     public abstract class ModuleConstants
@@ -254,5 +257,7 @@ public abstract class Constants
         public abstract double getHoodOffset();
 
         public abstract boolean invertHoodAngle();
+
+        public abstract boolean getSpinnerReversed();
     }
 }

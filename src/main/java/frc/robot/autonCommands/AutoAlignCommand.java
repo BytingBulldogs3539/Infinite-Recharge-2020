@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.utilities.PIDController;
@@ -16,19 +16,18 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class VisionTrack extends PIDCommand
-{
-  /**
-   * Creates a new VisionTrack.
-   */
+public class AutoAlignCommand extends PIDCommand {
+    /**
+     * Creates a new VisionTrack.
+     */
 
-  DriveSubsystem subsystem;
+    DriveSubsystem subsystem;
 
-  public VisionTrack(DriveSubsystem subsystem)
+    public AutoAlignCommand(DriveSubsystem subsystem)
   {
     super(
         // The controller that the command will use
-        new PIDController(1.0, 0.001, 0),
+        new PIDController(1.0, 0.0, .05),
         // This should return the measurement
         () -> subsystem.getVisionAngle(),
         // This should return the setpoint (can also be a constant)
@@ -37,9 +36,9 @@ public class VisionTrack extends PIDCommand
         output ->
         {
           // Use the output here
-          System.out.println(-output);
-          subsystem.drive(.5 * RobotContainer.m_driverController.getLeftStickY(),
-              -.5 * RobotContainer.m_driverController.getLeftStickX(), output*.5, true);
+          //System.out.println(output);
+          subsystem.drive(0,
+              0,output*.5, true);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -47,11 +46,16 @@ public class VisionTrack extends PIDCommand
     this.subsystem = subsystem;
     getController().setIntegratorRange(-1, 1);
     getController().setIntegratorZone(2);
-    getController().setTolerance(.5);
-
+    getController().setTolerance(.02);
+  }
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    System.out.println("AutoAlignCommand Ended");
+    getController().reset();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() { return false; }
+  public boolean isFinished() { return getController().atSetpoint(); }
 }

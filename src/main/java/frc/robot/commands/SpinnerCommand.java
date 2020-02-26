@@ -34,16 +34,37 @@ public class SpinnerCommand extends CommandBase
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    int backSpin = 0;
+    boolean spinCycle = true;
     // If FMS has sent a color, spin to that color:
-    if (DriverStation.getInstance().getGameSpecificMessage().length() > 0 && subsystem.getOffsetColor() != DriverStation.getInstance().getGameSpecificMessage().charAt(0)) {
-      subsystem.setPercentOutput(1.0);
+    if(DriverStation.getInstance().getGameSpecificMessage().length() > 0 && subsystem.getNumColor() != subsystem.getGoalColor(DriverStation.getInstance().getGameSpecificMessage().charAt(0))) {
+      if(subsystem.getNumColor() == 1 && subsystem.getGoalColor(DriverStation.getInstance().getGameSpecificMessage().charAt(0)) == 4){
+        //Red to "Green" Yellow (1 to 4)
+        subsystem.setPercentOutput(-0.3);
+      }else if(subsystem.getNumColor() == 4 && subsystem.getGoalColor(DriverStation.getInstance().getGameSpecificMessage().charAt(0)) == 1){
+        //Green to "Red" Blue (4 to 1)
+        subsystem.setPercentOutput(0.3);
+      }else if(subsystem.getNumColor() < subsystem.getGoalColor(DriverStation.getInstance().getGameSpecificMessage().charAt(0))){
+        //If the current color is less than the goal color
+        subsystem.setPercentOutput(0.3);
+        backSpin = 5;
+        spinCycle = true;
+      }else if(subsystem.getNumColor() > subsystem.getGoalColor(DriverStation.getInstance().getGameSpecificMessage().charAt(0))){
+         //If the current color is greater than the goal color
+        subsystem.setPercentOutput(-0.3);
+        backSpin = 5;
+        spinCycle = false;
+      }else{
+         //What happened
+        subsystem.setPercentOutput(0);
+      }
     // If 3-5 rotations are required, rotate at least 4 times:
     } else if (DriverStation.getInstance().getGameSpecificMessage().length() == 0 && subsystem.getRotations() < 4) {
       subsystem.setPercentOutput(1.0);
       subsystem.updateRoations();
       System.out.println(subsystem.getRotations());
-    // Otherwise, stop rotating:
-    } else {
+    //If the color sensor just finished, run the motor backwards for a few loops.
+    }else {
       subsystem.setPercentOutput(0.0);
     }
   }

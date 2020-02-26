@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.utilities.Constants;
 
@@ -44,7 +45,7 @@ public final class CompConstants extends Constants
         public int getClimbMotorLID() { return 10; }
 
         @Override
-        public int getClimbMotorRID() { return 15; }
+        public int getClimbMotorRID() { return 14; }
 
         @Override
         public int getAdjusterID() {
@@ -177,16 +178,23 @@ public final class CompConstants extends Constants
         }
 
         @Override
-        public double getKFrontLeftTurningEncoderOffset() { return 14.502; }
+        public double getKFrontLeftTurningEncoderOffset() { return -123.75; }
 
         @Override
-        public double getKRearLeftTurningEncoderOffset() { return -9.404297; }
+        public double getKRearLeftTurningEncoderOffset() { return -10.811; }
 
         @Override
-        public double getKFrontRightTurningEncoderOffset() { return -53.174; }
+        public double getKFrontRightTurningEncoderOffset() { return 138.867; }
 
         @Override
-        public double getKRearRightTurningEncoderOffset() { return -124.365; }
+        public double getKRearRightTurningEncoderOffset() { return -68.818; }
+
+        public TrajectoryConfig getTrajectoryConfig() {
+            return new TrajectoryConfig(RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
+                    RobotContainer.robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
+                            // Add kinematics to ensure max speed is actually obeyed
+                            .setKinematics(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics());
+        }
     }
 
     public class ModuleConstants extends Constants.ModuleConstants
@@ -226,7 +234,7 @@ public final class CompConstants extends Constants
     {
         public double getKMaxSpeedINPerSecond() { return 217.92; }
 
-        public double getKMaxAccelerationINPerSecondSquared() { return 20; }
+        public double getKMaxAccelerationINPerSecondSquared() { return 80; }
 
         public double getKMaxAngularSpeedRadiansPerSecond() { return 10.6; }
 
@@ -281,7 +289,7 @@ public final class CompConstants extends Constants
     {
 
         @Override
-        public boolean getClimbMotorInverted() { return true; }
+        public boolean getClimbMotorInverted() { return false; }
 
         @Override
         public boolean getClimbMotorBrake() { return true; }
@@ -325,7 +333,7 @@ public final class CompConstants extends Constants
 
         @Override
         public double getHoodOffset(){
-            return 74.3;
+            return 924.42;
         }
 
         @Override
@@ -334,6 +342,10 @@ public final class CompConstants extends Constants
         @Override
         public boolean getShooterMotorInverted() { return false; }
 
+        @Override
+        public boolean getSpinnerReversed() {
+            return false;
+        }
     }
 
     private RobotIDConstants robotIDConstants = new RobotIDConstants();

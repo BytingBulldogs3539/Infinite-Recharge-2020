@@ -5,16 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.BallIndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterCommand extends CommandBase
+public class AutoShooterCommand extends CommandBase
 {
   /**
    * Creates a new ShooterCommand.
@@ -22,24 +21,30 @@ public class ShooterCommand extends CommandBase
   ShooterSubsystem subsystem;
   double targetRPM;
   BallIndexerSubsystem indexerSubsystem;
+  DriveSubsystem driveSub;
   double targetServoSpeed;
-  IntakeSubsystem intakeSub;
+  boolean isSpinUp = false;
 
-  public ShooterCommand(ShooterSubsystem subsystem, IntakeSubsystem intakeSub, double targetRPM, BallIndexerSubsystem indexerSubsystem, double targetServoSpeed)
+  public AutoShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem,
+      DriveSubsystem driveSub, boolean isSpinUp)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);// , indexerSubsystem);
+    if(!isSpinUp)
+      addRequirements(subsystem, indexerSubsystem, driveSub);
+    else
+      addRequirements(subsystem);// , indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
     this.targetServoSpeed = targetServoSpeed;
-    this.intakeSub= intakeSub;
+    this.driveSub = driveSub;
+    this.isSpinUp = isSpinUp;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(targetRPM!=0)
+    if (targetRPM != 0)
     {
       subsystem.setVelocity(targetRPM);
     }
@@ -47,20 +52,26 @@ public class ShooterCommand extends CommandBase
     {
       subsystem.setPercentOutput(0);
     }
-    intakeSub.setIntakeSolinoid(true);
-    //subsystem.setServoSpeed(targetServoSpeed);
+    subsystem.setHoodAngle(-.006*Math.pow((driveSub.getTargetHeight()-70),2)+10);
+    // subsystem.setServoSpeed(targetServoSpeed);
+    // subsystem.setHoodAngle(20);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // System.out.println(subsystem.getDegrees());
-    // if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >=
-    // targetRPM+100)){
-    // indexerSubsystem.setPercentOutput(1);
-    // };
-    subsystem.setHoodAngle(-.006*Math.pow((Robot.m_robotContainer.m_robotDrive.getTargetHeight()-70),2)+10);
-
+    System.out.println(subsystem.getVelocity());
+    if(!isSpinUp)
+    {
+      System.out.println("SHOOOOOT");
+      if((subsystem.getVelocity() >= targetRPM-500) && (subsystem.getVelocity() <=
+      targetRPM+500) && targetRPM!=0){
+      indexerSubsystem.setPercentOutput(1);
+      };
+      driveSub.drive(0, 0, 0, true);
+    }
+     
   }
 
   // Called once the command ends or is interrupted.
@@ -68,9 +79,7 @@ public class ShooterCommand extends CommandBase
   public void end(boolean interrupted) {
     subsystem.setPercentOutput(0);
     subsystem.setServoSpeed(0);
-    intakeSub.setIntakeSolinoid(false);
-
-    // indexerSubsystem.setPercentOutput(0);
+    indexerSubsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.

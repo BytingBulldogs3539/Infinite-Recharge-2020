@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.utilities.Constants;
 
@@ -187,6 +188,13 @@ public final class PracConstants extends Constants
 
         @Override
         public double getKRearRightTurningEncoderOffset() { return -124.365; }
+
+        public TrajectoryConfig getTrajectoryConfig() {
+            return new TrajectoryConfig(RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond(),
+                    RobotContainer.robotConstants.getAutoConstants().getKMaxAccelerationINPerSecondSquared())
+                            // Add kinematics to ensure max speed is actually obeyed
+                            .setKinematics(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics());
+        }
     }
 
     public class ModuleConstants extends Constants.ModuleConstants
@@ -287,7 +295,7 @@ public final class PracConstants extends Constants
         public boolean getClimbMotorBrake() { return true; }
 
         @Override
-        public boolean getClimbAdjusterMotorInverted() { return false; }
+        public boolean getClimbAdjusterMotorInverted() { return true; }
 
         @Override
         public boolean getClimbAdjusterMotorBrake() { return true; }
@@ -319,7 +327,6 @@ public final class PracConstants extends Constants
 
         @Override
         public double getPotOffset() {
-            // TODO Auto-generated method stub
             return 0;
         }
 
@@ -333,6 +340,11 @@ public final class PracConstants extends Constants
 
         @Override
         public boolean getShooterMotorInverted() { return false; }
+
+        @Override
+        public boolean getSpinnerReversed() {
+            return false;
+        }
 
     }
 

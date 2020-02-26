@@ -9,7 +9,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -19,13 +21,16 @@ public class ClimbSubsystem extends SubsystemBase
 
   VictorSPX climbMotorL = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorLID());
   VictorSPX climbMotorR = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getClimbMotorRID());
-  VictorSPX climbAdjuster = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getAdjusterID());
+  public static TalonSRX climbAdjuster = new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getAdjusterID());
 
+
+  public static PigeonIMU pigeon;
   /**
    * Creates a new ClimbSubsystem.
    */
   public ClimbSubsystem()
   {
+    pigeon = new PigeonIMU(climbAdjuster);
     if (RobotContainer.robotConstants.getClimbConstants().getClimbMotorBrake())
     {
       climbMotorL.setNeutralMode(NeutralMode.Brake);
@@ -37,8 +42,9 @@ public class ClimbSubsystem extends SubsystemBase
       climbMotorR.setNeutralMode(NeutralMode.Coast);
     }
 
-    climbMotorL.setInverted(!RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+    climbMotorL.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
     climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
+    climbAdjuster.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setPercentOutput(double power) {
@@ -58,7 +64,7 @@ public class ClimbSubsystem extends SubsystemBase
   }
   public void setAdjusterPercentOutput(double power)
   {
-    climbAdjuster.set(ControlMode.PercentOutput, power);
+    climbAdjuster.set(ControlMode.PercentOutput, -power);
   }
 
   @Override

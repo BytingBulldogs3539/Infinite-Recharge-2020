@@ -20,28 +20,37 @@ public class IntakeCommand extends CommandBase
   IntakeSubsystem subsystem;
   /**Used to count loops in the intake command*/
   int counter = 0;
+  boolean shouldRunBack;
 
-  public IntakeCommand(IntakeSubsystem subsystem)
+  public IntakeCommand(IntakeSubsystem subsystem, boolean shouldRunBack)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
+    this.shouldRunBack = shouldRunBack;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     counter = 0;
-    subsystem.setPercentOutput(-1);
+    if(this.shouldRunBack)
+      subsystem.setPercentOutput(-1);
     subsystem.setIntakeSolinoid(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(counter<RobotContainer.robotConstants.getIntakeConstants().intakeReverseDelay()){
-      counter++;
-    }else{
+    if(this.shouldRunBack)
+    {
+      if(counter<RobotContainer.robotConstants.getIntakeConstants().intakeReverseDelay()){
+        counter++;
+      }else{
+        subsystem.setPercentOutput(1);
+      }
+    }
+    else{
       subsystem.setPercentOutput(1);
     }
   }

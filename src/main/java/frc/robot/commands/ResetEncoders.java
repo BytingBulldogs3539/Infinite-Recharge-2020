@@ -7,56 +7,38 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BallIndexerSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
 
-public class BallIndexerCommand extends CommandBase
-{
+public class ResetEncoders extends CommandBase {
   /**
-   * Creates a new BallIndexerCommand.
+   * Creates a new ResetGyro.
    */
-  BallIndexerSubsystem subsystem;
-  int counter;
-
-  public BallIndexerCommand(BallIndexerSubsystem subsystem)
-  {
-    addRequirements(subsystem);
+  DriveSubsystem subsystem;
+  public ResetEncoders(DriveSubsystem subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.subsystem = subsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*if (subsystem.getBallSensorState()){
-      counter=5;
-    }else{
-      subsystem.setPercentOutput(0);
-    }
-
-    if(counter > 0){
-      subsystem.setPercentOutput(1.0);
-      counter--;
-    }*/
-    if(subsystem.getBallSensorState()){
-      subsystem.setPercentOutput(1.0);
-    }else{
-      subsystem.setPercentOutput(0);
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.setPercentOutput(0);
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() { return false; }
+  public boolean isFinished() {
+    return true;
+  }
 }
