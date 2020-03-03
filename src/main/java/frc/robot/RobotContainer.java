@@ -31,14 +31,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.io.IOException;
 import java.net.NetworkInterface;
 
+import frc.robot.autons.AlignAndShootThenMoveALittle;
 import frc.robot.autons.Shoot;
 import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.BuddyClimbCommand;
 import frc.robot.commands.ClimbAdjustCommand;
 import frc.robot.commands.ClimbCommand;
+import frc.robot.commands.CloseShooter;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ResetEncoders;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.ShooterChirpCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SpinnerCommand;
 //import frc.robot.commands.ShooterChirpCommand;
@@ -161,6 +164,7 @@ public class RobotContainer
   public void putAuton()
   {
         chooser.addOption("Aim and Shoot", new Shoot(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("AIM AND SHOOT ONLY", new AlignAndShootThenMoveALittle(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
         SmartDashboard.putData("Auto Chooser", chooser);
   }
 
@@ -187,7 +191,7 @@ public class RobotContainer
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
     m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
     m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
-    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, -0.7));
+    m_opController.buttonSTART.whenHeld(new CloseShooter(m_ShooterSubsystem, m_IntakeSubsystem, 5700, m_BallIndexerSubsystem, 0.0));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));
@@ -196,7 +200,7 @@ public class RobotContainer
     m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem,true));
     m_opController.buttonPadLeft.whenHeld(new BuddyClimbCommand(m_BuddyClimbSubsystem, 1));
 
-    //SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
+    SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));
     SmartDashboard.putData("Climb Up Left", new ClimbCommand(m_ClimbSubsystem, -.2, 0));
     SmartDashboard.putData("Climb Up Right", new ClimbCommand(m_ClimbSubsystem, 0, -.2));
     SmartDashboard.putData("Climb Down Left", new ClimbCommand(m_ClimbSubsystem, .2, 0));

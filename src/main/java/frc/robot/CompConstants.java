@@ -201,7 +201,7 @@ public final class CompConstants extends Constants
     {
         public double getKMaxModuleAngularSpeedRadiansPerSecond() { return (50 * Math.PI); }
 
-        public double getKMaxModuleAngularAccelerationRadiansPerSecondSquared() { return (50 * Math.PI); }
+        public double getKMaxModuleAngularAccelerationRadiansPerSecondSquared() { return (30 * Math.PI); }
 
         public int getKDriveEncoderCPR() { return 240; }
 

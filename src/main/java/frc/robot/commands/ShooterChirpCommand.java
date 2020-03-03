@@ -45,7 +45,7 @@ public class ShooterChirpCommand extends CommandBase
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  public boolean isFinished() { return subsystem.isPlaying(); }
+  public boolean isFinished() { return !subsystem.isPlaying(); }
 
   // Called once after isFinished returns true
   @Override

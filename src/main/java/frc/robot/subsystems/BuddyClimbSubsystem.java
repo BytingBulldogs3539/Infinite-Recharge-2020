@@ -27,7 +27,7 @@ public class BuddyClimbSubsystem extends SubsystemBase
   }
 
   public void setPercentOutput(double power) {
-    buddyClimbMotor.set(ControlMode.PercentOutput, power);
+    buddyClimbMotor.set(ControlMode.PercentOutput, -power);
   }
 
   @Override

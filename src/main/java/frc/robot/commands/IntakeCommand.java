@@ -47,11 +47,11 @@ public class IntakeCommand extends CommandBase
       if(counter<RobotContainer.robotConstants.getIntakeConstants().intakeReverseDelay()){
         counter++;
       }else{
-        subsystem.setPercentOutput(1);
+        subsystem.setPercentOutput(.75);
       }
     }
     else{
-      subsystem.setPercentOutput(1);
+      subsystem.setPercentOutput(.75);
     }
   }
 
