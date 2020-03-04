@@ -30,6 +30,8 @@ public class SwerveModule
   public final CANSparkMax m_driveMotor;
   public final CANSparkMax m_turningMotor;
 
+  private SwerveModuleState moduleState;
+
   private final boolean driveEncoderReversed;
 
   private final CANEncoder m_driveEncoder;
@@ -120,23 +122,32 @@ public class SwerveModule
   public void setDesiredState(SwerveModuleState state) {
     // Calculate the drive output from the drive PID controller.
     state = optimizeModuleAngle(state, getAngle());
+    this.moduleState = state;
 
     final var driveOutput = m_drivePIDController.calculate(
         getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps(),
         state.speedMetersPerSecond);
 
     // Calculate the turning motor output from the turning PID controller.
-    final var turnOutput = m_turningPIDController.calculate(getAngle(), state.angle.getRadians());
-
-    // Calculate the turning motor output from the turning PID controller.
     m_driveMotor.set(driveOutput
         + RobotContainer.robotConstants.getModuleConstants().getKFModuleDriveController() * state.speedMetersPerSecond);
-    m_turningMotor.set(turnOutput);
   }
 
   public void stopDrive() {
     m_driveMotor.set(0);
     m_turningMotor.set(0);
+  }
+  public void periodic()
+  {
+    if(this.moduleState != null)
+    {
+      final var turnOutput = m_turningPIDController.calculate(getAngle(), this.moduleState.angle.getRadians());
+      m_turningMotor.set(turnOutput);
+    }
+    else
+    {
+      m_turningMotor.set(0);
+    }
   }
 
   /**

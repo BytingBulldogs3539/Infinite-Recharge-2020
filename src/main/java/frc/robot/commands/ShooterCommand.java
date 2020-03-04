@@ -28,7 +28,7 @@ public class ShooterCommand extends CommandBase
   public ShooterCommand(ShooterSubsystem subsystem, IntakeSubsystem intakeSub, double targetRPM, BallIndexerSubsystem indexerSubsystem, double targetServoSpeed)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);// , indexerSubsystem);
+    addRequirements(subsystem , indexerSubsystem);
     this.subsystem = subsystem;
     this.indexerSubsystem = indexerSubsystem;
     this.targetRPM = targetRPM;
@@ -54,13 +54,23 @@ public class ShooterCommand extends CommandBase
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // System.out.println(subsystem.getDegrees());
-    // if((subsystem.getVelocity() >= targetRPM-100) && (subsystem.getVelocity() >=
-    // targetRPM+100)){
-    // indexerSubsystem.setPercentOutput(1);
-    // };
-    subsystem.setHoodAngle(-.006*Math.pow((Robot.m_robotContainer.m_robotDrive.getTargetHeight()-70),2)+10);
+    //System.out.println(subsystem.getDegrees());
 
+    double velocity = subsystem.getVelocity();
+
+    if((velocity >= targetRPM-150) && (velocity <=targetRPM+100))
+    {
+      indexerSubsystem.setPercentOutput(1);
+      System.out.println("FEEEEEED");
+    }
+    else
+      indexerSubsystem.setPercentOutput(0);
+
+    SmartDashboard.putNumber("Shooter Velocity", velocity);
+    SmartDashboard.putNumber("Shooter Target Velocity", targetRPM);
+
+    //subsystem.setHoodAngle(-.006*Math.pow((Robot.m_robotContainer.m_robotDrive.getTargetHeight()-70),2)+10);
+    subsystem.setHoodAngle(30);
   }
 
   // Called once the command ends or is interrupted.

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.autons;
+package frc.robot.autonCommands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import frc.robot.utilities.SwerveControllerCommand;
 public class TrajectoryCommandGenerator
 {
         public static Command getMotionCommand(Pose2d startPoint, List<Translation2d> interiorPoints,
-                        Pose2d endPoint, boolean reverse, DriveSubsystem driveSub) {
+                        Pose2d endPoint,double percentOfPath, boolean shouldVisionTrack, boolean reverse, DriveSubsystem driveSub) {
                 TrajectoryConfig config = RobotContainer.robotConstants.getDriveConstants().getTrajectoryConfig();
                  config.setReversed(reverse);
                 // An example trajectory to follow. All units in inches.
@@ -55,6 +55,7 @@ public class TrajectoryCommandGenerator
                                                 0, 0,
                                                 RobotContainer.robotConstants.getAutoConstants()
                                                                 .getKThetaControllerConstraints()),
+                                percentOfPath,
 
                                 driveSub::setModuleStates,
 
@@ -62,7 +63,7 @@ public class TrajectoryCommandGenerator
 
                                 driveSub::getVisionAngle,
 
-                                false,
+                                shouldVisionTrack,
 
                                 driveSub
 

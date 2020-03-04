@@ -307,12 +307,12 @@ public final class CompConstants extends Constants
 
         @Override
         public double getKP() {
-            return 0.1;
+            return 0.25;
         }
 
         @Override
         public double getKI() {
-            return 0;
+            return 0.0001;
         }
 
         @Override
@@ -322,7 +322,7 @@ public final class CompConstants extends Constants
 
         @Override
         public double getKF() {
-            return 0.054;
+            return 0.052;
         }
 
         @Override

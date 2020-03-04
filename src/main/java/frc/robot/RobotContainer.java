@@ -31,8 +31,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.io.IOException;
 import java.net.NetworkInterface;
 
-import frc.robot.autons.AlignAndShootThenMoveALittle;
-import frc.robot.autons.Shoot;
+import frc.robot.autons.SimpleThreeBall;
+import frc.robot.autons.SixBallRonday;
 import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.BuddyClimbCommand;
 import frc.robot.commands.ClimbAdjustCommand;
@@ -163,8 +163,8 @@ public class RobotContainer
   }
   public void putAuton()
   {
-        chooser.addOption("Aim and Shoot", new Shoot(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
-        chooser.addOption("AIM AND SHOOT ONLY", new AlignAndShootThenMoveALittle(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("Three Ball Trench", new SixBallRonday(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("AIM AND SHOOT ONLY", new SimpleThreeBall(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
         SmartDashboard.putData("Auto Chooser", chooser);
   }
 
@@ -184,14 +184,14 @@ public class RobotContainer
     m_driverController.buttonSELECT.whenPressed(new ResetEncoders(m_robotDrive));
     // m_driverController.buttonA.whenHeld(visionCommand);
 
-    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5700, m_BallIndexerSubsystem, 0.0));
-    m_opController.buttonTR.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, 1.0));
-    m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-1.0));
+    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5100, m_BallIndexerSubsystem, 0.0));
+    m_opController.buttonTR.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, .4));
+    m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-.4));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
     m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
     m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
-    m_opController.buttonSTART.whenHeld(new CloseShooter(m_ShooterSubsystem, m_IntakeSubsystem, 5700, m_BallIndexerSubsystem, 0.0));
+    m_opController.buttonSTART.whenHeld(new CloseShooter(m_ShooterSubsystem, m_IntakeSubsystem, 4800, m_BallIndexerSubsystem, 0.0));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));

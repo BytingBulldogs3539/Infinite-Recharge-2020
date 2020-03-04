@@ -55,6 +55,7 @@ public class SwerveControllerCommand extends CommandBase
   private final Supplier<Double> m_targetSupplier;
   private final boolean m_shouldVisionTrack;
   private final Supplier<Boolean> m_targetIsAvail;
+  private final double percentOfPath;
 
   /**
    * Constructs a new SwerveControllerCommand that when executed will follow the
@@ -88,7 +89,7 @@ public class SwerveControllerCommand extends CommandBase
 
   @SuppressWarnings("ParameterName")
   public SwerveControllerCommand(Trajectory trajectory, Supplier<Pose2d> pose, SwerveDriveKinematics kinematics,
-      PIDController xController, PIDController yController, ProfiledPIDController thetaController,
+      PIDController xController, PIDController yController, ProfiledPIDController thetaController, double percentOfPath,
 
       Consumer<SwerveModuleState[]> outputModuleStates, Supplier<Boolean> targetIsAvail,
       Supplier<Double> targetSupplier, Boolean shouldVisionTrack, Subsystem... requirements)
@@ -106,6 +107,8 @@ public class SwerveControllerCommand extends CommandBase
     m_targetIsAvail = requireNonNullParam(targetIsAvail, "targetIsAvail", "SwerveControllerCommand");
     m_targetSupplier = requireNonNullParam(targetSupplier, "targetSuplier", "SwerveControllerCommand");
     m_shouldVisionTrack = requireNonNullParam(shouldVisionTrack, "shouldVisionTrack", "SwerveControllerCommand");
+    this.percentOfPath = requireNonNullParam(percentOfPath, "shouldVisionTrack", "SwerveControllerCommand");
+
     addRequirements(requirements);
   }
 
@@ -165,7 +168,7 @@ public class SwerveControllerCommand extends CommandBase
     else
     {
       targetAngularVel = m_thetaController.calculate(m_pose.get().getRotation().getRadians(),
-          m_finalPose.getRotation().getRadians());
+          getExpectedAngle(curTime));
     }
 
     double vRef = desiredState.velocityMetersPerSecond;
@@ -179,6 +182,14 @@ public class SwerveControllerCommand extends CommandBase
 
     m_outputModuleStates.accept(targetModuleStates);
 
+  }
+
+  public double getExpectedAngle(double time)
+  {
+    if(time<m_trajectory.getTotalTimeSeconds())
+      return (m_finalPose.getRotation().getRadians() / (m_trajectory.getTotalTimeSeconds()*percentOfPath))*time;
+    else
+      return m_finalPose.getRotation().getRadians();
   }
 
   @Override

@@ -96,6 +96,10 @@ public class DriveSubsystem extends SubsystemBase
     // Update the odometry in the periodic block
     m_odometry.update(new Rotation2d(Math.toRadians(getHeading())), m_frontLeft.getState(), m_rearLeft.getState(),
         m_frontRight.getState(), m_rearRight.getState());
+        m_frontLeft.periodic();
+        m_frontRight.periodic();
+        m_rearLeft.periodic();
+        m_rearRight.periodic();
   }
 
   /**
@@ -136,10 +140,18 @@ public class DriveSubsystem extends SubsystemBase
     ySpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
     rot*=RobotContainer.robotConstants.getAutoConstants().getKMaxAngularSpeedRadiansPerSecond();
 
+    if(xSpeed == 0 && ySpeed ==0 && rot==0)
+    {
+      stopDrive();
+    }
+    else
+    {
       var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics()
-          .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
-              : new ChassisSpeeds(xSpeed, ySpeed, rot));
+      .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
+          : new ChassisSpeeds(xSpeed, ySpeed, rot));
       setModuleStates(swerveModuleStates);
+    }
+      
 
   }
 

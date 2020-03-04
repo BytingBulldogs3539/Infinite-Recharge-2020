@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.autonCommands.AutoAlignCommand;
 import frc.robot.autonCommands.AutoShooterCommand;
+import frc.robot.autonCommands.TrajectoryCommandGenerator;
 import frc.robot.commands.BallIndexerCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.BallIndexerSubsystem;
@@ -26,11 +27,11 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AlignAndShootThenMoveALittle extends SequentialCommandGroup {
+public class SixBallRonday extends SequentialCommandGroup {
   /**
    * Creates a new Shoot.
    */
-  public AlignAndShootThenMoveALittle(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub, BallIndexerSubsystem ballIndexerSubsystem)
+  public SixBallRonday(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub, BallIndexerSubsystem ballIndexerSubsystem)
   {  // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super( 
@@ -39,10 +40,34 @@ public class AlignAndShootThenMoveALittle extends SequentialCommandGroup {
          new AutoShooterCommand(shooterSub, 5000,
          ballIndexerSubsystem,
          driveSub, false).withTimeout(3),
+
+        new ParallelCommandGroup(
         TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
-            new Pose2d(-20, 0, Rotation2d.fromDegrees(0)), true, driveSub)
-        );      
-    
+            new Pose2d(-85, 68, Rotation2d.fromDegrees(30)), .75, false,true, driveSub),
+            new IntakeCommand(intakeSub,true).withTimeout(2)
+            ),
+
+        new ParallelCommandGroup(
+            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+                new Pose2d(15, -55, Rotation2d.fromDegrees(0)), 1, false, false, driveSub),
+            new IntakeCommand(intakeSub,true).withTimeout(3),
+            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(3)),
+
+        new ParallelCommandGroup(
+            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+                new Pose2d(55, 25, Rotation2d.fromDegrees(0)), .75, true ,false, driveSub),
+            new IntakeCommand(intakeSub,false).withTimeout(2),
+            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(2),
+            new AutoShooterCommand(shooterSub, 5000, ballIndexerSubsystem, driveSub, true).withTimeout(3)
+            ),
+
+        new ParallelCommandGroup(
+            new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
+        new AutoShooterCommand(shooterSub, 5000, ballIndexerSubsystem, driveSub, true).withTimeout(1)),
+
+        new AutoShooterCommand(shooterSub,5000, ballIndexerSubsystem,
+            driveSub,false).withTimeout(5)        
+    );
               
 
   }

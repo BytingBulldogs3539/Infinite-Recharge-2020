@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -51,8 +52,9 @@ public class ShooterSubsystem extends SubsystemBase
     shooterMotor.config_kF(0, RobotContainer.robotConstants.getShooterConstants().getKF());
     _orchestra = new Orchestra(_instruments);
     _orchestra.addInstrument(shooterMotor);
-
-    SmartDashboard.putNumber("Servo Target", 30);
+    
+    SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 40, 45, 1.0);
+    shooterMotor.configSupplyCurrentLimit(currentConfig);
   }
 
   /**
