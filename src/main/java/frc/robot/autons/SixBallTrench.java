@@ -12,6 +12,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.autonCommands.AutoAlignCommand;
@@ -28,43 +29,48 @@ import frc.robot.subsystems.ShooterSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class SixBallTrench extends SequentialCommandGroup {
-  /**
-   * Creates a new Shoot.
-   */
-  public SixBallTrench(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub, BallIndexerSubsystem ballIndexerSubsystem)
-  {  // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super( 
-        new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
-        
-         new AutoShooterCommand(shooterSub, 5000,
-         ballIndexerSubsystem,
-         driveSub, false).withTimeout(3),
-        new ParallelCommandGroup(
-        TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
-            new Pose2d(-69, -17, Rotation2d.fromDegrees(0)), .75,false,true, driveSub),
-            new IntakeCommand(intakeSub,true).withTimeout(2)
-            ),
-
-        new ParallelCommandGroup(
-            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
-                new Pose2d(-100, 0, Rotation2d.fromDegrees(0)), .75,false,true, driveSub),
-            new IntakeCommand(intakeSub,true).withTimeout(2),
-            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(2)),
-
-        new ParallelCommandGroup(
-            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
-                new Pose2d(153, 25, Rotation2d.fromDegrees(0)), .75,false,false, driveSub),
-            new IntakeCommand(intakeSub,false).withTimeout(2),
-            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(2),
-            new AutoShooterCommand(shooterSub, 5000, ballIndexerSubsystem, driveSub, true).withTimeout(3)
-            ),
-
-        new ParallelCommandGroup(
+    /**
+     * Creates a new Shoot.
+     */
+    public SixBallTrench(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub,
+            BallIndexerSubsystem ballIndexerSubsystem) { // Add your commands in the super() call, e.g.
+                                                         // super(new FooCommand(), new BarCommand());
+        super(
+            new ParallelRaceGroup(
             new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
-        new AutoShooterCommand(shooterSub, 5000, ballIndexerSubsystem, driveSub, true).withTimeout(1)),
+            new AutoShooterCommand(shooterSub, intakeSub, 5000, ballIndexerSubsystem, driveSub, true)
+                                .withTimeout(10)),
 
-        new AutoShooterCommand(shooterSub,5000, ballIndexerSubsystem,
+                new AutoShooterCommand(shooterSub, intakeSub, 5000, ballIndexerSubsystem, driveSub, false)
+                        .withTimeout(3),
+
+                new ParallelRaceGroup(
+        TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+            new Pose2d(-50, -24, Rotation2d.fromDegrees(0)), .75, false, false, true, driveSub),
+            new IntakeCommand(intakeSub,ballIndexerSubsystem, true).withTimeout(12)
+            ),
+
+        new ParallelRaceGroup(
+            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+                new Pose2d(-120, 0, Rotation2d.fromDegrees(0)), .1 ,false,true,true, driveSub),
+            new IntakeCommand(intakeSub,ballIndexerSubsystem,true).withTimeout(10),
+            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(10)),
+
+        new ParallelRaceGroup(
+            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+                new Pose2d(153, 25, Rotation2d.fromDegrees(0)), .75,false,false,false, driveSub),
+            new IntakeCommand(intakeSub,ballIndexerSubsystem,false).withTimeout(10),
+            new BallIndexerCommand(ballIndexerSubsystem).withTimeout(10),
+            new AutoShooterCommand(shooterSub, intakeSub, 5000, ballIndexerSubsystem, driveSub, true)
+                                .withTimeout(10)
+            ),
+
+        new ParallelRaceGroup(
+            new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
+        new AutoShooterCommand(shooterSub, intakeSub, 5000, ballIndexerSubsystem, driveSub, true)
+                                .withTimeout(10)),
+
+        new AutoShooterCommand(shooterSub, intakeSub, 5000, ballIndexerSubsystem,
             driveSub,false).withTimeout(5)        
     );
               

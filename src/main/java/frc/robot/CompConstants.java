@@ -213,7 +213,9 @@ public final class CompConstants extends Constants
 
         public double getKDriveEncoderRpmToInps() { return (217.92 / 5676.0); }
 
-        public double getKPModuleTurningController() { return .4; }
+        public double getKPModuleTurningController() { return .25; }
+
+        public double getKDModuleTurningController() { return .0025; }
 
         public double getKPModuleDriveController() { return .0001; }
 
@@ -234,7 +236,7 @@ public final class CompConstants extends Constants
     {
         public double getKMaxSpeedINPerSecond() { return 217.92; }
 
-        public double getKMaxAccelerationINPerSecondSquared() { return 80; }
+        public double getKMaxAccelerationINPerSecondSquared() { return 40; }
 
         public double getKMaxAngularSpeedRadiansPerSecond() { return 10.6; }
 
@@ -248,7 +250,10 @@ public final class CompConstants extends Constants
 
         public double getKDYController() { return .033; }
 
-        public double getKPThetaController() { return 1.6; }
+        public double getKPThetaController() { return 2.5; }
+
+        
+        public double getKDThetaController() { return .3; }
 
         // Constraint for the motion profilied robot angle controller
         public TrapezoidProfile.Constraints getKThetaControllerConstraints() {

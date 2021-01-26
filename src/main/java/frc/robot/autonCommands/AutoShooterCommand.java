@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AutoShooterCommand extends CommandBase
@@ -22,15 +23,16 @@ public class AutoShooterCommand extends CommandBase
   double targetRPM;
   BallIndexerSubsystem indexerSubsystem;
   DriveSubsystem driveSub;
+  IntakeSubsystem intakeSub;
   double targetServoSpeed;
   boolean isSpinUp = false;
 
-  public AutoShooterCommand(ShooterSubsystem subsystem, double targetRPM, BallIndexerSubsystem indexerSubsystem,
+  public AutoShooterCommand(ShooterSubsystem subsystem, IntakeSubsystem intakeSub ,double targetRPM, BallIndexerSubsystem indexerSubsystem,
       DriveSubsystem driveSub, boolean isSpinUp)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     if(!isSpinUp)
-      addRequirements(subsystem, indexerSubsystem, driveSub);
+      addRequirements(subsystem, indexerSubsystem, driveSub, intakeSub);
     else
       addRequirements(subsystem);// , indexerSubsystem);
     this.subsystem = subsystem;
@@ -39,6 +41,7 @@ public class AutoShooterCommand extends CommandBase
     this.targetServoSpeed = targetServoSpeed;
     this.driveSub = driveSub;
     this.isSpinUp = isSpinUp;
+    this.intakeSub = intakeSub;
   }
 
   // Called when the command is initially scheduled.
@@ -52,7 +55,13 @@ public class AutoShooterCommand extends CommandBase
     {
       subsystem.setPercentOutput(0);
     }
-    subsystem.setHoodAngle(-.006*Math.pow((driveSub.getTargetHeight()-70),2)+10);
+    if(!isSpinUp)
+    {
+     intakeSub.setIntakeSolinoid(true); 
+    }
+    double x = driveSub.getTargetHeight();
+
+    subsystem.setHoodAngle((.0000709536*Math.pow(x,3)-.0167058*Math.pow(x,2)+1.11431*x+4.21954));
     // subsystem.setServoSpeed(targetServoSpeed);
     // subsystem.setHoodAngle(20);
   }
@@ -61,13 +70,13 @@ public class AutoShooterCommand extends CommandBase
   @Override
   public void execute() {
     // System.out.println(subsystem.getDegrees());
-    System.out.println(subsystem.getVelocity());
+    //System.out.println(subsystem.getVelocity());
     if(!isSpinUp)
     {
-      System.out.println("SHOOOOOT");
+      //System.out.println("SHOOOOOT");
       if((subsystem.getVelocity() >= targetRPM-500) && (subsystem.getVelocity() <=
       targetRPM+500) && targetRPM!=0){
-      indexerSubsystem.setPercentOutput(1);
+      indexerSubsystem.setPercentOutput(.8);
       };
       driveSub.drive(0, 0, 0, true);
     }
@@ -80,6 +89,8 @@ public class AutoShooterCommand extends CommandBase
     subsystem.setPercentOutput(0);
     subsystem.setServoSpeed(0);
     indexerSubsystem.setPercentOutput(0);
+    intakeSub.setIntakeSolinoid(false); 
+
   }
 
   // Returns true when the command should end.

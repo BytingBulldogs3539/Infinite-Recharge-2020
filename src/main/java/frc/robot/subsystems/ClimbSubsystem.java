@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -45,6 +46,20 @@ public class ClimbSubsystem extends SubsystemBase
     climbMotorL.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
     climbMotorR.setInverted(RobotContainer.robotConstants.getClimbConstants().getClimbMotorInverted());
     climbAdjuster.setNeutralMode(NeutralMode.Brake);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 500);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 500);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 500);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 500);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 500);
+    climbMotorR.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 500);
+
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 500);
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 500);
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 500);
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 500);
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 500);
+    climbMotorL.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 500);
+
   }
 
   public void setPercentOutput(double power) {

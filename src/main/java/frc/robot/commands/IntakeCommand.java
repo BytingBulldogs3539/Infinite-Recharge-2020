@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.BallIndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase
@@ -18,16 +19,19 @@ public class IntakeCommand extends CommandBase
    * Creates a new IntakeCommand.
    */
   IntakeSubsystem subsystem;
+  BallIndexerSubsystem ballIndexer;
   /**Used to count loops in the intake command*/
   int counter = 0;
   boolean shouldRunBack;
 
-  public IntakeCommand(IntakeSubsystem subsystem, boolean shouldRunBack)
+  public IntakeCommand(IntakeSubsystem subsystem, BallIndexerSubsystem ballIndexer, boolean shouldRunBack)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
     this.subsystem = subsystem;
     this.shouldRunBack = shouldRunBack;
+    this.ballIndexer = ballIndexer;
+
   }
 
   // Called when the command is initially scheduled.
@@ -37,6 +41,7 @@ public class IntakeCommand extends CommandBase
     if(this.shouldRunBack)
       subsystem.setPercentOutput(-1);
     subsystem.setIntakeSolinoid(true);
+    this.ballIndexer.isIntake = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,11 +52,11 @@ public class IntakeCommand extends CommandBase
       if(counter<RobotContainer.robotConstants.getIntakeConstants().intakeReverseDelay()){
         counter++;
       }else{
-        subsystem.setPercentOutput(.75);
+        subsystem.setPercentOutput(1);
       }
     }
     else{
-      subsystem.setPercentOutput(.75);
+      subsystem.setPercentOutput(1);
     }
   }
 
@@ -61,6 +66,8 @@ public class IntakeCommand extends CommandBase
     subsystem.setIntakeSolinoid(false);
     subsystem.setPercentOutput(0);
     counter = 0;
+    this.ballIndexer.isIntake = false;
+
   }
 
   // Returns true when the command should end.

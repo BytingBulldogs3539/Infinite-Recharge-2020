@@ -12,6 +12,7 @@ import java.util.List;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.autonCommands.AutoAlignCommand;
@@ -27,23 +28,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SimpleThreeBall extends SequentialCommandGroup {
-  /**
-   * Creates a new Shoot.
-   */
-  public SimpleThreeBall(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub, BallIndexerSubsystem ballIndexerSubsystem)
-  {  // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super( 
-        new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
-        
-         new AutoShooterCommand(shooterSub, intakeSub, 5000,
-         ballIndexerSubsystem,
-         driveSub, false).withTimeout(3),
-        TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
-            new Pose2d(-20, 0, Rotation2d.fromDegrees(0)),.75,false, false,true, driveSub)
-        );      
-    
+public class TuneBallTracking extends SequentialCommandGroup {
+    /**
+     * Creates a new Shoot.
+     */
+    public TuneBallTracking(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub,
+            BallIndexerSubsystem ballIndexerSubsystem) { // Add your commands in the super() call, e.g.
+                                                         // super(new FooCommand(), new BarCommand());
+        super(
+        new ParallelRaceGroup(
+            TrajectoryCommandGenerator.getMotionCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), List.of(),
+                new Pose2d(-30, 0, Rotation2d.fromDegrees(0)), .1 ,false,true,true, driveSub))
+    );
               
 
   }

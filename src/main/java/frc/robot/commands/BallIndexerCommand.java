@@ -43,8 +43,8 @@ public class BallIndexerCommand extends CommandBase
       subsystem.setPercentOutput(1.0);
       counter--;
     }*/
-    if(subsystem.getBallSensorState()){
-      subsystem.setPercentOutput(1.0);
+    if(subsystem.getBallSensorState()  && subsystem.isIntake){
+      subsystem.setPercentOutput(1);
     }else{
       subsystem.setPercentOutput(0);
     }

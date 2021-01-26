@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpiutil.CircularBuffer;
 
 import static edu.wpi.first.wpilibj.util.ErrorMessages.requireNonNullParam;
 
@@ -49,6 +50,7 @@ public class SwerveControllerCommand extends CommandBase
   private final Supplier<Pose2d> m_pose;
   private final SwerveDriveKinematics m_kinematics;
   private final PIDController m_xController;
+  
   private final PIDController m_yController;
   private final ProfiledPIDController m_thetaController;
   private final Consumer<SwerveModuleState[]> m_outputModuleStates;
@@ -56,6 +58,14 @@ public class SwerveControllerCommand extends CommandBase
   private final boolean m_shouldVisionTrack;
   private final Supplier<Boolean> m_targetIsAvail;
   private final double percentOfPath;
+  private Pose2d startPose;
+  private final Supplier<Double> m_ballTargetSupplier;
+  private final Supplier<Boolean> m_ballTargetIsAvail;
+  private final Boolean m_shouldVisionBallTrack;
+  private final Supplier<Double> ballTargetArea;
+
+  int bufferSize = 2;
+  CircularBuffer visionBuffer = new CircularBuffer(bufferSize);
 
   /**
    * Constructs a new SwerveControllerCommand that when executed will follow the
@@ -92,7 +102,7 @@ public class SwerveControllerCommand extends CommandBase
       PIDController xController, PIDController yController, ProfiledPIDController thetaController, double percentOfPath,
 
       Consumer<SwerveModuleState[]> outputModuleStates, Supplier<Boolean> targetIsAvail,
-      Supplier<Double> targetSupplier, Boolean shouldVisionTrack, Subsystem... requirements)
+      Supplier<Double> targetSupplier, Supplier<Double> ballTargetSupplier, Supplier<Double> ballTargetArea ,Supplier<Boolean> ballTargetIsAvail,Boolean shouldVisionTrack, Boolean shouldVisionBallTrack,Subsystem... requirements)
   {
     m_trajectory = requireNonNullParam(trajectory, "trajectory", "SwerveControllerCommand");
     m_pose = requireNonNullParam(pose, "pose", "SwerveControllerCommand");
@@ -107,15 +117,26 @@ public class SwerveControllerCommand extends CommandBase
     m_targetIsAvail = requireNonNullParam(targetIsAvail, "targetIsAvail", "SwerveControllerCommand");
     m_targetSupplier = requireNonNullParam(targetSupplier, "targetSuplier", "SwerveControllerCommand");
     m_shouldVisionTrack = requireNonNullParam(shouldVisionTrack, "shouldVisionTrack", "SwerveControllerCommand");
-    this.percentOfPath = requireNonNullParam(percentOfPath, "shouldVisionTrack", "SwerveControllerCommand");
-
+    this.percentOfPath = requireNonNullParam(percentOfPath, "percentOfPath", "SwerveControllerCommand");
+    this.m_ballTargetIsAvail = requireNonNullParam(ballTargetIsAvail, "ballTargetAvail", "SwerveControllerCommand");
+    this.m_ballTargetSupplier = requireNonNullParam(ballTargetSupplier, "ballTargetSupplier", "SwerveControllerCommand");
+    this.m_shouldVisionBallTrack = requireNonNullParam(shouldVisionBallTrack, "ShouldVisionTrack", "SwerveControllerCommand");
+    this.ballTargetArea = requireNonNullParam(ballTargetArea, "BallTargetArea", "SwerveControllerCommand");
+    this.startPose = m_pose.get();
     addRequirements(requirements);
+
+    if(this.m_shouldVisionBallTrack)
+    {
+      this.m_yController.setI(.001);
+    }
   }
 
   @Override
   public void initialize() {
     // Sample final pose to get robot rotation
     m_finalPose = m_trajectory.sample(m_trajectory.getTotalTimeSeconds()).poseMeters;
+    this.startPose = m_pose.get();
+
 
     m_timer.reset();
     m_timer.start();
@@ -129,29 +150,54 @@ public class SwerveControllerCommand extends CommandBase
     var desiredState = m_trajectory.sample(curTime);
     var desiredPose = desiredState.poseMeters;
 
-    SmartDashboard.putNumber("Expected X", desiredPose.getTranslation().getX());
-    SmartDashboard.putNumber("Expected Y", desiredPose.getTranslation().getY());
+    //SmartDashboard.putNumber("Expected X", desiredPose.getTranslation().getX());
+    //SmartDashboard.putNumber("Expected Y", desiredPose.getTranslation().getY());
 
-    SmartDashboard.putNumber("Real X", m_pose.get().getTranslation().getX());
-    SmartDashboard.putNumber("Real Y", m_pose.get().getTranslation().getY());
+    //SmartDashboard.putNumber("Real X", m_pose.get().getTranslation().getX());
+    //SmartDashboard.putNumber("Real Y", m_pose.get().getTranslation().getY());
+
+
+    //SmartDashboard.putNumber("REAL GYROs", m_pose.get().getRotation().getDegrees());
 
     var poseError = desiredPose.relativeTo(m_pose.get());
 
-    SmartDashboard.putNumber("Error X", poseError.getTranslation().getX());
+    //SmartDashboard.putNumber("Error X", poseError.getTranslation().getX());
 
-    SmartDashboard.putNumber("Error Y", poseError.getTranslation().getY());
+    //SmartDashboard.putNumber("Error Y", poseError.getTranslation().getY());
 
     double targetXVel = m_xController.calculate(m_pose.get().getTranslation().getX(),
         desiredPose.getTranslation().getX());
 
-    double targetYVel = m_yController.calculate(m_pose.get().getTranslation().getY(),
-        desiredPose.getTranslation().getY());
+    double targetYVel = 0;
+
+    if(this.m_shouldVisionBallTrack)
+    {
+      if(this.m_ballTargetIsAvail.get())
+      {
+        visionBuffer.addFirst(this.m_ballTargetSupplier.get()*600);
+        double bufferAverage = 0;
+        for(int i =0;i<bufferSize; i++)
+        {
+          bufferAverage+=visionBuffer.get(i);
+        }
+        bufferAverage/=bufferSize;
+
+        targetYVel = m_yController.calculate(bufferAverage, 0);
+        //SmartDashboard.putNumber("Y OUT", targetYVel);
+      }
+    }
+    else
+    {
+      targetYVel = m_yController.calculate(m_pose.get().getTranslation().getY(),
+      desiredPose.getTranslation().getY());
+    }
+    
 
     // The robot will go to the desired rotation of the final pose in the
     // trajectory,
     // not following the poses at individual states.
     double targetAngularVel;
-    System.out.println(m_shouldVisionTrack + " " + m_targetIsAvail.get());
+    //System.out.println(m_shouldVisionTrack + " " + m_targetIsAvail.get());
     if (m_shouldVisionTrack)
     {
       if (m_targetIsAvail.get())
@@ -162,15 +208,14 @@ public class SwerveControllerCommand extends CommandBase
       else
       {
         targetAngularVel = m_thetaController.calculate(m_pose.get().getRotation().getRadians(),
-            m_finalPose.getRotation().getRadians());
+          getExpectedAngle(curTime));
       }
     }
     else
     {
       targetAngularVel = m_thetaController.calculate(m_pose.get().getRotation().getRadians(),
-          getExpectedAngle(curTime));
+        getExpectedAngle(curTime));
     }
-
     double vRef = desiredState.velocityMetersPerSecond;
 
     targetXVel += vRef * poseError.getRotation().getCos();
@@ -187,7 +232,7 @@ public class SwerveControllerCommand extends CommandBase
   public double getExpectedAngle(double time)
   {
     if(time<m_trajectory.getTotalTimeSeconds())
-      return (m_finalPose.getRotation().getRadians() / (m_trajectory.getTotalTimeSeconds()*percentOfPath))*time;
+      return (((m_finalPose.getRotation().getRadians() - startPose.getRotation().getRadians()) / (m_trajectory.getTotalTimeSeconds()*percentOfPath))*time)+startPose.getRotation().getRadians();
     else
       return m_finalPose.getRotation().getRadians();
   }

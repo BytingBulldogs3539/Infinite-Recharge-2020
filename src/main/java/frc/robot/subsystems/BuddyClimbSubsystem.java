@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,11 +20,19 @@ public class BuddyClimbSubsystem extends SubsystemBase
   // Buddy climb motor
   VictorSPX buddyClimbMotor = new VictorSPX(RobotContainer.robotConstants.getRobotIDConstants().getBuddyClimbMotorID());
 
+  
   /**
    * Creates a new BuddyClimbSubsystem.
    */
   public BuddyClimbSubsystem()
   {
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 500);
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 500);
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 500);
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 500);
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 500);
+    buddyClimbMotor.setStatusFramePeriod(StatusFrame.Status_14_Turn_PIDF1, 500);
+
   }
 
   public void setPercentOutput(double power) {

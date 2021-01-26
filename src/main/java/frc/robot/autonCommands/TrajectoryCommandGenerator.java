@@ -29,9 +29,10 @@ import frc.robot.utilities.SwerveControllerCommand;
 public class TrajectoryCommandGenerator
 {
         public static Command getMotionCommand(Pose2d startPoint, List<Translation2d> interiorPoints,
-                        Pose2d endPoint,double percentOfPath, boolean shouldVisionTrack, boolean reverse, DriveSubsystem driveSub) {
+                        Pose2d endPoint,double percentOfPath, boolean shouldVisionTrack, boolean shouldBallTrack, boolean reverse, DriveSubsystem driveSub) {
                 TrajectoryConfig config = RobotContainer.robotConstants.getDriveConstants().getTrajectoryConfig();
                  config.setReversed(reverse);
+                 startPoint = new Pose2d(startPoint.getTranslation().getX(), startPoint.getTranslation().getY(), driveSub.getAngle());
                 // An example trajectory to follow. All units in inches.
                 Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                                 // Start at the origin facing the +X direction
@@ -52,7 +53,7 @@ public class TrajectoryCommandGenerator
                                                 0, RobotContainer.robotConstants.getAutoConstants().getKDYController()),
                                 new ProfiledPIDController(
                                                 RobotContainer.robotConstants.getAutoConstants().getKPThetaController(),
-                                                0, 0,
+                                                0, RobotContainer.robotConstants.getAutoConstants().getKDThetaController(),
                                                 RobotContainer.robotConstants.getAutoConstants()
                                                                 .getKThetaControllerConstraints()),
                                 percentOfPath,
@@ -63,7 +64,18 @@ public class TrajectoryCommandGenerator
 
                                 driveSub::getVisionAngle,
 
+
+                                driveSub::getVisionBallAngle,
+
+                                driveSub::getVisionBallArea,
+
+
+                                driveSub::getVisionBallSeeing,
+
+
                                 shouldVisionTrack,
+
+                                shouldBallTrack,
 
                                 driveSub
 

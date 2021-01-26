@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveCommand;
@@ -68,17 +69,25 @@ public class DriveSubsystem extends SubsystemBase
 
   public static final NetworkTableInstance table = NetworkTableInstance.getDefault();
   public static final NetworkTable myCam = table.getTable("chameleon-vision").getSubTable("mmal service 16.1");
+  public static final NetworkTable myBallCam = table.getTable("chameleon-vision").getSubTable("Microsoft LifeCam HD-3000");
 
   /**
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem()
   {
+    
+    SmartDashboard.putNumber("REAL GYROs", 0);
+    SmartDashboard.putNumber("Y OUT", 0);
+    SmartDashboard.putNumber("Ball Multipler", 300.0);
+
+
     setDefaultCommand(new DriveCommand(this));
 
     ClimbSubsystem.pigeon.setYaw(0);
     m_odometry = new SwerveDriveOdometry(RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics(),
         getAngle());
+
   }
 
   /**
@@ -140,17 +149,17 @@ public class DriveSubsystem extends SubsystemBase
     ySpeed*=RobotContainer.robotConstants.getAutoConstants().getKMaxSpeedINPerSecond();
     rot*=RobotContainer.robotConstants.getAutoConstants().getKMaxAngularSpeedRadiansPerSecond();
 
-    if(xSpeed == 0 && ySpeed ==0 && rot==0)
-    {
-      stopDrive();
-    }
-    else
-    {
+    // if(xSpeed == 0 && ySpeed ==0 && rot==0)
+    // {
+    //   stopDrive();
+    // }
+    // else
+    // {
       var swerveModuleStates = RobotContainer.robotConstants.getDriveConstants().getKDriveKinematics()
       .toSwerveModuleStates(fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getAngle())
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
       setModuleStates(swerveModuleStates);
-    }
+   // }
       
 
   }
@@ -216,10 +225,45 @@ public class DriveSubsystem extends SubsystemBase
     return false;
   }
 
+  public boolean getVisionBallSeeing() {
+    if (myBallCam.getEntry("isValid").getBoolean(false))
+    { return true; }
+    return false;
+  }
+
   public double getVisionAngle() {
-    double value = Math.toRadians(myCam.getEntry("targetYaw").getDouble(0));
+    //-1.08021 + 0.400697 x + 0.015903 x^2 - 0.00118477 x^3
+    double value = 0;
+    if(myCam.getEntry("targetFittedHeight").getDouble(0) > myCam.getEntry("targetFittedWidth").getDouble(0))
+    {
+      value = myCam.getEntry("targetRotation").getDouble(0)+90.0;
+    }
+    else
+      value = myCam.getEntry("targetRotation").getDouble(0);
+    double output = myCam.getEntry("targetYaw").getDouble(0);
+
+    double targetArea = myCam.getEntry("targetArea").getDouble(.038);
+
+    value -= 172.09*(targetArea-.038);
+
+    //System.out.println(-(-1.08021 + 0.400697*value + 0.015903 * Math.pow(value, 2) - 0.00118477*Math.pow(value, 3)));
+    //output += -(-1.08021 + 0.400697*value + 0.015903 * Math.pow(value, 2) - 0.00118477*Math.pow(value, 3));
+    output+= -.3*value-.9;
+    return Math.toRadians(output);
+  }
+  public double getVisionBallAngle() {
+    double value = -Math.toRadians(myBallCam.getEntry("targetYaw").getDouble(0));
     return value;
   }
+  public double getVisionBallArea() {
+    double value = myBallCam.getEntry("targetArea").getDouble(0);
+    return value;
+  }
+  public void setDriverMode(boolean on)
+  {
+    myBallCam.getEntry("driverMode").setBoolean(on);
+  }
+  
 
   public double getTargetHeight()
   {

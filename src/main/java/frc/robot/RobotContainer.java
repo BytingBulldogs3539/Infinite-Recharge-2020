@@ -33,6 +33,8 @@ import java.net.NetworkInterface;
 
 import frc.robot.autons.SimpleThreeBall;
 import frc.robot.autons.SixBallRonday;
+import frc.robot.autons.SixBallTrench;
+import frc.robot.autons.TuneBallTracking;
 import frc.robot.commands.BallIndexerManualCommand;
 import frc.robot.commands.BuddyClimbCommand;
 import frc.robot.commands.ClimbAdjustCommand;
@@ -150,9 +152,9 @@ public class RobotContainer
       robotConstants = new PracConstants();
     }
 
-    m_ShooterSubsystem = new ShooterSubsystem();
     m_IntakeSubsystem = new IntakeSubsystem();
     m_BallIndexerSubsystem = new BallIndexerSubsystem();
+    m_ShooterSubsystem = new ShooterSubsystem(m_BallIndexerSubsystem);
     m_ClimbSubsystem = new ClimbSubsystem();
     m_BuddyClimbSubsystem = new BuddyClimbSubsystem();
     m_SpinnerSubsystem = new SpinnerSubsystem();
@@ -163,7 +165,9 @@ public class RobotContainer
   }
   public void putAuton()
   {
-        chooser.addOption("Three Ball Trench", new SixBallRonday(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("Three Ball RONDAY", new SixBallRonday(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("Three Ball Trench", new SixBallTrench(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
+        chooser.addOption("TUNE BALL", new TuneBallTracking(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
         chooser.addOption("AIM AND SHOOT ONLY", new SimpleThreeBall(m_robotDrive, m_IntakeSubsystem, m_ShooterSubsystem, m_BallIndexerSubsystem));
         SmartDashboard.putData("Auto Chooser", chooser);
   }
@@ -184,7 +188,7 @@ public class RobotContainer
     m_driverController.buttonSELECT.whenPressed(new ResetEncoders(m_robotDrive));
     // m_driverController.buttonA.whenHeld(visionCommand);
 
-    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5100, m_BallIndexerSubsystem, 0.0));
+    m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 4800, m_BallIndexerSubsystem, 0.0));
     m_opController.buttonTR.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, .4));
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-.4));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
@@ -197,7 +201,7 @@ public class RobotContainer
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));
     // m_opController.buttonX.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
     m_opController.buttonPadUp.whenHeld(new ClimbCommand(m_ClimbSubsystem, 1, 1));
-    m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem,true));
+    m_opController.buttonPadDown.whenHeld(new IntakeCommand(m_IntakeSubsystem,m_BallIndexerSubsystem,true));
     m_opController.buttonPadLeft.whenHeld(new BuddyClimbCommand(m_BuddyClimbSubsystem, 1));
 
     SmartDashboard.putData("Play Bad Guy", new ShooterChirpCommand(m_ShooterSubsystem, "badguy.chrp", true, 3));

@@ -172,6 +172,8 @@ public abstract class Constants
 
         public abstract double getKPModuleTurningController();
 
+        public abstract double getKDModuleTurningController();
+
         public abstract double getKPModuleDriveController();
 
         public abstract double getKFModuleDriveController();
@@ -204,6 +206,8 @@ public abstract class Constants
         public abstract double getKDYController();
 
         public abstract double getKPThetaController();
+
+        public abstract double getKDThetaController();
 
         public abstract TrapezoidProfile.Constraints getKThetaControllerConstraints();
 

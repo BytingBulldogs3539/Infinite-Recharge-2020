@@ -21,6 +21,7 @@ import frc.robot.utilities.ProfiledPIDController;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import frc.robot.RobotContainer;
 
@@ -41,14 +42,15 @@ public class SwerveModule
 
   private final PIDController m_drivePIDController = new PIDController(
       RobotContainer.robotConstants.getModuleConstants().getKPModuleDriveController(), 0, 0);
-
+      private final PIDController m_turningPIDController = new PIDController(
+          RobotContainer.robotConstants.getModuleConstants().getKPModuleTurningController(), 0, RobotContainer.robotConstants.getModuleConstants().getKDModuleTurningController());
   // Using a TrapezoidProfile PIDController to allow for smooth turning
-  private final ProfiledPIDController m_turningPIDController = new ProfiledPIDController(
-      RobotContainer.robotConstants.getModuleConstants().getKPModuleTurningController(), 0, 0,
-      new TrapezoidProfile.Constraints(
-          RobotContainer.robotConstants.getModuleConstants().getKMaxModuleAngularSpeedRadiansPerSecond(),
-          RobotContainer.robotConstants.getModuleConstants()
-              .getKMaxModuleAngularAccelerationRadiansPerSecondSquared()));
+  //private final ProfiledPIDController m_turningPIDController = new ProfiledPIDController(
+  //    RobotContainer.robotConstants.getModuleConstants().getKPModuleTurningController(), 0, 0,
+  //    new TrapezoidProfile.Constraints(
+  //        RobotContainer.robotConstants.getModuleConstants().getKMaxModuleAngularSpeedRadiansPerSecond(),
+  //        RobotContainer.robotConstants.getModuleConstants()
+  //            .getKMaxModuleAngularAccelerationRadiansPerSecondSquared()));
 
   /**
    * Constructs a SwerveModule.
@@ -124,6 +126,9 @@ public class SwerveModule
     state = optimizeModuleAngle(state, getAngle());
     this.moduleState = state;
 
+    SmartDashboard.putNumber(this.name+" Module Angle Setpoint", moduleState.angle.getDegrees());
+    //System.out.println(this.name+" Module Angle Setpoint "+ moduleState.angle);
+
     final var driveOutput = m_drivePIDController.calculate(
         getDriveVel() * RobotContainer.robotConstants.getModuleConstants().getKDriveEncoderRpmToInps(),
         state.speedMetersPerSecond);
@@ -165,7 +170,7 @@ public class SwerveModule
   public double getDriveVel() { return m_driveEncoder.getVelocity() * ((driveEncoderReversed) ? -1 : 1); }
 
   public double getAngle() {
-    double enc = Math.toRadians(m_turningEncoder.getPosition());
+    double enc = Math.toRadians(m_turningEncoder.getAbsolutePosition());
     return enc;
   }
 
@@ -181,6 +186,7 @@ public class SwerveModule
     Rotation2d deltaAngle = Rotation2d.fromDegrees(desiredState.angle.getDegrees() - Math.toDegrees(angle));
     if (Math.abs(deltaAngle.getDegrees()) > 90 && Math.abs(deltaAngle.getDegrees()) < 270)
     {
+      System.out.println("FLIP");
       finalState.angle = finalState.angle.plus(Rotation2d.fromDegrees(180));
       finalState.speedMetersPerSecond = -finalState.speedMetersPerSecond;
     }

@@ -28,6 +28,7 @@ public class ShooterSubsystem extends SubsystemBase
   Servo servoL = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoLID());
   Servo servoR = new Servo(RobotContainer.robotConstants.getRobotIDConstants().getShooterServoRID());
   PIDController pidController = new PIDController(0.1,0,0);
+  public final BallIndexerSubsystem indexerSubsystem;
 
   // Shooter motor
   TalonFX shooterMotor = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getShooterMotorID());
@@ -43,17 +44,23 @@ public class ShooterSubsystem extends SubsystemBase
   /**
    * Creates a new ShooterSubsystem.
    */
-  public ShooterSubsystem()
+  public ShooterSubsystem( BallIndexerSubsystem indexerSubsystem)
   {
+    this.indexerSubsystem = indexerSubsystem;
+
+    SmartDashboard.putNumber("Hood Angle", 0);
     shooterMotor.setInverted(RobotContainer.robotConstants.getShooterConstants().getShooterMotorInverted());
     shooterMotor.config_kP(0, RobotContainer.robotConstants.getShooterConstants().getKP());
     shooterMotor.config_kI(0, RobotContainer.robotConstants.getShooterConstants().getKI());
     shooterMotor.config_kD(0, RobotContainer.robotConstants.getShooterConstants().getKD());
     shooterMotor.config_kF(0, RobotContainer.robotConstants.getShooterConstants().getKF());
+    shooterMotor.configVoltageCompSaturation(12);
+    shooterMotor.enableVoltageCompensation(true);
     _orchestra = new Orchestra(_instruments);
     _orchestra.addInstrument(shooterMotor);
+    _orchestra.addInstrument(indexerSubsystem.ballIndexerSrx);
     
-    SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 40, 45, 1.0);
+    SupplyCurrentLimitConfiguration currentConfig = new SupplyCurrentLimitConfiguration(true, 40, 45, .2);
     shooterMotor.configSupplyCurrentLimit(currentConfig);
   }
 
@@ -96,7 +103,12 @@ public class ShooterSubsystem extends SubsystemBase
    *          less than 0 or greater than 60 will disable pid.
    */
   public void setHoodAngle(double angle) { 
+    if(angle>40)
+      return;
+    if(angle<0)
+      return;
     this.hoodAngle = angle;
+    
     pidController.setSetpoint(angle);
    }
 

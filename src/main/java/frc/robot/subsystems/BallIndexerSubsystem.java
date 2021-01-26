@@ -23,7 +23,7 @@ public class BallIndexerSubsystem extends SubsystemBase
   TalonFX ballIndexerSrx = new TalonFX(RobotContainer.robotConstants.getRobotIDConstants().getIndexMotorID());
   DigitalInput ballSensor = new DigitalInput(RobotContainer.robotConstants.getRobotIDConstants().getBallSensorPort());
   //public PigeonIMU pigeon;
-
+  public boolean isIntake = false;
   /**
    * Creates a new BallIndexerSubsystem.
    */

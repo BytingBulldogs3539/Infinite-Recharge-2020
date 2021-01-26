@@ -58,7 +58,7 @@ public class ShooterCommand extends CommandBase
 
     double velocity = subsystem.getVelocity();
 
-    if((velocity >= targetRPM-150) && (velocity <=targetRPM+100))
+    if((velocity >= targetRPM-175) && (velocity <=targetRPM+100))
     {
       indexerSubsystem.setPercentOutput(1);
       System.out.println("FEEEEEED");
@@ -68,9 +68,14 @@ public class ShooterCommand extends CommandBase
 
     SmartDashboard.putNumber("Shooter Velocity", velocity);
     SmartDashboard.putNumber("Shooter Target Velocity", targetRPM);
-
-    //subsystem.setHoodAngle(-.006*Math.pow((Robot.m_robotContainer.m_robotDrive.getTargetHeight()-70),2)+10);
-    subsystem.setHoodAngle(30);
+    double x = Robot.m_robotContainer.m_robotDrive.getTargetHeight();
+    subsystem.setHoodAngle((.0000709536*Math.pow(x,3)-.0167058*Math.pow(x,2)+1.11431*x+4.21954));
+    // System.out.println("X "+x);
+    // System.out.println("CUB " + .0000709536*Math.pow(x,3));
+    // System.out.println("SQR "+.0167058*Math.pow(x,2));
+    // System.out.println("LIN "+1.11431*x);
+    //subsystem.setHoodAngle(-.0033*Math.pow((Robot.m_robotContainer.m_robotDrive.getTargetHeight()-44),2)+27);
+    //subsystem.setHoodAngle(SmartDashboard.getNumber("Hood Angle", 0));
   }
 
   // Called once the command ends or is interrupted.

@@ -8,6 +8,7 @@
 package frc.robot.autonCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpiutil.CircularBuffer;
 import frc.robot.utilities.PIDController;
 import frc.robot.utilities.PIDCommand;
 import frc.robot.RobotContainer;
@@ -22,12 +23,14 @@ public class AutoAlignCommand extends PIDCommand {
      */
 
     DriveSubsystem subsystem;
+    int y = 5;
+    CircularBuffer buffer = new CircularBuffer(y);
 
     public AutoAlignCommand(DriveSubsystem subsystem)
   {
     super(
         // The controller that the command will use
-        new PIDController(1.0, 0.0, .05),
+        new PIDController(.85, 0.0, .05),
         // This should return the measurement
         () -> subsystem.getVisionAngle(),
         // This should return the setpoint (can also be a constant)
@@ -48,14 +51,36 @@ public class AutoAlignCommand extends PIDCommand {
     getController().setIntegratorZone(2);
     getController().setTolerance(.02);
   }
+
+  @Override
+  public void initialize() {
+    // TODO Auto-generated method stub
+    super.initialize();
+    subsystem.setDriverMode(true);
+
+  }
+
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
     System.out.println("AutoAlignCommand Ended");
     getController().reset();
+    subsystem.setDriverMode(false);
+
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() { return getController().atSetpoint(); }
+  public boolean isFinished() { 
+    if(getController().atSetpoint())
+      buffer.addFirst(1.0);
+    else
+      buffer.addFirst(0.0);
+    double average = 0;
+    for(int i =0; i<y; i++)
+    {
+      average += buffer.get(i);
+    }
+      return average==y;
+   }
 }
