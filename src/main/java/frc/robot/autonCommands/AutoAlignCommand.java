@@ -27,9 +27,10 @@ public class AutoAlignCommand extends PIDCommand {
   {
     super(
         // The controller that the command will use
-        new PIDController(1.0, 0.0, .05),
+        new PIDController(1.0, 0.01, .05),
         // This should return the measurement
-        () -> subsystem.getVisionAngle(),
+        () -> {System.out.println(subsystem.getVisionAngle());
+            return subsystem.getVisionAngle();},
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
@@ -38,7 +39,7 @@ public class AutoAlignCommand extends PIDCommand {
           // Use the output here
           //System.out.println(output);
           subsystem.drive(0,
-              0,output*.5, true);
+              0,output, true);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -48,12 +49,21 @@ public class AutoAlignCommand extends PIDCommand {
     getController().setIntegratorZone(2);
     getController().setTolerance(.02);
   }
+ @Override
+  public void initialize() {
+    // TODO Auto-generated method stub
+    super.initialize();
+    subsystem.drive(0, 0, 0, false);
+  }
   @Override
   public void end(boolean interrupted) {
+    // TODO Auto-generated method stub
     super.end(interrupted);
-    System.out.println("AutoAlignCommand Ended");
-    getController().reset();
+    subsystem.drive(0, 0, 0, false);
+
+
   }
+
 
   // Returns true when the command should end.
   @Override

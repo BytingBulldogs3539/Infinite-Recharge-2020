@@ -22,6 +22,7 @@ public class ShooterCommand extends CommandBase
   ShooterSubsystem subsystem;
   double targetRPM;
   BallIndexerSubsystem indexerSubsystem;
+  DriveSubsystem driveSub;
   double targetServoSpeed;
   IntakeSubsystem intakeSub;
 

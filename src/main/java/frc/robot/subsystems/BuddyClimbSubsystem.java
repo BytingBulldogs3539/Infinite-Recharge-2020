@@ -24,6 +24,7 @@ public class BuddyClimbSubsystem extends SubsystemBase
    */
   public BuddyClimbSubsystem()
   {
+    buddyClimbMotor.setInverted(RobotContainer.robotConstants.getClimbConstants().getBuddyClimbMotorInverted());
   }
 
   public void setPercentOutput(double power) {

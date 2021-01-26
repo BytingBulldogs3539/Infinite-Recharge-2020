@@ -62,13 +62,16 @@ import frc.robot.utilities.LogitechF310;
 public class RobotContainer
 {
   // The robot's subsystems
-  public final ShooterSubsystem m_ShooterSubsystem;
-  public final ClimbSubsystem m_ClimbSubsystem;
-  public final IntakeSubsystem m_IntakeSubsystem;
-  public final BallIndexerSubsystem m_BallIndexerSubsystem;
-  public final BuddyClimbSubsystem m_BuddyClimbSubsystem;
-  public final SpinnerSubsystem m_SpinnerSubsystem;
-  public final DriveSubsystem m_robotDrive;
+  public static ShooterSubsystem m_ShooterSubsystem;
+  public static ClimbSubsystem m_ClimbSubsystem;
+  public static IntakeSubsystem m_IntakeSubsystem;
+  public static BallIndexerSubsystem m_BallIndexerSubsystem;
+  public static BuddyClimbSubsystem m_BuddyClimbSubsystem;
+  public static SpinnerSubsystem m_SpinnerSubsystem;
+  public static DriveSubsystem m_robotDrive;
+
+  public SendableChooser<Command> chooser = new SendableChooser<Command>();
+
 
   // The driver's controller
   public static LogitechF310 m_driverController;
@@ -76,6 +79,7 @@ public class RobotContainer
 
   // The constants of the robot
   public static Constants robotConstants;
+
 
   // Define the possible robot MAC addresses so we can identify what robot we are
   // using.
@@ -186,8 +190,8 @@ public class RobotContainer
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));
     m_opController.buttonX.whenHeld(new SpinnerCommand(m_SpinnerSubsystem));
-    m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, 0.7));
-    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 0.0, m_BallIndexerSubsystem, -0.7));
+    m_opController.buttonSELECT.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, m_robotDrive,0.4));
+    m_opController.buttonSTART.whenHeld(new ShooterCommand(m_ShooterSubsystem, 0.0, m_BallIndexerSubsystem, m_robotDrive,-0.4));
 
     // m_opController.buttonY.whenHeld(new
     // BallIndexerCommand(m_BallIndexerSubsystem, -1));

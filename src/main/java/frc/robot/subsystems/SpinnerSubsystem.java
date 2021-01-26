@@ -18,8 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
-public class SpinnerSubsystem extends SubsystemBase
-{
+public class SpinnerSubsystem extends SubsystemBase {
 
   // Spinner motor
   TalonSRX spinnerMotor ;//= new TalonSRX(RobotContainer.robotConstants.getRobotIDConstants().getSpinnerMotorID());
@@ -58,15 +57,18 @@ public class SpinnerSubsystem extends SubsystemBase
     // Get the current color
     char currentColor = getCurrentColor();
     // if (currentColor != lastColor && currentColor == startingColor) {
-    //   rotations += 0.5;
+    // rotations += 0.5;
     // }
-    // TODO: figure out which way the control panel is spun to prevent issues (so "rotations" will only increment one way)
+    // TODO: figure out which way the control panel is spun to prevent issues (so
+    // "rotations" will only increment one way)
     // Y -> B -> G -> R (counter-clockwise)
-    if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G')) {
+    if ((currentColor == 'Y' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'Y')
+        || (currentColor == 'G' && lastColor == 'B') || (currentColor == 'R' && lastColor == 'G')) {
       rotations += 0.125;
     }
     // R -> G -> B -> Y (clockwise)
-    if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R') || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B')) {
+    if ((currentColor == 'R' && lastColor == 'Y') || (currentColor == 'G' && lastColor == 'R')
+        || (currentColor == 'B' && lastColor == 'G') || (currentColor == 'Y' && lastColor == 'B')) {
       rotations += 0.125;
     }
     // Update "lastColor" for the next iteration
@@ -86,19 +88,19 @@ public class SpinnerSubsystem extends SubsystemBase
       if (r > g && r > b) {
         // red
         numColor = 1;
-        return 'R'; 
+        return 'R';
       } else if (Math.abs(b - g) < 0.1) {
         // blue
         numColor = 3;
-        return 'B'; 
+        return 'B';
       } else if (Math.abs(g - r) < 0.3 && b < 0.16) {
         // yellow
         numColor = 2;
-        return 'Y'; 
+        return 'Y';
       } else if (g > r && g > b) {
         // green
         numColor = 4;
-        return 'G'; 
+        return 'G';
       } else {
         // NONE (no color)
         numColor = 5; //A value of 5 will always spin the wheel counterclockwise
@@ -140,8 +142,7 @@ public class SpinnerSubsystem extends SubsystemBase
   public char getOffsetColor() {
     col = this.getCurrentColor();
 
-    switch (col)
-    {
+    switch (col) {
     case 'R': // red
       newCol = 'B'; // change to blue
       break;
@@ -155,7 +156,7 @@ public class SpinnerSubsystem extends SubsystemBase
       newCol = 'G'; // change to green
       break;
     default:
-      newCol ='N';
+      newCol = 'N';
       break;
     }
 
@@ -171,7 +172,7 @@ public class SpinnerSubsystem extends SubsystemBase
     }
   }
 
-  
+
 
   /*@Override
   public void periodic() {

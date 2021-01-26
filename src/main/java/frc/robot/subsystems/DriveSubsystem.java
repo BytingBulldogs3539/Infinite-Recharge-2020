@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.CircularBuffer;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveCommand;
 
@@ -88,6 +89,7 @@ public class DriveSubsystem extends SubsystemBase
    */
   public Rotation2d getAngle() {
     // Negating the angle because WPILib gyros are CW positive.
+    System.out.println("Robot Angle " + getPigeonAngle());
     return Rotation2d.fromDegrees(getPigeonAngle());
   }
 
@@ -96,6 +98,7 @@ public class DriveSubsystem extends SubsystemBase
     // Update the odometry in the periodic block
     m_odometry.update(new Rotation2d(Math.toRadians(getHeading())), m_frontLeft.getState(), m_rearLeft.getState(),
         m_frontRight.getState(), m_rearRight.getState());
+    getTargetHeight();
   }
 
   /**
@@ -207,6 +210,17 @@ public class DriveSubsystem extends SubsystemBase
   public double getVisionAngle() {
     double value = Math.toRadians(myCam.getEntry("targetYaw").getDouble(0));
     return value;
+  }
+  public double getTargetHeight() {
+    double value = Math.min(myCam.getEntry("targetFittedHeight").getDouble(0) , myCam.getEntry("targetFittedWidth").getDouble(0));
+    buffer.addLast(value);
+    double average=0;
+    for(int x =0; x<bufferSize; x++)
+    {
+      average+=buffer.get(x);
+    }
+    average/=bufferSize;
+    return average;
   }
 
   public double getTargetHeight()

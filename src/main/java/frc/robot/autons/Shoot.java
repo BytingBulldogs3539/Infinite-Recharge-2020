@@ -33,9 +33,9 @@ public class Shoot extends SequentialCommandGroup {
   public Shoot(DriveSubsystem driveSub, IntakeSubsystem intakeSub, ShooterSubsystem shooterSub, BallIndexerSubsystem ballIndexerSubsystem)
   {  // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super( 
+    super(
         new AutoAlignCommand(driveSub).andThen(() ->driveSub.drive(0, 0, 0, true)),
-        
+
          new AutoShooterCommand(shooterSub, 5000,
          ballIndexerSubsystem,
          driveSub, false).withTimeout(3),
@@ -64,9 +64,9 @@ public class Shoot extends SequentialCommandGroup {
         new AutoShooterCommand(shooterSub, 5000, ballIndexerSubsystem, driveSub, true).withTimeout(1)),
 
         new AutoShooterCommand(shooterSub,5000, ballIndexerSubsystem,
-            driveSub,false).withTimeout(5)        
+            driveSub,false).withTimeout(5)
     );
-              
+
 
   }
 }

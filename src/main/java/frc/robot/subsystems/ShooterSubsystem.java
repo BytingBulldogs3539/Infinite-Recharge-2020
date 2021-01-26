@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.RobotController;
 //import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -56,9 +57,9 @@ public class ShooterSubsystem extends SubsystemBase
   }
 
   /**
-   * 
+   *
    * @param speed a value between 1 (full forward) and -1 (full reverse)
-   * 
+   *
    */
   public void setPercentOutput(double speed) {
     shooterMotor.set(ControlMode.PercentOutput, speed);
@@ -66,34 +67,32 @@ public class ShooterSubsystem extends SubsystemBase
 
   /**
    * Sets the motor RPM of the shooter
-   * 
+   *
    * @param velocity the motor RPM (max motor rpm is about 5700)
-   * 
+   *
    */
   public void setVelocity(double velocity) {
     shooterMotor.set(ControlMode.Velocity, velocity * 2048.0 / 600.0);
   }
 
   /**
-   * 
+   *
    * @return the current velocity of the motor in rpm.
-   * 
+   *
    */
   public double getVelocity() { return shooterMotor.getSelectedSensorVelocity() / 2048.0 * 600.0; }
 
-  /**
-   * 
-   * @return returns the current Hood Angle in Degrees.
-   */
-  public double getHoodAngle() { return pot.getValue(); }
+
 
   /**
-   * 
+   *
    * @param angle the angle you want the hood to be at. (Zero will shoot the ball
    *          high and 60 will shoot it low almost into the floor.) a value of
    *          less than 0 or greater than 60 will disable pid.
    */
-  public void setHoodAngle(double angle) { 
+  public void setHoodAngle(double angle) {
+    if(angle>45)
+      angle = 45;
     this.hoodAngle = angle;
     pidController.setSetpoint(angle);
    }
@@ -113,9 +112,9 @@ public class ShooterSubsystem extends SubsystemBase
 
   /**
    * Plays or pauses the current music file in the Talon fx
-   * 
+   *
    * @param play_pause True for play, False for pause
-   * 
+   *
    */
   public void PlayPauseChirp(boolean play_pause) {
     if (play_pause)
@@ -140,9 +139,14 @@ public class ShooterSubsystem extends SubsystemBase
     //setServoSpeed()
     //SmartDashboard.putNumber("Curr Shooter Velocity", getVelocity());
     setServoSpeed(pidController.calculate(getAngle()));
+    //System.out.println(pidController.calculate(getAngle())+" "+getAngle()+" "+pidController.getSetpoint());
     SmartDashboard.putNumber("Curr Angle", getAngle());
   }
 
+  /**
+   *
+   * @return returns the current Hood Angle in Degrees.
+   */
   public double getAngle(){
     if(RobotContainer.robotConstants.getShooterConstants().invertHoodAngle()){
       return ((3993-pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();

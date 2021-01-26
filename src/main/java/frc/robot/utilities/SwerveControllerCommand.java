@@ -148,13 +148,13 @@ public class SwerveControllerCommand extends CommandBase
     // trajectory,
     // not following the poses at individual states.
     double targetAngularVel;
-    System.out.println(m_shouldVisionTrack + " " + m_targetIsAvail.get());
+    //System.out.println(m_shouldVisionTrack + " " + m_targetIsAvail.get());
     if (m_shouldVisionTrack)
     {
       if (m_targetIsAvail.get())
       {
         targetAngularVel = m_thetaController.calculate(m_targetSupplier.get(), 0);
-        System.out.println(targetAngularVel);
+        //System.out.println(targetAngularVel);
       }
       else
       {

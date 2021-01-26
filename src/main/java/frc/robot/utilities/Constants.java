@@ -61,6 +61,7 @@ public abstract class Constants
         public abstract int getShooterPotentiometerID();
 
         public abstract int getShooterServoLID();
+
         public abstract int getShooterServoRID();
 
         public abstract int getBallSensorPort();
@@ -89,8 +90,6 @@ public abstract class Constants
         public abstract int getKFrontRightTurningMotorPort();
 
         public abstract int getKRearRightTurningMotorPort();
-
-        public abstract int getKPigeonID();
 
         public abstract int getKFrontLeftTurningEncoderPorts();
 
@@ -237,6 +236,8 @@ public abstract class Constants
         public abstract boolean getClimbAdjusterMotorInverted();
 
         public abstract boolean getClimbAdjusterMotorBrake();
+
+        public abstract boolean getBuddyClimbMotorInverted();
 
     }
 

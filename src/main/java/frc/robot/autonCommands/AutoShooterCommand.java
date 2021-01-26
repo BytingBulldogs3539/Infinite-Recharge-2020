@@ -71,7 +71,7 @@ public class AutoShooterCommand extends CommandBase
       };
       driveSub.drive(0, 0, 0, true);
     }
-     
+
   }
 
   // Called once the command ends or is interrupted.

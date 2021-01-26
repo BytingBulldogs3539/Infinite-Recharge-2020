@@ -63,13 +63,10 @@ public final class PracConstants extends Constants
         public int getSpinnerMotorID() { return 14; }
 
         @Override
-        public int getShooterServoLID() {
-            return 1;
-        }
+        public int getShooterServoLID() { return 1; }
+
         @Override
-        public int getShooterServoRID() {
-            return 0;
-        }
+        public int getShooterServoRID() { return 0; }
 
         @Override
         public int getShooterPotentiometerID() {
@@ -112,8 +109,6 @@ public final class PracConstants extends Constants
         public int getKFrontRightTurningMotorPort() { return 6; }
 
         public int getKRearRightTurningMotorPort() { return 4; }
-
-        public int getKPigeonID() { return 25; }
 
         public int getKFrontLeftTurningEncoderPorts() { return 30; }
 
@@ -234,19 +229,19 @@ public final class PracConstants extends Constants
     {
         public double getKMaxSpeedINPerSecond() { return 217.92; }
 
-        public double getKMaxAccelerationINPerSecondSquared() { return 20; }
+        public double getKMaxAccelerationINPerSecondSquared() { return 80; }
 
         public double getKMaxAngularSpeedRadiansPerSecond() { return 10.6; }
 
         public double getKMaxAngularSpeedRadiansPerSecondSquared() { return 10.6; }
 
-        public double getKPXController() { return .076; }
+        public double getKPXController() { return .85; }
 
-        public double getKPYController() { return .076; }
+        public double getKPYController() { return .6; }
 
-        public double getKDXController() { return .033; }
+        public double getKDXController() { return .0546; }
 
-        public double getKDYController() { return .033; }
+        public double getKDYController() { return .0546; }
 
         public double getKPThetaController() { return 1.6; }
 
@@ -270,7 +265,9 @@ public final class PracConstants extends Constants
         public boolean getDefaultIntakeDirection() { return false; }
 
         @Override
-        public int intakeReverseDelay() { return 5; }
+        public int intakeReverseDelay() {
+            return 5;
+        }
 
     }
 
@@ -278,7 +275,7 @@ public final class PracConstants extends Constants
     {
 
         @Override
-        public boolean getIndexMotorInverted() { return true; }
+        public boolean getIndexMotorInverted() { return false; }
 
         @Override
         public boolean getIndexMotorBrake() { return true; }
@@ -300,30 +297,25 @@ public final class PracConstants extends Constants
         @Override
         public boolean getClimbAdjusterMotorBrake() { return true; }
 
+        @Override
+        public boolean getBuddyClimbMotorInverted() { return true; }
+
     }
 
     public class ShooterConstants extends Constants.ShooterConstants
     {
 
         @Override
-        public double getKP() {
-            return 0.1;
-        }
+        public double getKP() { return 0.1; }
 
         @Override
-        public double getKI() {
-            return 0;
-        }
+        public double getKI() { return 0; }
 
         @Override
-        public double getKD() {
-            return 0;
-        }
+        public double getKD() { return 0; }
 
         @Override
-        public double getKF() {
-            return 0.054;
-        }
+        public double getKF() { return 0.054; }
 
         @Override
         public double getPotOffset() {
@@ -331,12 +323,12 @@ public final class PracConstants extends Constants
         }
 
         @Override
-        public boolean invertHoodAngle() { return true; }
+        public boolean invertHoodAngle() {
+            return true;
+        }
 
         @Override
-        public double getHoodOffset(){
-            return 74.3;
-        }
+        public double getHoodOffset() { return -8.9 + 17.6 + .15; }
 
         @Override
         public boolean getShooterMotorInverted() { return false; }
