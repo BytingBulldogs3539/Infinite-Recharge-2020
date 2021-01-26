@@ -186,6 +186,7 @@ public class RobotContainer
 
     m_opController.buttonB.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5100, m_BallIndexerSubsystem, 0.0));
     m_opController.buttonTR.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem, .4));
+    m_opController.buttonTL.whenHeld(new ShooterCommand(m_ShooterSubsystem, m_IntakeSubsystem, 5100, m_BallIndexerSubsystem, 0.0, true));
     m_opController.buttonY.whenHeld(new BallIndexerManualCommand(m_BallIndexerSubsystem, m_ShooterSubsystem,-.4));
     m_opController.buttonBR.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, 1));
     m_opController.buttonBL.whenHeld(new ClimbAdjustCommand(m_ClimbSubsystem, -1));

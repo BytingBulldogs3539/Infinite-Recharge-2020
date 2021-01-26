@@ -147,7 +147,7 @@ public class ShooterSubsystem extends SubsystemBase
 
   public double getAngle(){
     if(RobotContainer.robotConstants.getShooterConstants().invertHoodAngle()){
-      return ((3993-pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
+      return -((3993-pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }else{
       return ((pot.getValue()/13.5322)/4.0)-RobotContainer.robotConstants.getShooterConstants().getHoodOffset();
     }

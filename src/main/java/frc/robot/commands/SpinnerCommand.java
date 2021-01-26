@@ -55,12 +55,12 @@ public class SpinnerCommand extends CommandBase
         backSpin = 5;
         spinCycle = false;
       }else{
-         //What happened
+         //How did we get here?
         subsystem.setPercentOutput(0);
       }
     // If 3-5 rotations are required, rotate at least 4 times:
     } else if (DriverStation.getInstance().getGameSpecificMessage().length() == 0 && subsystem.getRotations() < 4) {
-      subsystem.setPercentOutput(1.0);
+      subsystem.setPercentOutput(0.75);
       subsystem.updateRoations();
       System.out.println(subsystem.getRotations());
     //If the color sensor just finished, run the motor backwards for a few loops.

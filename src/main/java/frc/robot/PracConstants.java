@@ -331,7 +331,7 @@ public final class PracConstants extends Constants
         }
 
         @Override
-        public boolean invertHoodAngle() { return true; }
+        public boolean invertHoodAngle() { return false; }
 
         @Override
         public double getHoodOffset(){

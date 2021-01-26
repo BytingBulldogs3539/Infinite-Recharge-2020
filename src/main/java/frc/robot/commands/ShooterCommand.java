@@ -24,6 +24,8 @@ public class ShooterCommand extends CommandBase
   BallIndexerSubsystem indexerSubsystem;
   double targetServoSpeed;
   IntakeSubsystem intakeSub;
+  boolean overrideRPMDrop;
+  boolean latch = false;
 
   public ShooterCommand(ShooterSubsystem subsystem, IntakeSubsystem intakeSub, double targetRPM, BallIndexerSubsystem indexerSubsystem, double targetServoSpeed)
   {
@@ -34,6 +36,19 @@ public class ShooterCommand extends CommandBase
     this.targetRPM = targetRPM;
     this.targetServoSpeed = targetServoSpeed;
     this.intakeSub= intakeSub;
+    this.overrideRPMDrop = false;
+  }
+
+  public ShooterCommand(ShooterSubsystem subsystem, IntakeSubsystem intakeSub, double targetRPM, BallIndexerSubsystem indexerSubsystem, double targetServoSpeed, boolean overrideRPMDrop)
+  {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem , indexerSubsystem);
+    this.subsystem = subsystem;
+    this.indexerSubsystem = indexerSubsystem;
+    this.targetRPM = targetRPM;
+    this.targetServoSpeed = targetServoSpeed;
+    this.intakeSub= intakeSub;
+    this.overrideRPMDrop = overrideRPMDrop;
   }
 
   // Called when the command is initially scheduled.
@@ -58,13 +73,24 @@ public class ShooterCommand extends CommandBase
 
     double velocity = subsystem.getVelocity();
 
-    if((velocity >= targetRPM-150) && (velocity <=targetRPM+100))
+
+    if(!overrideRPMDrop){
+    if((velocity >= targetRPM-150) /*&& (velocity <=targetRPM+100)*/)
     {
       indexerSubsystem.setPercentOutput(1);
       System.out.println("FEEEEEED");
     }
-    else
+    else{
       indexerSubsystem.setPercentOutput(0);
+    }
+    }else{
+      if((latch)||(velocity >= targetRPM-150) /*&&(velocity <=targetRPM+100)*/){
+        latch = true;
+        indexerSubsystem.setPercentOutput(1);
+      }else{
+        indexerSubsystem.setPercentOutput(0);
+      }
+    }
 
     SmartDashboard.putNumber("Shooter Velocity", velocity);
     SmartDashboard.putNumber("Shooter Target Velocity", targetRPM);
